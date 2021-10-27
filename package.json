@@ -16,9 +16,9 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -48,12 +48,20 @@
     "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
+    "cssnano": "^4.1.11",
+    "cssnano-preset-advanced": "^4.0.7",
     "customize-cra": "^1.0.0",
     "eslint": "^7.32.0",
     "eslint-config-alloy": "^4.4.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-react": "^7.26.1",
     "node-sass": "^6.0.1",
+    "postcss": "^7.0.39",
+    "postcss-aspect-ratio-mini": "^1.1.0",
+    "postcss-preset-env": "^6.7.0",
+    "postcss-px-to-viewport": "^1.1.1",
+    "postcss-viewport-units": "^0.1.6",
+    "postcss-write-svg": "^3.0.1",
     "prettier": "^2.4.1",
     "react-app-rewired": "^2.1.8",
     "sass-loader": "^10.2.0"
