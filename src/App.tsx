@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.scss';
+import { HashRouter } from 'react-router-dom';
+import routes from './routes/index';
 function App() {
     return (
-        <div className="App">
-            <div className="test">123</div>
-        </div>
+        <HashRouter>
+            <div className="App">{routes()}</div>
+        </HashRouter>
     );
 }
 
