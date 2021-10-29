@@ -1,13 +1,14 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-28 23:23:22
- * @LastEditTime: 2021-10-29 00:11:55
+ * @LastEditTime: 2021-10-29 14:50:49
  * @Description:
  * @FilePath: /melodia-ts/src/application/Home/index.tsx
  */
 import React, { ReactNode } from 'react';
 import { renderRoutes, RouteConfig } from 'react-router-config';
-import { RouteProps } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import Icon from '../../components/Icon/icon';
 
 interface IHomeProps extends RouteConfig {
     id?: string;
@@ -16,9 +17,26 @@ const Home: React.FC<IHomeProps> = (props) => {
     const { route } = props;
     return (
         <div className="home-container">
-            <div className="home-header">header</div>
             {renderRoutes(route.routes)}
-            <div className="home-footer">footer</div>
+            <div className="home-footer">
+                <NavLink to="/discover" activeClassName="RouterActive">
+                    <div className="tab-item">
+                        <Icon icon="toilet-paper-slash" />
+                        <span>发现</span>
+                    </div>
+                </NavLink>
+                <div className="CD-wrapper play">
+                    <div className="CD">
+                        <Icon icon="compact-disc" size="4x" />
+                    </div>
+                </div>
+                <NavLink to="/mine" activeClassName="RouterActive">
+                    <div className="tab-item">
+                        <Icon icon="user-astronaut" />
+                        <span>我的</span>
+                    </div>
+                </NavLink>
+            </div>
         </div>
     );
 };
