@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-28 23:23:22
- * @LastEditTime: 2021-10-29 14:50:49
+ * @LastEditTime: 2021-10-31 14:44:23
  * @Description:
  * @FilePath: /melodia-ts/src/application/Home/index.tsx
  */
@@ -9,14 +9,20 @@ import React, { ReactNode } from 'react';
 import { renderRoutes, RouteConfig } from 'react-router-config';
 import { NavLink } from 'react-router-dom';
 import Icon from '../../components/Icon/icon';
+import { useDispatch } from 'react-redux';
 
 interface IHomeProps extends RouteConfig {
     id?: string;
 }
 const Home: React.FC<IHomeProps> = (props) => {
     const { route } = props;
+    const dispatch = useDispatch();
+    const handleClick = () => {
+        dispatch({ type: 'TEST' });
+    };
     return (
         <div className="home-container">
+            <button onClick={handleClick}>test</button>
             {renderRoutes(route.routes)}
             <div className="home-footer">
                 <NavLink to="/discover" activeClassName="RouterActive">
