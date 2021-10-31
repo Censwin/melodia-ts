@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './styles/index.scss';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { Provider } from 'react-redux';
+library.add(fas);
+// https://codesandbox.io/s/redux-saga-forked-6ookq?file=/src/index.js
 ReactDOM.render(
     <React.StrictMode>
         <App />

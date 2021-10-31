@@ -1,0 +1,13 @@
+$icon-theme-colors: (
+    'default': $gray-900,
+    'primary': $primary,
+    'success': $success,
+    'danger': $danger,
+    'light': $light
+);
+
+@each $key, $val in $icon-theme-colors {
+    .my-icon-#{$key} {
+        color: $val;
+    }
+}
