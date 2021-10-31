@@ -2,3 +2,12 @@
 @import './variables';
 // css样式重置
 @import './reset';
+
+// 导入动画
+@import './animation';
+
+// 导入通用组件样式
+@import './../components/index.scss';
+
+// 导入主页面样式
+@import './../application/index.scss';
