@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-28 23:23:22
- * @LastEditTime: 2021-10-31 14:44:23
+ * @LastEditTime: 2021-11-04 15:02:55
  * @Description:
  * @FilePath: /melodia-ts/src/application/Home/index.tsx
  */
@@ -22,7 +22,6 @@ const Home: React.FC<IHomeProps> = (props) => {
     };
     return (
         <div className="home-container">
-            <button onClick={handleClick}>test</button>
             {renderRoutes(route.routes)}
             <div className="home-footer">
                 <NavLink to="/discover" activeClassName="RouterActive">
