@@ -13,7 +13,7 @@ $gray-900: #212529;
 $black: #000;
 
 // 基础色
-$blue: #0d6efd;
+$blue: #418dfff3;
 $indigo: #6610f2;
 $purple: #6f42c1;
 $pink: #d63384;
@@ -36,19 +36,20 @@ $dark: $gray-800;
 
 // 字体
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
-    Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-    'Noto Color Emoji'; // 最佳方案字体
+  Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+  'Noto Color Emoji'; // 最佳方案字体
 $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-    monospace; // 等宽字体
+  monospace; // 等宽字体
 $font-family-base: $font-family-sans-serif;
 
 // 字体大小
 $font-size-base: 1rem; // 大部分都是默认16px
-$font-size-lg: $font-size-base * 1.25;
+$font-size-lg: $font-size-base * 1.4;
 $font-size-sm: $font-size-base * 0.875;
+$font-size-least: 12px;
 
 // body
-$body-bg: $white-100;
+$body-bg: $white;
 $body-color: $gray-900;
 $body-text-align: null;
 
