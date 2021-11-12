@@ -1,0 +1,25 @@
+.card-wrapper {
+  width: 90%;
+  padding: 0 12px;
+  margin: 0 auto;
+  border: $border-common;
+  border-radius: $font-size-base;
+  background: $white;
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 0.5px solid $border-color;
+    .card-header-title {
+      flex-grow: 2;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .card-header-extra {
+    }
+  }
+  .card-body {
+    padding: 12px 0;
+  }
+}

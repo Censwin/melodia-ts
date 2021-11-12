@@ -28,3 +28,18 @@
     color: $white;
   }
 }
+
+.discover-card-header {
+  .card-header-title {
+    font-weight: 300;
+  }
+}
+.more-btn-wrapper {
+  font-size: 12px;
+  border: 0.5px solid $border-color;
+  border-radius: 12px;
+  padding: 2px 4px;
+  span {
+    margin-right: 4px;
+  }
+}

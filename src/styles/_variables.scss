@@ -43,24 +43,24 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mon
 $font-family-base: $font-family-sans-serif;
 
 // 字体大小
-$font-size-base: 1rem; // 大部分都是默认16px
+$font-size-base: 16px; // 大部分都是默认16px
 $font-size-lg: $font-size-base * 1.4;
 $font-size-sm: $font-size-base * 0.875;
 $font-size-least: 12px;
 
 // body
-$body-bg: $white;
+$body-bg: $white-100;
 $body-color: $gray-900;
 $body-text-align: null;
 
 // 边框 和 border radius
-
 $border-width: 1px;
 $border-color: $gray-300;
+$border-common: $border-width solid $border-color;
 
-$border-radius: 0.25rem;
-$border-radius-lg: 0.3rem;
-$border-radius-sm: 0.2rem;
+$border-radius: 0.25 * $font-size-base;
+$border-radius-lg: 0.3 * $font-size-base;
+$border-radius-sm: 0.2 * $font-size-base;
 
 // 不同类型的 box shadow
 $box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075);
