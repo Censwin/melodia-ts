@@ -1,10 +1,21 @@
-import React, { useCallback } from 'react';
+/*
+ * @Author: Censwin
+ * @Date: 2021-11-14 12:09:49
+ * @LastEditTime: 2021-11-14 21:45:30
+ * @Description:
+ * @FilePath: /melodia-ts/src/application/Discover/index.tsx
+ */
+import React, { useCallback, useEffect } from 'react';
 import Scroll from '../../baseUI/Scroll/scroll';
 import Icon from '../../components/Icon/icon';
 import Slider from '../../components/Slider/slider';
 import Card from '../../components/Card/Card';
+import { useDispatch } from 'react-redux';
 const Discover: React.FC = () => {
-  console.log(process.env.NODE_ENV); // dev
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: 'getBanner' });
+  }, []);
   const _imgList = new Array(4).fill({
     imageUrl: 'http://p1.music.126.net/ZYLJ2oZn74yUz5x8NBGkVA==/109951164331219056.jpg'
   });
