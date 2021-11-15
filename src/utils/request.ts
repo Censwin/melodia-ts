@@ -1,61 +1,67 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-11-14 21:55:30
+ * @LastEditTime: 2021-11-15 17:08:58
  * @Description:
  * @FilePath: /melodia-ts/src/utils/request.ts
  */
-import axios from 'axios';
+import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-let baseUrl = 'http://localhost:3000';
+let apiBaseUrl = 'http://localhost:3000';
 if (process.env.NODE_ENV === 'development') {
-  baseUrl = 'http://localhost:3000';
+  apiBaseUrl = 'http://localhost:3000';
 } else if (process.env.NODE_ENV === 'production') {
-  baseUrl = 'http://localhost:3000';
+  apiBaseUrl = 'http://localhost:3000';
 }
-
 axios.defaults.timeout = 5000;
-
-const axiosInstance = axios.create({
-  baseURL: baseUrl
-});
-
-axiosInstance.interceptors.request.use(
-  (config) => {
-    // if token config.header.token ....
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
+class HttpRequest {
+  public baseUrl: string;
+  public constructor(baseUrl = apiBaseUrl) {
+    this.baseUrl = baseUrl;
   }
-);
-
-axiosInstance.interceptors.response.use(
-  (res) => {
-    if (res.status === 200) {
-      return Promise.resolve(res);
-    } else {
-      return Promise.reject(res);
-    }
-  },
-  (err) => {
-    console.error(' error： ' + err);
+  public request(options: AxiosRequestConfig): AxiosPromise {
+    const axiosInstance: AxiosInstance = axios.create();
+    const _options = this.mergeOptions(options);
+    this.interceptors(axiosInstance, _options.url);
+    return axiosInstance(_options);
   }
-);
-
-const request = (url: string, params?: { [key: string]: any }, callback?: Function) => {
-  return new Promise((resolve, reject) => {
-    axiosInstance
-      .get(url, {
-        params
-      })
-      .then((res) => {
-        resolve(res.data);
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
-};
-
-export { request };
+  private interceptors(axiosInstance: AxiosInstance, url?: string) {
+    // 定义这个函数用于添加全局请求和响应拦截逻辑
+    axiosInstance.interceptors.request.use(
+      (config: AxiosRequestConfig) => {
+        // if token config.header.token ....
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+    // 返回拦截
+    axiosInstance.interceptors.response.use(
+      (res: AxiosResponse) => {
+        if (res.status === 200) {
+          const { data } = res;
+          if (data.code !== 200) {
+            console.error('请求错误:', res);
+          }
+          return res.data; // 返回数据
+        }
+      },
+      (err) => {
+        // throw new Error('请求错误' + err);
+        // console.error('请求错误: ' + err);
+        // return false;
+        return Promise.reject(err);
+        // return Promise.resolve(err);
+      }
+    );
+  }
+  private mergeOptions(options: AxiosRequestConfig): AxiosRequestConfig {
+    return { baseURL: this.baseUrl, ...options };
+  }
+}
+export interface ResponseData {
+  code: number;
+  data?: any;
+}
+export default HttpRequest;

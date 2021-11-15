@@ -1,12 +1,18 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 21:29:17
- * @LastEditTime: 2021-11-14 22:33:44
+ * @LastEditTime: 2021-11-15 16:41:06
  * @Description:
  * @FilePath: /melodia-ts/src/services/discover.ts
  */
-import { request } from '../utils/request';
+import Request from './index';
+import { AxiosPromise } from 'axios';
 
-export function getBannerList() {
-  return request('/banner');
+export interface IBannersRes {
+  banners: any[];
 }
+export const getBannerList = (): AxiosPromise<IBannersRes> => {
+  return Request.request({
+    url: '/lkjljkljkljk'
+  });
+};
