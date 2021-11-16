@@ -43,3 +43,28 @@
     margin-right: 4px;
   }
 }
+
+.recommend-wrapper {
+  width: 100%;
+  // overflow-x: scroll;
+  display: flex;
+  flex-direction: row;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .recommend-item {
+    margin-right: 5px;
+    .recommend-item-pic {
+      border-radius: 12px;
+      width: 100px;
+    }
+    .recommend-item-name {
+      font-size: $font-size-least;
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-line-clamp: 2; // 行数
+      -webkit-box-orient: vertical; // 设置或检索伸缩盒对象的子元素的排列方式
+      text-overflow: ellipsis;
+    }
+  }
+}

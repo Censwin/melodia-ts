@@ -7,7 +7,7 @@
  */
 import { all } from 'redux-saga/effects';
 import HomeSagas from '../application/Home/store';
-import DiscoverSagas from '../application/Discover/store';
+import { DiscoverSagas } from '../application/Discover/store';
 export default function* rootSagas() {
   yield all([HomeSagas(), DiscoverSagas()]);
 }

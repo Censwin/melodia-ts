@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-11-15 17:08:58
+ * @LastEditTime: 2021-11-16 11:03:30
  * @Description:
  * @FilePath: /melodia-ts/src/utils/request.ts
  */
@@ -44,7 +44,7 @@ class HttpRequest {
           if (data.code !== 200) {
             console.error('请求错误:', res);
           }
-          return res.data; // 返回数据
+          return res.data;
         }
       },
       (err) => {
