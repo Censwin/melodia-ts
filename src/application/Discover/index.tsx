@@ -1,13 +1,112 @@
-import React from 'react';
+/*
+ * @Author: Censwin
+ * @Date: 2021-11-14 12:09:49
+ * @LastEditTime: 2021-11-17 14:46:40
+ * @Description:
+ * @FilePath: /melodia-ts/src/application/Discover/index.tsx
+ */
+import React, { useCallback, useEffect, useRef } from 'react';
+import { RouteConfig } from 'react-router-config';
+import { useDispatch, connect } from 'react-redux';
 import Scroll from '../../baseUI/Scroll/scroll';
 import Icon from '../../components/Icon/icon';
 import Slider from '../../components/Slider/slider';
+import Card from '../../components/Card/Card';
+import { IApplicationState } from '../../store/reducers';
+import { IDiscoverState, constants as actionTypes } from './store';
+import { IconName } from '@fortawesome/fontawesome-svg-core';
+import { getCount } from '../../utils/tools';
+type TDiscoverProps = IDiscoverState & RouteConfig;
+const CHANNEL_LIST = [
+  {
+    icon: 'calendar-week',
+    name: '每日推荐',
+    path: ''
+  },
+  {
+    icon: 'stream',
+    name: '歌单',
+    path: ''
+  },
+  {
+    icon: 'sort-amount-up',
+    name: '排行榜',
+    path: ''
+  },
+  {
+    icon: 'street-view',
+    name: '歌手',
+    path: ''
+  }
+];
 
-const Discover: React.FC = () => {
-  const _imgList = new Array(4).fill({
-    imageUrl: 'http://p1.music.126.net/ZYLJ2oZn74yUz5x8NBGkVA==/109951164331219056.jpg'
+const Discover: React.FC<TDiscoverProps> = (props) => {
+  const { bannerList, recommendList } = props;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!bannerList.length) {
+      dispatch({ type: actionTypes.GET_BANNER });
+    }
+    if (!recommendList.length) {
+      dispatch({ type: actionTypes.GET_RECOMMEND });
+    }
+  }, []);
+  const HorizenWrapperRef = useRef<HTMLElement & HTMLDivElement>(null);
+  type ScrollComponentType = React.ElementRef<typeof Scroll>;
+  const HorizenScrollRef = useRef<ScrollComponentType>(null);
+  const VerticalScrollRef = useRef<ScrollComponentType>(null);
+  useEffect(() => {
+    console.log('refresh');
+    let Dom = HorizenWrapperRef.current as HTMLElement;
+    let items = Dom.querySelectorAll<HTMLElement>('.recommend-item');
+    let totalWidth = 0;
+    Array.from(items).forEach((e) => {
+      totalWidth += e.offsetWidth;
+    });
+    Dom.style.width = `${totalWidth + 100}px`;
+    HorizenScrollRef.current?.refresh();
+  }, [recommendList.length]);
+  useEffect(() => {
+    VerticalScrollRef.current?.refresh();
   });
-
+  const MoreBtn = useCallback(() => {
+    return (
+      <div className="more-btn-wrapper">
+        <span>更多</span>
+        <Icon icon="angle-right" />
+      </div>
+    );
+  }, []);
+  const RenderRecommend = useCallback(() => {
+    return recommendList.map((item) => {
+      return (
+        <div key={item.id} className="recommend-item">
+          <img className="recommend-item-pic" src={item.picUrl} />
+          <div className="play-count">
+            <Icon icon="play" />
+            {getCount(item.playCount)}
+          </div>
+          <span className="recommend-item-name">{item.name}</span>
+        </div>
+      );
+    });
+  }, [recommendList]);
+  const RenderChannelList = useCallback(() => {
+    return CHANNEL_LIST.map((item) => {
+      return (
+        <div className="channel-entity" key={item.name}>
+          <a className="c-blocka">
+            <div className="channel-icon-wrapper">
+              <div className="channel-icon-bg">
+                <Icon icon={item.icon as IconName} />
+              </div>
+            </div>
+            <p className="channel-name">{item.name}</p>
+          </a>
+        </div>
+      );
+    });
+  }, []);
   return (
     <div className="discover-content">
       <div className="Header">
@@ -19,145 +118,31 @@ const Discover: React.FC = () => {
         </div>
         <Icon icon="bars" className="header-more" />
       </div>
-      <Scroll>
+      <Scroll ref={VerticalScrollRef}>
         <div>
-          <Slider imgList={_imgList} />
+          <Slider imgList={bannerList} />
+          <div className="channel-list">{RenderChannelList()}</div>
           <div style={{ paddingBottom: '100px' }}>
-            雷锋曾经说过，自己活着，就是为了使别人过得更美好。我希望诸位也能好好地体会这句话。
-            希腊在不经意间这样说过，最困难的事情就是认识自己。我希望诸位也能好好地体会这句话。
-            这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。
-            贝多芬在不经意间这样说过，卓越的人一大优点是：在不利与艰难的遭遇里百折不饶。我希望诸位也能好好地体会这句话。
-            从这个角度来看， 这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。
-            对我个人而言，科学和人文谁更有意义不仅仅是一个重大的事件，还可能会改变我的人生。
-            我们一般认为，抓住了问题的关键，其他一切则会迎刃而解。
-            拿破仑·希尔曾经说过，不要等待，时机永远不会恰到好处。这句话语虽然很短，但令我浮想联翩。
-            拿破仑·希尔曾经提到过，不要等待，时机永远不会恰到好处。我希望诸位也能好好地体会这句话。
-            这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。 从这个角度来看，
-            了解清楚科学和人文谁更有意义到底是一种怎么样的存在，是解决一切问题的关键。
-            我们一般认为，抓住了问题的关键，其他一切则会迎刃而解。
-            在这种困难的抉择下，本人思来想去，寝食难安。
-            莎士比亚曾经说过，抛弃时间的人，时间也抛弃他。这似乎解答了我的疑惑。
-            就我个人来说，科学和人文谁更有意义对我的意义，不能不说非常重大。 经过上述讨论，
-            科学和人文谁更有意义的发生，到底需要如何做到，不科学和人文谁更有意义的发生，又会如何产生。
-            我认为， 一般来说， 既然如此， 带着这些问题，我们来审视一下科学和人文谁更有意义。
-            我们都知道，只要有意义，那么就必须慎重考虑。
-            莎士比亚曾经说过，抛弃时间的人，时间也抛弃他。带着这句话，我们还要更加慎重的审视这个问题：
-            带着这些问题，我们来审视一下科学和人文谁更有意义。 我认为， 既然如何，
-            莎士比亚曾经说过，人的一生是短的，但如果卑劣地过这一生，就太长了。这似乎解答了我的疑惑。
-            而这些并不是完全重要，更加重要的问题是，
-            这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。
-            了解清楚科学和人文谁更有意义到底是一种怎么样的存在，是解决一切问题的关键。
-            经过上述讨论， 科学和人文谁更有意义，到底应该如何实现。
-            这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。 问题的关键究竟为何？
-            每个人都不得不面对这些问题。 在面对这种问题时，
-            马云在不经意间这样说过，最大的挑战和突破在于用人，而用人最大的突破在于信任人。这句话语虽然很短，但令我浮想联翩。
-            科学和人文谁更有意义的发生，到底需要如何做到，不科学和人文谁更有意义的发生，又会如何产生。
-            既然如何， 生活中，若科学和人文谁更有意义出现了，我们就不得不考虑它出现了的事实。
-            而这些并不是完全重要，更加重要的问题是，
-            可是，即使是这样，科学和人文谁更有意义的出现仍然代表了一定的意义。 既然如何，
-            科学和人文谁更有意义，发生了会如何，不发生又会如何。 每个人都不得不面对这些问题。
-            在面对这种问题时， 一般来说， 既然如何，
-            鲁巴金在不经意间这样说过，读书是在别人思想的帮助下，建立起自己的思想。这句话语虽然很短，但令我浮想联翩。
-            马云说过一句富有哲理的话，最大的挑战和突破在于用人，而用人最大的突破在于信任人。这句话语虽然很短，但令我浮想联翩。
-            生活中，若科学和人文谁更有意义出现了，我们就不得不考虑它出现了的事实。 从这个角度来看，
-            那么，
-            奥斯特洛夫斯基在不经意间这样说过，共同的事业，共同的斗争，可以使人们产生忍受一切的力量。这似乎解答了我的疑惑。
-            这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。 既然如何， 既然如此，
-            培根曾经提到过，深窥自己的心，而后发觉一切的奇迹在你自己。这不禁令我深思。
-            富勒曾经提到过，苦难磨炼一些人，也毁灭另一些人。这似乎解答了我的疑惑。
-            了解清楚科学和人文谁更有意义到底是一种怎么样的存在，是解决一切问题的关键。
-            罗素·贝克在不经意间这样说过，一个人即使已登上顶峰，也仍要自强不息。这不禁令我深思。
-            了解清楚科学和人文谁更有意义到底是一种怎么样的存在，是解决一切问题的关键。 这样看来，
-            科学和人文谁更有意义，到底应该如何实现。
-            生活中，若科学和人文谁更有意义出现了，我们就不得不考虑它出现了的事实。
-            科学和人文谁更有意义，到底应该如何实现。
-            奥普拉·温弗瑞曾经提到过，你相信什么，你就成为什么样的人。我希望诸位也能好好地体会这句话。
-            那么，
-            塞涅卡曾经说过，真正的人生，只有在经过艰难卓绝的斗争之后才能实现。这似乎解答了我的疑惑。
-            那么， 我们一般认为，抓住了问题的关键，其他一切则会迎刃而解。 既然如此，
-            带着这些问题，我们来审视一下科学和人文谁更有意义。
-            带着这些问题，我们来审视一下科学和人文谁更有意义。
-            普列姆昌德曾经提到过，希望的灯一旦熄灭，生活刹那间变成了一片黑暗。这启发了我，
-            现在，解决科学和人文谁更有意义的问题，是非常非常重要的。 所以，
-            科学和人文谁更有意义，到底应该如何实现。
-            生活中，若科学和人文谁更有意义出现了，我们就不得不考虑它出现了的事实。
-            爱尔兰曾经说过，越是无能的人，越喜欢挑剔别人的错儿。这句话语虽然很短，但令我浮想联翩。
-            冯学峰曾经提到过，当一个人用工作去迎接光明，光明很快就会来照耀着他。带着这句话，我们还要更加慎重的审视这个问题：
-            生活中，若科学和人文谁更有意义出现了，我们就不得不考虑它出现了的事实。 一般来说，
-            克劳斯·莫瑟爵士在不经意间这样说过，教育需要花费钱，而无知也是一样。这句话语虽然很短，但令我浮想联翩。
-            科学和人文谁更有意义因何而发生？ 带着这些问题，我们来审视一下科学和人文谁更有意义。
-            生活中，若科学和人文谁更有意义出现了，我们就不得不考虑它出现了的事实。
-            可是，即使是这样，科学和人文谁更有意义的出现仍然代表了一定的意义。
-            一般来讲，我们都必须务必慎重的考虑考虑。 经过上述讨论，
-            我们不得不面对一个非常尴尬的事实，那就是，
-            就我个人来说，科学和人文谁更有意义对我的意义，不能不说非常重大。
-            我们都知道，只要有意义，那么就必须慎重考虑。
-            现在，解决科学和人文谁更有意义的问题，是非常非常重要的。 所以， 那么，
-            科学和人文谁更有意义，发生了会如何，不发生又会如何。
-            海贝尔说过一句富有哲理的话，人生就是学校。在那里，与其说好的教师是幸福，不如说好的教师是不幸。带着这句话，我们还要更加慎重的审视这个问题：
-            这样看来， 科学和人文谁更有意义，到底应该如何实现。 那么，
-            科学和人文谁更有意义的发生，到底需要如何做到，不科学和人文谁更有意义的发生，又会如何产生。
-            屠格涅夫曾经提到过，你想成为幸福的人吗？但愿你首先学会吃得起苦。我希望诸位也能好好地体会这句话。
-            科学和人文谁更有意义，到底应该如何实现。 我们都知道，只要有意义，那么就必须慎重考虑。
-            这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。 我认为，
-            现在，解决科学和人文谁更有意义的问题，是非常非常重要的。 所以，
-            现在，解决科学和人文谁更有意义的问题，是非常非常重要的。 所以， 既然如此，
-            科学和人文谁更有意义，到底应该如何实现。 总结的来说， 既然如何，
-            卡耐基曾经说过，我们若已接受最坏的，就再没有什么损失。带着这句话，我们还要更加慎重的审视这个问题：
-            贝多芬在不经意间这样说过，卓越的人一大优点是：在不利与艰难的遭遇里百折不饶。这不禁令我深思。
-            要想清楚，科学和人文谁更有意义，到底是一种怎么样的存在。
-            吉姆·罗恩曾经说过，要么你主宰生活，要么你被生活主宰。我希望诸位也能好好地体会这句话。
-            要想清楚，科学和人文谁更有意义，到底是一种怎么样的存在。 问题的关键究竟为何？
-            所谓科学和人文谁更有意义，关键是科学和人文谁更有意义需要如何写。
-            伏尔泰在不经意间这样说过，坚持意志伟大的事业需要始终不渝的精神。这启发了我，
-            要想清楚，科学和人文谁更有意义，到底是一种怎么样的存在。 每个人都不得不面对这些问题。
-            在面对这种问题时， 问题的关键究竟为何？ 既然如此，
-            我们不得不面对一个非常尴尬的事实，那就是，
-            了解清楚科学和人文谁更有意义到底是一种怎么样的存在，是解决一切问题的关键。
-            从这个角度来看， 每个人都不得不面对这些问题。 在面对这种问题时。
-            科学和人文谁更有意义因何而发生？
-            博说过一句富有哲理的话，一次失败，只是证明我们成功的决心还够坚强。
-            维这句话语虽然很短，但令我浮想联翩。 科学和人文谁更有意义，到底应该如何实现。
-            本人也是经过了深思熟虑，在每个日日夜夜思考这个问题。
-            达·芬奇曾经说过，大胆和坚定的决心能够抵得上武器的精良。这不禁令我深思。
-            可是，即使是这样，科学和人文谁更有意义的出现仍然代表了一定的意义。 一般来说，
-            经过上述讨论， 我们不得不面对一个非常尴尬的事实，那就是，
-            科学和人文谁更有意义因何而发生？ 一般来说，
-            德谟克利特在不经意间这样说过，节制使快乐增加并使享受加强。这不禁令我深思。 这样看来，
-            既然如此， 从这个角度来看， 带着这些问题，我们来审视一下科学和人文谁更有意义。
-            我们一般认为，抓住了问题的关键，其他一切则会迎刃而解。 我认为， 经过上述讨论，
-            科学和人文谁更有意义，发生了会如何，不发生又会如何。 我认为，
-            了解清楚科学和人文谁更有意义到底是一种怎么样的存在，是解决一切问题的关键。
-            西班牙曾经提到过，自己的鞋子，自己知道紧在哪里。这启发了我，
-            我们都知道，只要有意义，那么就必须慎重考虑。
-            屠格涅夫说过一句富有哲理的话，你想成为幸福的人吗？但愿你首先学会吃得起苦。这启发了我，
-            一般来说， 从这个角度来看，
-            生活中，若科学和人文谁更有意义出现了，我们就不得不考虑它出现了的事实。
-            雷锋曾经提到过，自己活着，就是为了使别人过得更美好。这似乎解答了我的疑惑。
-            了解清楚科学和人文谁更有意义到底是一种怎么样的存在，是解决一切问题的关键。 一般来说，
-            科学和人文谁更有意义的发生，到底需要如何做到，不科学和人文谁更有意义的发生，又会如何产生。
-            科学和人文谁更有意义的发生，到底需要如何做到，不科学和人文谁更有意义的发生，又会如何产生。
-            那么， 既然如此，
-            亚伯拉罕·林肯曾经提到过，我这个人走得很慢，但是我从不后退。带着这句话，我们还要更加慎重的审视这个问题：
-            我们不得不面对一个非常尴尬的事实，那就是， 从这个角度来看，
-            希腊曾经提到过，最困难的事情就是认识自己。这不禁令我深思。
-            这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。
-            这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。
-            科学和人文谁更有意义的发生，到底需要如何做到，不科学和人文谁更有意义的发生，又会如何产生。
-            就我个人来说，科学和人文谁更有意义对我的意义，不能不说非常重大。
-            带着这些问题，我们来审视一下科学和人文谁更有意义。 科学和人文谁更有意义因何而发生？
-            这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。
-            西班牙在不经意间这样说过，自己的鞋子，自己知道紧在哪里。我希望诸位也能好好地体会这句话。
-            带着这些问题，我们来审视一下科学和人文谁更有意义。 问题的关键究竟为何？
-            对我个人而言，科学和人文谁更有意义不仅仅是一个重大的事件，还可能会改变我的人生。
-            对我个人而言，科学和人文谁更有意义不仅仅是一个重大的事件，还可能会改变我的人生。
-            我们都知道，只要有意义，那么就必须慎重考虑。 问题的关键究竟为何？ 从这个角度来看，
-            对我个人而言，科学和人文谁更有意义不仅仅是一个重大的事件，还可能会改变我的人生。
-            带着这些问题，我们来审视一下科学和人文谁更有意义。
+            <Card headerClassName="discover-card-header" title="推荐歌单" extra={<MoreBtn />}>
+              <Scroll ref={HorizenScrollRef} direction="horizental">
+                <div ref={HorizenWrapperRef}>
+                  <div className="recommend-wrapper">{RenderRecommend()}</div>
+                </div>
+              </Scroll>
+            </Card>
+            <Card headerClassName="discover-card-header" title="精选音乐视频" extra={<MoreBtn />}>
+              <div className="video-list-wrapper">视频</div>
+            </Card>
           </div>
         </div>
       </Scroll>
     </div>
   );
 };
-export default React.memo(Discover);
+
+const mapStateToProps = ({ Discover }: IApplicationState) => ({
+  bannerList: Discover.bannerList,
+  recommendList: Discover.recommendList
+});
+
+export default connect(mapStateToProps)(React.memo(Discover));
