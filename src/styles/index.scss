@@ -2,7 +2,8 @@
 @import './variables';
 // css样式重置
 @import './reset';
-
+// 导入全局通用类名
+@import './common';
 // 导入动画
 @import './animation';
 

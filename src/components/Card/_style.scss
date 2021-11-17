@@ -2,6 +2,7 @@
   width: 90%;
   padding: 0 12px;
   margin: 0 auto;
+  margin-bottom: 5px;
   border: $border-common;
   border-radius: $font-size-base;
   background: $white;
@@ -20,6 +21,7 @@
     }
   }
   .card-body {
+    overflow: hidden;
     padding: 12px 0;
   }
 }

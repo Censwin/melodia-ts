@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-11-16 18:14:09
+ * @LastEditTime: 2021-11-17 14:46:40
  * @Description:
  * @FilePath: /melodia-ts/src/application/Discover/index.tsx
  */
@@ -14,19 +14,61 @@ import Slider from '../../components/Slider/slider';
 import Card from '../../components/Card/Card';
 import { IApplicationState } from '../../store/reducers';
 import { IDiscoverState, constants as actionTypes } from './store';
-
+import { IconName } from '@fortawesome/fontawesome-svg-core';
+import { getCount } from '../../utils/tools';
 type TDiscoverProps = IDiscoverState & RouteConfig;
+const CHANNEL_LIST = [
+  {
+    icon: 'calendar-week',
+    name: '每日推荐',
+    path: ''
+  },
+  {
+    icon: 'stream',
+    name: '歌单',
+    path: ''
+  },
+  {
+    icon: 'sort-amount-up',
+    name: '排行榜',
+    path: ''
+  },
+  {
+    icon: 'street-view',
+    name: '歌手',
+    path: ''
+  }
+];
 
 const Discover: React.FC<TDiscoverProps> = (props) => {
   const { bannerList, recommendList } = props;
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({ type: actionTypes.GET_BANNER });
-    dispatch({ type: actionTypes.GET_RECOMMEND });
+    if (!bannerList.length) {
+      dispatch({ type: actionTypes.GET_BANNER });
+    }
+    if (!recommendList.length) {
+      dispatch({ type: actionTypes.GET_RECOMMEND });
+    }
   }, []);
   const HorizenWrapperRef = useRef<HTMLElement & HTMLDivElement>(null);
-  type HorizenScroll = React.ElementRef<typeof Scroll>;
-  const HorizenScrollRef = useRef<HorizenScroll>(null);
+  type ScrollComponentType = React.ElementRef<typeof Scroll>;
+  const HorizenScrollRef = useRef<ScrollComponentType>(null);
+  const VerticalScrollRef = useRef<ScrollComponentType>(null);
+  useEffect(() => {
+    console.log('refresh');
+    let Dom = HorizenWrapperRef.current as HTMLElement;
+    let items = Dom.querySelectorAll<HTMLElement>('.recommend-item');
+    let totalWidth = 0;
+    Array.from(items).forEach((e) => {
+      totalWidth += e.offsetWidth;
+    });
+    Dom.style.width = `${totalWidth + 100}px`;
+    HorizenScrollRef.current?.refresh();
+  }, [recommendList.length]);
+  useEffect(() => {
+    VerticalScrollRef.current?.refresh();
+  });
   const MoreBtn = useCallback(() => {
     return (
       <div className="more-btn-wrapper">
@@ -35,32 +77,36 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
       </div>
     );
   }, []);
-  const renderRecommend = useCallback(() => {
+  const RenderRecommend = useCallback(() => {
     return recommendList.map((item) => {
       return (
         <div key={item.id} className="recommend-item">
           <img className="recommend-item-pic" src={item.picUrl} />
+          <div className="play-count">
+            <Icon icon="play" />
+            {getCount(item.playCount)}
+          </div>
           <span className="recommend-item-name">{item.name}</span>
         </div>
       );
     });
   }, [recommendList]);
-  useEffect(() => {
-    let Dom = HorizenWrapperRef.current as HTMLElement;
-    let items = Dom.querySelectorAll<HTMLElement>('.recommend-item');
-    let totalWidth = 0;
-    Array.from(items).forEach((e) => {
-      totalWidth += e.offsetWidth;
+  const RenderChannelList = useCallback(() => {
+    return CHANNEL_LIST.map((item) => {
+      return (
+        <div className="channel-entity" key={item.name}>
+          <a className="c-blocka">
+            <div className="channel-icon-wrapper">
+              <div className="channel-icon-bg">
+                <Icon icon={item.icon as IconName} />
+              </div>
+            </div>
+            <p className="channel-name">{item.name}</p>
+          </a>
+        </div>
+      );
     });
-    Dom.style.width = `${totalWidth}px`;
-    if (HorizenScrollRef.current) {
-      HorizenScrollRef.current.refresh();
-    }
-  }, [recommendList.length !== 0]);
-  // const handleMove = (e: React.TouchEvent<HTMLElement>) => {
-  // onTouchMove={(e) => handleMove(e)}
-  //   console.log(e.touches[0].pageX);
-  // };
+  }, []);
   return (
     <div className="discover-content">
       <div className="Header">
@@ -72,16 +118,20 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
         </div>
         <Icon icon="bars" className="header-more" />
       </div>
-      <Scroll>
+      <Scroll ref={VerticalScrollRef}>
         <div>
           <Slider imgList={bannerList} />
+          <div className="channel-list">{RenderChannelList()}</div>
           <div style={{ paddingBottom: '100px' }}>
             <Card headerClassName="discover-card-header" title="推荐歌单" extra={<MoreBtn />}>
               <Scroll ref={HorizenScrollRef} direction="horizental">
                 <div ref={HorizenWrapperRef}>
-                  <div className="recommend-wrapper">{renderRecommend()}</div>
+                  <div className="recommend-wrapper">{RenderRecommend()}</div>
                 </div>
               </Scroll>
+            </Card>
+            <Card headerClassName="discover-card-header" title="精选音乐视频" extra={<MoreBtn />}>
+              <div className="video-list-wrapper">视频</div>
             </Card>
           </div>
         </div>
