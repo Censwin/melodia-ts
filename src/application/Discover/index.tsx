@@ -1,12 +1,12 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-11-17 14:46:40
+ * @LastEditTime: 2021-11-17 16:44:43
  * @Description:
  * @FilePath: /melodia-ts/src/application/Discover/index.tsx
  */
 import React, { useCallback, useEffect, useRef } from 'react';
-import { RouteConfig } from 'react-router-config';
+import { renderRoutes, RouteConfig } from 'react-router-config';
 import { useDispatch, connect } from 'react-redux';
 import Scroll from '../../baseUI/Scroll/scroll';
 import Icon from '../../components/Icon/icon';
@@ -16,7 +16,7 @@ import { IApplicationState } from '../../store/reducers';
 import { IDiscoverState, constants as actionTypes } from './store';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { getCount } from '../../utils/tools';
-type TDiscoverProps = IDiscoverState & RouteConfig;
+import { useHistory } from 'react-router';
 const CHANNEL_LIST = [
   {
     icon: 'calendar-week',
@@ -39,10 +39,12 @@ const CHANNEL_LIST = [
     path: ''
   }
 ];
+type TDiscoverProps = IDiscoverState & RouteConfig;
 
 const Discover: React.FC<TDiscoverProps> = (props) => {
-  const { bannerList, recommendList } = props;
+  const { bannerList, recommendList, route } = props;
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     if (!bannerList.length) {
       dispatch({ type: actionTypes.GET_BANNER });
@@ -56,7 +58,6 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
   const HorizenScrollRef = useRef<ScrollComponentType>(null);
   const VerticalScrollRef = useRef<ScrollComponentType>(null);
   useEffect(() => {
-    console.log('refresh');
     let Dom = HorizenWrapperRef.current as HTMLElement;
     let items = Dom.querySelectorAll<HTMLElement>('.recommend-item');
     let totalWidth = 0;
@@ -69,14 +70,17 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
   useEffect(() => {
     VerticalScrollRef.current?.refresh();
   });
-  const MoreBtn = useCallback(() => {
+
+  const MoreBtn = useCallback((props) => {
+    const { path } = props;
     return (
-      <div className="more-btn-wrapper">
+      <div className="more-btn-wrapper" onClick={() => history.push(path)}>
         <span>更多</span>
         <Icon icon="angle-right" />
       </div>
     );
   }, []);
+
   const RenderRecommend = useCallback(() => {
     return recommendList.map((item) => {
       return (
@@ -109,6 +113,7 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
   }, []);
   return (
     <div className="discover-content">
+      {renderRoutes(route.routes)}
       <div className="Header">
         <div className="searchBar">
           <span>
@@ -123,14 +128,22 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
           <Slider imgList={bannerList} />
           <div className="channel-list">{RenderChannelList()}</div>
           <div style={{ paddingBottom: '100px' }}>
-            <Card headerClassName="discover-card-header" title="推荐歌单" extra={<MoreBtn />}>
+            <Card
+              headerClassName="discover-card-header"
+              title="推荐歌单"
+              extra={<MoreBtn path="/discover/recommend" />}
+            >
               <Scroll ref={HorizenScrollRef} direction="horizental">
                 <div ref={HorizenWrapperRef}>
                   <div className="recommend-wrapper">{RenderRecommend()}</div>
                 </div>
               </Scroll>
             </Card>
-            <Card headerClassName="discover-card-header" title="精选音乐视频" extra={<MoreBtn />}>
+            <Card
+              headerClassName="discover-card-header"
+              title="精选音乐视频"
+              extra={<MoreBtn path="/recommend" />}
+            >
               <div className="video-list-wrapper">视频</div>
             </Card>
           </div>

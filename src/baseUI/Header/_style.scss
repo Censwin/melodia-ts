@@ -1,0 +1,16 @@
+.header-container {
+  padding: 5px 10px;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  .header-back {
+    font-size: 20px;
+  }
+  > span {
+    flex-grow: 1;
+    text-align: center;
+    margin-right: 20px;
+    font-weight: bold;
+  }
+}
