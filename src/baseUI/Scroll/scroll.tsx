@@ -1,13 +1,14 @@
 /*
  * @Author: Censwin
  * @Date: 2021-09-05 15:23:27
- * @LastEditTime: 2021-11-04 16:39:46
+ * @LastEditTime: 2021-11-17 11:49:34
  * @Description: 通用滚动组件
  * @FilePath: /melodia-ts/src/baseUI/scroll/index.tsx
  */
 import * as React from 'react';
 import BScroll from 'better-scroll';
 import './_style.scss';
+import classNames from 'classnames';
 export interface ScrollImperativeHandle {
   finishPullDown: Function;
   getBScroll: Function;
@@ -108,8 +109,11 @@ const Scroll = React.forwardRef<ScrollImperativeHandle, Partial<SrcollPropsType>
       }
     }
   }));
+  const classes = classNames('myscroll-container', {
+    'myscroll-vertical': direction === 'vertical'
+  });
   return (
-    <div className="ScrollContainer" ref={scrollContaninerRef}>
+    <div className={classes} ref={scrollContaninerRef}>
       {props.children}
     </div>
   );
