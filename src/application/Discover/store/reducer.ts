@@ -7,20 +7,29 @@
  */
 import { Reducer } from 'redux';
 import produce, { Draft } from 'immer';
-import { IDiscoverState } from './types';
-import * as actionTypes from './constants';
+import * as ActionTypes from './constants';
+
+interface bannerItem {
+  imageUrl: string;
+}
+export interface IDiscoverState {
+  bannerList: bannerItem[];
+  recommendList: any[];
+}
+
 const deafultState: IDiscoverState = {
   bannerList: [],
   recommendList: []
 };
+
 const DiscoverReducer: Reducer<IDiscoverState> = (state = deafultState, action) => {
   return produce(state, (draft: Draft<IDiscoverState>) => {
     const { type, payload } = action;
     switch (type) {
-      case actionTypes.SAVE_BANNER:
+      case ActionTypes.SAVE_BANNER:
         draft.bannerList = payload;
         break;
-      case actionTypes.SAVE_RECOMMEND:
+      case ActionTypes.SAVE_RECOMMEND:
         draft.recommendList = payload;
         break;
       default:

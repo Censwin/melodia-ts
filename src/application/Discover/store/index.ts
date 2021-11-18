@@ -1,17 +1,17 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 17:37:14
- * @LastEditTime: 2021-11-16 16:15:24
+ * @LastEditTime: 2021-11-18 14:58:15
  * @Description:
- * @FilePath: /melodia-ts/src/application/Discover/store/index.ts
+ * @FilePath: \melodia-ts\src\application\Discover\store\index.ts
  */
-import { all } from '@redux-saga/core/effects';
+// import { all } from '@redux-saga/core/effects';
 import DiscoverSagas from './sagas';
 import reducer from './reducer';
-import * as constants from './constants';
-export * from './types';
+import * as ActionTypes from './constants';
+export * from './reducer';
 
-export { reducer, constants, DiscoverSagas };
+export { reducer, ActionTypes, DiscoverSagas };
 // export default function* rootSaga() {
 //   yield all([DiscoverWatcher()]);
 // }

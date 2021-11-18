@@ -1,5 +1,12 @@
+/*
+ * @Date: 2021-11-17 16:22:13
+ * @LastEditors:
+ * @LastEditTime: 2021-11-18 11:00:02
+ * @Description:
+ * @FilePath: \melodia-ts\src\baseUI\Header\header.tsx
+ */
 import React from 'react';
-import Icon from './../../components/Icon/icon';
+import { Icon } from './../../components';
 
 interface IHeaderProps {
   handleClick: Function;

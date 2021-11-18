@@ -1,22 +1,20 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-11-17 16:44:43
+ * @LastEditTime: 2021-11-18 15:14:55
  * @Description:
- * @FilePath: /melodia-ts/src/application/Discover/index.tsx
+ * @FilePath: \melodia-ts\src\application\Discover\index.tsx
  */
 import React, { useCallback, useEffect, useRef } from 'react';
 import { renderRoutes, RouteConfig } from 'react-router-config';
 import { useDispatch, connect } from 'react-redux';
-import Scroll from '../../baseUI/Scroll/scroll';
-import Icon from '../../components/Icon/icon';
-import Slider from '../../components/Slider/slider';
-import Card from '../../components/Card/Card';
+import { Icon, Slider, Card } from '../../components';
 import { IApplicationState } from '../../store/reducers';
-import { IDiscoverState, constants as actionTypes } from './store';
+import { IDiscoverState, ActionTypes } from './store';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { getCount } from '../../utils/tools';
 import { useHistory } from 'react-router';
+import { HorizenList, Scroll } from '../../baseUI';
 const CHANNEL_LIST = [
   {
     icon: 'calendar-week',
@@ -47,26 +45,14 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
   const history = useHistory();
   useEffect(() => {
     if (!bannerList.length) {
-      dispatch({ type: actionTypes.GET_BANNER });
+      dispatch({ type: ActionTypes.GET_BANNER });
     }
     if (!recommendList.length) {
-      dispatch({ type: actionTypes.GET_RECOMMEND });
+      dispatch({ type: ActionTypes.GET_RECOMMEND });
     }
   }, []);
-  const HorizenWrapperRef = useRef<HTMLElement & HTMLDivElement>(null);
   type ScrollComponentType = React.ElementRef<typeof Scroll>;
-  const HorizenScrollRef = useRef<ScrollComponentType>(null);
   const VerticalScrollRef = useRef<ScrollComponentType>(null);
-  useEffect(() => {
-    let Dom = HorizenWrapperRef.current as HTMLElement;
-    let items = Dom.querySelectorAll<HTMLElement>('.recommend-item');
-    let totalWidth = 0;
-    Array.from(items).forEach((e) => {
-      totalWidth += e.offsetWidth;
-    });
-    Dom.style.width = `${totalWidth + 100}px`;
-    HorizenScrollRef.current?.refresh();
-  }, [recommendList.length]);
   useEffect(() => {
     VerticalScrollRef.current?.refresh();
   });
@@ -84,7 +70,7 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
   const RenderRecommend = useCallback(() => {
     return recommendList.map((item) => {
       return (
-        <div key={item.id} className="recommend-item">
+        <div key={item.id} className="recommend-item horizen-item">
           <img className="recommend-item-pic" src={item.picUrl} />
           <div className="play-count">
             <Icon icon="play" />
@@ -133,11 +119,9 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
               title="推荐歌单"
               extra={<MoreBtn path="/discover/recommend" />}
             >
-              <Scroll ref={HorizenScrollRef} direction="horizental">
-                <div ref={HorizenWrapperRef}>
-                  <div className="recommend-wrapper">{RenderRecommend()}</div>
-                </div>
-              </Scroll>
+              <HorizenList>
+                <div className="recommend-wrapper">{RenderRecommend()}</div>
+              </HorizenList>
             </Card>
             <Card
               headerClassName="discover-card-header"
