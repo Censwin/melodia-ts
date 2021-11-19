@@ -1,13 +1,19 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 21:29:17
- * @LastEditTime: 2021-11-16 15:54:10
+ * @LastEditTime: 2021-11-18 14:45:54
  * @Description:
- * @FilePath: /melodia-ts/src/services/discover.ts
+ * @FilePath: \melodia-ts\src\services\discoverApi.ts
  */
 import Request from './index';
 import { AxiosPromise } from 'axios';
-import { IBannerRes, IRecommendListRes } from '../application/Discover/store/types';
+export interface IBannerRes {
+  banners: any[];
+}
+
+export interface IRecommendListRes {
+  result: any[];
+}
 
 export const getBannerList = (): AxiosPromise<IBannerRes> => {
   return Request.request({

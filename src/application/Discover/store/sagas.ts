@@ -1,13 +1,17 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 17:37:43
- * @LastEditTime: 2021-11-16 17:04:46
+ * @LastEditTime: 2021-11-18 14:47:07
  * @Description:
- * @FilePath: /melodia-ts/src/application/Discover/store/sagas.ts
+ * @FilePath: \melodia-ts\src\application\Discover\store\sagas.ts
  */
 import { takeLatest, put, call } from '@redux-saga/core/effects';
-import { getBannerList, getRecommendList } from '../../../services/discoverApi';
-import { IBannerRes, IRecommendListRes } from './types';
+import {
+  getBannerList,
+  getRecommendList,
+  IBannerRes,
+  IRecommendListRes
+} from '../../../services/discoverApi';
 import * as actionTypes from './constants';
 export function* fetchBanner() {
   try {
