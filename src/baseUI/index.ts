@@ -6,7 +6,7 @@
  * @FilePath: \melodia-ts\src\baseUI\index.ts
  */
 import Header from './Header/header';
-import HorizenList from './HorizenList/index';
+import HorizenScroll from './HorizenScroll/index';
 import Scroll from './Scroll/scroll';
 
-export { Header, HorizenList, Scroll };
+export { Header, HorizenScroll, Scroll };

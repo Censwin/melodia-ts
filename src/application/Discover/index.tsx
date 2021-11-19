@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-11-19 16:13:28
+ * @LastEditTime: 2021-11-19 18:11:00
  * @Description:
  * @FilePath: \melodia-ts\src\application\Discover\index.tsx
  */
@@ -14,7 +14,7 @@ import { IDiscoverState, ActionTypes } from './store';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { getCount } from '../../utils/tools';
 import { useHistory } from 'react-router';
-import { HorizenList, Scroll } from '../../baseUI';
+import { HorizenScroll, Scroll } from '../../baseUI';
 import { Link } from 'react-router-dom';
 const CHANNEL_LIST = [
   {
@@ -68,10 +68,19 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
     );
   }, []);
 
+  const enterDetail = useCallback((id) => {
+    console.log(id);
+    history.push(`/discover/recommend/${id}`);
+  }, []);
+
   const RenderRecommend = useCallback(() => {
     return recommendList.map((item) => {
       return (
-        <div key={item.id} className="recommend-item horizen-item">
+        <div
+          key={item.id}
+          className="recommend-item horizen-item"
+          onClick={(_) => enterDetail(item.id)}
+        >
           <img className="recommend-item-pic" src={item.picUrl + '?param=300x300'} />
           <div className="play-count">
             <Icon icon="play" />
@@ -98,6 +107,7 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
       );
     });
   }, []);
+
   return (
     <div className="discover-content">
       {renderRoutes(route.routes)}
@@ -120,9 +130,9 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
               title="推荐歌单"
               extra={<MoreBtn path="/discover/recommend" />}
             >
-              <HorizenList>
+              <HorizenScroll>
                 <div className="recommend-wrapper">{RenderRecommend()}</div>
-              </HorizenList>
+              </HorizenScroll>
             </Card>
             <Card
               headerClassName="discover-card-header"
