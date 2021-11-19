@@ -1,9 +1,9 @@
 /*
  * @Author: Censwin
  * @Date: 2021-09-05 15:23:27
- * @LastEditTime: 2021-11-17 16:27:50
+ * @LastEditTime: 2021-11-19 14:15:40
  * @Description: 通用滚动组件
- * @FilePath: /melodia-ts/src/baseUI/scroll/index.tsx
+ * @FilePath: \melodia-ts\src\baseUI\Scroll\scroll.tsx
  */
 import * as React from 'react';
 import BScroll from 'better-scroll';

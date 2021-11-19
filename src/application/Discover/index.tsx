@@ -71,7 +71,7 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
     return recommendList.map((item) => {
       return (
         <div key={item.id} className="recommend-item horizen-item">
-          <img className="recommend-item-pic" src={item.picUrl} />
+          <img className="recommend-item-pic" src={item.picUrl + '?param=300x300'} />
           <div className="play-count">
             <Icon icon="play" />
             {getCount(item.playCount)}

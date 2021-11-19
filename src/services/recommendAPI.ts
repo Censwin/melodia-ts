@@ -24,7 +24,7 @@ export interface IPlayListParams {
 export interface IPlayListRes {
   playlists: any[];
 }
-export const getPlayList = (params: IPlayListParams): AxiosPromise<IPlayListRes> => {
+export const getPlayLists = (params: IPlayListParams): AxiosPromise<IPlayListRes> => {
   return Request.request({
     url: '/top/playlist',
     params: params
