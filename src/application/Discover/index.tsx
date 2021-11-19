@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-11-18 15:14:55
+ * @LastEditTime: 2021-11-19 16:13:28
  * @Description:
  * @FilePath: \melodia-ts\src\application\Discover\index.tsx
  */
@@ -15,6 +15,7 @@ import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { getCount } from '../../utils/tools';
 import { useHistory } from 'react-router';
 import { HorizenList, Scroll } from '../../baseUI';
+import { Link } from 'react-router-dom';
 const CHANNEL_LIST = [
   {
     icon: 'calendar-week',
@@ -24,7 +25,7 @@ const CHANNEL_LIST = [
   {
     icon: 'stream',
     name: '歌单',
-    path: ''
+    path: '/discover/recommend'
   },
   {
     icon: 'sort-amount-up',
@@ -85,14 +86,14 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
     return CHANNEL_LIST.map((item) => {
       return (
         <div className="channel-entity" key={item.name}>
-          <a className="c-blocka">
+          <Link to={item.path} className="c-blocka">
             <div className="channel-icon-wrapper">
               <div className="channel-icon-bg">
                 <Icon icon={item.icon as IconName} />
               </div>
             </div>
             <p className="channel-name">{item.name}</p>
-          </a>
+          </Link>
         </div>
       );
     });
