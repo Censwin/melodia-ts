@@ -1,0 +1,104 @@
+.recommend-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  width: 100%;
+  height: 100%;
+  background: $white;
+  transform-origin: right bottom;
+  .r-cate-wrapper {
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    > .r-cate-item {
+      font-size: $font-size-least;
+      padding: 5px 8px;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        bottom: 0;
+        left: 10%;
+        transform: translateY(-70%);
+        width: 80%;
+        height: 6px;
+        border-radius: 6px;
+        background-color: transparent;
+      }
+      &.selected {
+        font-weight: bold;
+        &::after {
+          transition: background-color 0.5s;
+          background-color: lighten($primary, 8);
+        }
+      }
+    }
+  }
+  .playlist-wrapper {
+    // 歌单列表
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: hidden;
+    > .playlist-item {
+      position: relative;
+      width: 31%;
+      margin-bottom: 10px;
+      > .item-pic-wrapper {
+        width: 29vw;
+        height: 29vw;
+        margin-bottom: 4px;
+        .playlist-item-pic {
+          width: 100%;
+          border-radius: 12px;
+        }
+      }
+      .play-count {
+        font-size: $font-size-least;
+        zoom: 0.8;
+        color: $white;
+        background: linear-gradient(hsla(0, 0%, 43%, 0.4), hsla(0, 0%, 100%, 0));
+        position: absolute;
+        top: 6px;
+        right: 8px;
+        padding: 4px 8px;
+        border-radius: 14px;
+        svg {
+          margin-right: 4px;
+          transform: scale(0.6);
+          transform-origin: center;
+        }
+      }
+    }
+    .recommend-item-name {
+      font-size: $font-size-least;
+      width: 100%;
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+// 路由切换动画
+
+.recommend-fade-enter {
+  transform: translate3d(100%, 0, 0);
+}
+.recommend-fade-enter-active {
+  transition: transform 0.3s;
+  transform: translate3d(0, 0, 0);
+}
+.recommend-fade-exit {
+  transform: translate3d(0, 0, 0);
+}
+.recommend-fade-exit-active {
+  transition: transform 0.3s;
+  transform: translate3d(100%, 0, 0);
+}
+// 路由切换动画结束

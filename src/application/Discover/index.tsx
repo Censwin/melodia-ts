@@ -1,22 +1,21 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-11-17 14:46:40
+ * @LastEditTime: 2021-11-19 16:13:28
  * @Description:
- * @FilePath: /melodia-ts/src/application/Discover/index.tsx
+ * @FilePath: \melodia-ts\src\application\Discover\index.tsx
  */
 import React, { useCallback, useEffect, useRef } from 'react';
-import { RouteConfig } from 'react-router-config';
+import { renderRoutes, RouteConfig } from 'react-router-config';
 import { useDispatch, connect } from 'react-redux';
-import Scroll from '../../baseUI/Scroll/scroll';
-import Icon from '../../components/Icon/icon';
-import Slider from '../../components/Slider/slider';
-import Card from '../../components/Card/Card';
+import { Icon, Slider, Card } from '../../components';
 import { IApplicationState } from '../../store/reducers';
-import { IDiscoverState, constants as actionTypes } from './store';
+import { IDiscoverState, ActionTypes } from './store';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { getCount } from '../../utils/tools';
-type TDiscoverProps = IDiscoverState & RouteConfig;
+import { useHistory } from 'react-router';
+import { HorizenList, Scroll } from '../../baseUI';
+import { Link } from 'react-router-dom';
 const CHANNEL_LIST = [
   {
     icon: 'calendar-week',
@@ -26,7 +25,7 @@ const CHANNEL_LIST = [
   {
     icon: 'stream',
     name: '歌单',
-    path: ''
+    path: '/discover/recommend'
   },
   {
     icon: 'sort-amount-up',
@@ -39,49 +38,41 @@ const CHANNEL_LIST = [
     path: ''
   }
 ];
+type TDiscoverProps = IDiscoverState & RouteConfig;
 
 const Discover: React.FC<TDiscoverProps> = (props) => {
-  const { bannerList, recommendList } = props;
+  const { bannerList, recommendList, route } = props;
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     if (!bannerList.length) {
-      dispatch({ type: actionTypes.GET_BANNER });
+      dispatch({ type: ActionTypes.GET_BANNER });
     }
     if (!recommendList.length) {
-      dispatch({ type: actionTypes.GET_RECOMMEND });
+      dispatch({ type: ActionTypes.GET_RECOMMEND });
     }
   }, []);
-  const HorizenWrapperRef = useRef<HTMLElement & HTMLDivElement>(null);
   type ScrollComponentType = React.ElementRef<typeof Scroll>;
-  const HorizenScrollRef = useRef<ScrollComponentType>(null);
   const VerticalScrollRef = useRef<ScrollComponentType>(null);
-  useEffect(() => {
-    console.log('refresh');
-    let Dom = HorizenWrapperRef.current as HTMLElement;
-    let items = Dom.querySelectorAll<HTMLElement>('.recommend-item');
-    let totalWidth = 0;
-    Array.from(items).forEach((e) => {
-      totalWidth += e.offsetWidth;
-    });
-    Dom.style.width = `${totalWidth + 100}px`;
-    HorizenScrollRef.current?.refresh();
-  }, [recommendList.length]);
   useEffect(() => {
     VerticalScrollRef.current?.refresh();
   });
-  const MoreBtn = useCallback(() => {
+
+  const MoreBtn = useCallback((props) => {
+    const { path } = props;
     return (
-      <div className="more-btn-wrapper">
+      <div className="more-btn-wrapper" onClick={() => history.push(path)}>
         <span>更多</span>
         <Icon icon="angle-right" />
       </div>
     );
   }, []);
+
   const RenderRecommend = useCallback(() => {
     return recommendList.map((item) => {
       return (
-        <div key={item.id} className="recommend-item">
-          <img className="recommend-item-pic" src={item.picUrl} />
+        <div key={item.id} className="recommend-item horizen-item">
+          <img className="recommend-item-pic" src={item.picUrl + '?param=300x300'} />
           <div className="play-count">
             <Icon icon="play" />
             {getCount(item.playCount)}
@@ -95,20 +86,21 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
     return CHANNEL_LIST.map((item) => {
       return (
         <div className="channel-entity" key={item.name}>
-          <a className="c-blocka">
+          <Link to={item.path} className="c-blocka">
             <div className="channel-icon-wrapper">
               <div className="channel-icon-bg">
                 <Icon icon={item.icon as IconName} />
               </div>
             </div>
             <p className="channel-name">{item.name}</p>
-          </a>
+          </Link>
         </div>
       );
     });
   }, []);
   return (
     <div className="discover-content">
+      {renderRoutes(route.routes)}
       <div className="Header">
         <div className="searchBar">
           <span>
@@ -123,14 +115,20 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
           <Slider imgList={bannerList} />
           <div className="channel-list">{RenderChannelList()}</div>
           <div style={{ paddingBottom: '100px' }}>
-            <Card headerClassName="discover-card-header" title="推荐歌单" extra={<MoreBtn />}>
-              <Scroll ref={HorizenScrollRef} direction="horizental">
-                <div ref={HorizenWrapperRef}>
-                  <div className="recommend-wrapper">{RenderRecommend()}</div>
-                </div>
-              </Scroll>
+            <Card
+              headerClassName="discover-card-header"
+              title="推荐歌单"
+              extra={<MoreBtn path="/discover/recommend" />}
+            >
+              <HorizenList>
+                <div className="recommend-wrapper">{RenderRecommend()}</div>
+              </HorizenList>
             </Card>
-            <Card headerClassName="discover-card-header" title="精选音乐视频" extra={<MoreBtn />}>
+            <Card
+              headerClassName="discover-card-header"
+              title="精选音乐视频"
+              extra={<MoreBtn path="/recommend" />}
+            >
               <div className="video-list-wrapper">视频</div>
             </Card>
           </div>
