@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-28 23:23:22
- * @LastEditTime: 2021-11-19 18:13:54
+ * @LastEditTime: 2021-11-22 10:58:36
  * @Description:
  * @FilePath: \melodia-ts\src\routes\index.tsx
  */
@@ -25,14 +25,21 @@ const routes = [
       },
       {
         path: '/discover',
+        // exact: true,
         component: Discover,
         routes: [
           {
             path: '/discover/recommend',
-            component: Recommend,
-            routes: [{ path: '/discover/recommend/:id', component: Album }]
+            component: Recommend
+            // routes: [{ path: '/discover/recommend/:id', component: Album }]
           }
         ]
+      },
+      {
+        path: '/album/:id',
+        exact: true,
+        key: 'album',
+        component: Album
       }
     ]
   }

@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:57:53
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-11-19 18:18:28
+ * @LastEditors: k200c
+ * @LastEditTime: 2021-11-22 11:19:42
  * @Description:
  * @FilePath: \melodia-ts\src\application\Recommend\index.tsx
  */
@@ -25,7 +25,7 @@ interface IRecommendProps extends RouteConfig {
 
 const Recommend: React.FC<IRecommendProps> = (props) => {
   const { route } = props;
-  const [show, setshow] = useState(false);
+  const [show, setshow] = useState(true);
   const [selectedId, setSelectedId] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
@@ -33,9 +33,9 @@ const Recommend: React.FC<IRecommendProps> = (props) => {
   const containerRef = useRef(null);
   type ScrollComponentType = React.ElementRef<typeof Scroll>;
   const ScrollRef = useRef<ScrollComponentType>(null);
-  useEffect(() => {
-    setshow(true);
-  }, []);
+  // useEffect(() => {
+  //   setshow(true);
+  // }, []);
   useEffect(() => {
     if (!cateList.length) {
       dispatch({ type: ActionTypes.GET_CATELIST });
@@ -54,7 +54,7 @@ const Recommend: React.FC<IRecommendProps> = (props) => {
 
   const enterDetail = useCallback((id) => {
     console.log(id);
-    history.push(`/discover/recommend/${id}`);
+    history.push(`/album/${id}`);
   }, []);
 
   const handleChangeSelectedId = (id: string) => {
@@ -99,28 +99,25 @@ const Recommend: React.FC<IRecommendProps> = (props) => {
   };
 
   return (
-    <>
-      {renderRoutes(route.routes)}
-      <CSSTransition
-        nodeRef={containerRef} // TRG issue 668
-        in={show}
-        timeout={300}
-        classNames="recommend-fade"
-        unmountOnExit
-        appear={true}
-        onExited={history.goBack}
-      >
-        <div className="recommend-container" ref={containerRef}>
-          <Header title="歌单广场" handleClick={handleBack} />
-          <HorizenScroll>
-            <div className="r-cate-wrapper">{RenderCateOptions()}</div>
-          </HorizenScroll>
-          <Scroll ref={ScrollRef} onScroll={forceCheck}>
-            <div className="playlist-wrapper">{RenderPlayList()}</div>
-          </Scroll>
-        </div>
-      </CSSTransition>
-    </>
+    <CSSTransition
+      nodeRef={containerRef} // TRG issue 668
+      in={show}
+      timeout={300}
+      classNames="common-fade"
+      unmountOnExit
+      appear={true}
+      onExited={history.goBack}
+    >
+      <div className="recommend-container" ref={containerRef}>
+        <Header title="歌单广场" handleClick={handleBack} />
+        <HorizenScroll>
+          <div className="r-cate-wrapper">{RenderCateOptions()}</div>
+        </HorizenScroll>
+        <Scroll ref={ScrollRef} onScroll={forceCheck}>
+          <div className="playlist-wrapper">{RenderPlayList()}</div>
+        </Scroll>
+      </div>
+    </CSSTransition>
   );
 };
 

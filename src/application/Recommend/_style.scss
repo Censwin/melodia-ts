@@ -86,19 +86,20 @@
 }
 
 // 路由切换动画
-
-.recommend-fade-enter {
-  transform: translate3d(100%, 0, 0);
-}
-.recommend-fade-enter-active {
-  transition: transform 0.3s;
-  transform: translate3d(0, 0, 0);
-}
-.recommend-fade-exit {
-  transform: translate3d(0, 0, 0);
-}
-.recommend-fade-exit-active {
-  transition: transform 0.3s;
-  transform: translate3d(100%, 0, 0);
-}
+// .recommend-fade-enter,
+// .recommend-fade-appear {
+//   transform: translate3d(100%, 0, 0);
+// }
+// .recommend-fade-enter-active,
+// .recommend-fade-appear-active {
+//   transition: transform 0.3s;
+//   transform: translate3d(0, 0, 0);
+// }
+// .recommend-fade-exit {
+//   transform: translate3d(0, 0, 0);
+// }
+// .recommend-fade-exit-active {
+//   transition: transform 0.3s;
+//   transform: translate3d(100%, 0, 0);
+// }
 // 路由切换动画结束

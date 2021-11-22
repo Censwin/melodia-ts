@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-11-19 18:11:00
+ * @LastEditTime: 2021-11-22 10:52:39
  * @Description:
  * @FilePath: \melodia-ts\src\application\Discover\index.tsx
  */
@@ -70,7 +70,7 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
 
   const enterDetail = useCallback((id) => {
     console.log(id);
-    history.push(`/discover/recommend/${id}`);
+    history.push(`/album/${id}`);
   }, []);
 
   const RenderRecommend = useCallback(() => {
