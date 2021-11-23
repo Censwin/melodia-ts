@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-11-22 10:52:39
+ * @LastEditTime: 2021-11-23 18:00:31
  * @Description:
  * @FilePath: \melodia-ts\src\application\Discover\index.tsx
  */
@@ -120,11 +120,11 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
         </div>
         <Icon icon="bars" className="header-more" />
       </div>
-      <Scroll ref={VerticalScrollRef}>
-        <div>
-          <Slider imgList={bannerList} />
-          <div className="channel-list">{RenderChannelList()}</div>
-          <div style={{ paddingBottom: '100px' }}>
+      <div className="scroll-window-wrapper">
+        <Scroll ref={VerticalScrollRef}>
+          <div>
+            <Slider imgList={bannerList} />
+            <div className="channel-list">{RenderChannelList()}</div>
             <Card
               headerClassName="discover-card-header"
               title="推荐歌单"
@@ -142,8 +142,8 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
               <div className="video-list-wrapper">视频</div>
             </Card>
           </div>
-        </div>
-      </Scroll>
+        </Scroll>
+      </div>
     </div>
   );
 };

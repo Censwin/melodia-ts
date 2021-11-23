@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:57:53
  * @LastEditors: k200c
- * @LastEditTime: 2021-11-22 11:19:42
+ * @LastEditTime: 2021-11-23 17:19:10
  * @Description:
  * @FilePath: \melodia-ts\src\application\Recommend\index.tsx
  */
@@ -113,9 +113,11 @@ const Recommend: React.FC<IRecommendProps> = (props) => {
         <HorizenScroll>
           <div className="r-cate-wrapper">{RenderCateOptions()}</div>
         </HorizenScroll>
-        <Scroll ref={ScrollRef} onScroll={forceCheck}>
-          <div className="playlist-wrapper">{RenderPlayList()}</div>
-        </Scroll>
+        <div className="scroll-window-wrapper">
+          <Scroll ref={ScrollRef} onScroll={forceCheck}>
+            <div className="playlist-wrapper">{RenderPlayList()}</div>
+          </Scroll>
+        </div>
       </div>
     </CSSTransition>
   );

@@ -7,6 +7,9 @@
   height: 100%;
   background: $white;
   transform-origin: right bottom;
+  .scroll-window-wrapper {
+    height: calc(100vh - 132px);
+  }
   .r-cate-wrapper {
     padding: 5px 10px;
     margin-bottom: 10px;
@@ -43,6 +46,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     overflow: hidden;
+    padding-bottom: 10px;
     > .playlist-item {
       position: relative;
       width: 31%;
