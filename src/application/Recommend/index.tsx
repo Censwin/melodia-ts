@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:57:53
  * @LastEditors: k200c
- * @LastEditTime: 2021-11-23 17:19:10
+ * @LastEditTime: 2021-11-24 14:49:19
  * @Description:
  * @FilePath: \melodia-ts\src\application\Recommend\index.tsx
  */
@@ -53,7 +53,6 @@ const Recommend: React.FC<IRecommendProps> = (props) => {
   }, []);
 
   const enterDetail = useCallback((id) => {
-    console.log(id);
     history.push(`/album/${id}`);
   }, []);
 
