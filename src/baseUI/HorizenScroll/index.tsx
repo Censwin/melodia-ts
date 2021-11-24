@@ -3,12 +3,12 @@
  * @LastEditTime: 2021-11-18 10:44:25
  * @LastEditors: Please set LastEditors
  * @Description: 横向滚动组件， 注意每一个需要被render的item的根节点都需加上类名: horizen-item
- * @FilePath: \melodia-ts\src\baseUI\HorizenList\index.tsx
+ * @FilePath: \melodia-ts\src\baseUI\HorizenScroll\index.tsx
  */
 import React, { useCallback, useEffect, useRef } from 'react';
 import Scroll from '../Scroll/scroll';
 
-const HorizenList: React.FC = (props) => {
+const HorizenScroll: React.FC = (props) => {
   type ScrollComponentType = React.ElementRef<typeof Scroll>;
   const HorizenWrapperRef = useRef<HTMLElement & HTMLDivElement>(null);
   const HorizenScrollRef = useRef<ScrollComponentType>(null);
@@ -29,4 +29,4 @@ const HorizenList: React.FC = (props) => {
   );
 };
 
-export default HorizenList;
+export default HorizenScroll;

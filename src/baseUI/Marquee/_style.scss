@@ -1,0 +1,11 @@
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  margin-left: 10px;
+  .marquee-text {
+    animation-name: textRolling;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+}

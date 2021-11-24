@@ -17,12 +17,12 @@ export interface IDiscoverState {
   recommendList: any[];
 }
 
-const deafultState: IDiscoverState = {
+const defaultState: IDiscoverState = {
   bannerList: [],
   recommendList: []
 };
 
-const DiscoverReducer: Reducer<IDiscoverState> = (state = deafultState, action) => {
+const DiscoverReducer: Reducer<IDiscoverState> = (state = defaultState, action) => {
   return produce(state, (draft: Draft<IDiscoverState>) => {
     const { type, payload } = action;
     switch (type) {
