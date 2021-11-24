@@ -14,12 +14,12 @@ export interface IRcomendState {
   cateList: any[];
   playLists: any[]; // 歌单列表
 }
-const deafultState: IRcomendState = {
+const defaultState: IRcomendState = {
   cateList: [],
   playLists: []
 };
 
-const RecommendReducer: Reducer<IRcomendState> = (state = deafultState, action) => {
+const RecommendReducer: Reducer<IRcomendState> = (state = defaultState, action) => {
   return produce(state, (draft: Draft<IRcomendState>) => {
     const { type, payload } = action;
     switch (type) {

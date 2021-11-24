@@ -7,6 +7,9 @@
   height: 100%;
   background: $white;
   transform-origin: right bottom;
+  .scroll-window-wrapper {
+    height: calc(100vh - 132px);
+  }
   .r-cate-wrapper {
     padding: 5px 10px;
     margin-bottom: 10px;
@@ -43,6 +46,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     overflow: hidden;
+    padding-bottom: 10px;
     > .playlist-item {
       position: relative;
       width: 31%;
@@ -86,19 +90,20 @@
 }
 
 // 路由切换动画
-
-.recommend-fade-enter {
-  transform: translate3d(100%, 0, 0);
-}
-.recommend-fade-enter-active {
-  transition: transform 0.3s;
-  transform: translate3d(0, 0, 0);
-}
-.recommend-fade-exit {
-  transform: translate3d(0, 0, 0);
-}
-.recommend-fade-exit-active {
-  transition: transform 0.3s;
-  transform: translate3d(100%, 0, 0);
-}
+// .recommend-fade-enter,
+// .recommend-fade-appear {
+//   transform: translate3d(100%, 0, 0);
+// }
+// .recommend-fade-enter-active,
+// .recommend-fade-appear-active {
+//   transition: transform 0.3s;
+//   transform: translate3d(0, 0, 0);
+// }
+// .recommend-fade-exit {
+//   transform: translate3d(0, 0, 0);
+// }
+// .recommend-fade-exit-active {
+//   transition: transform 0.3s;
+//   transform: translate3d(100%, 0, 0);
+// }
 // 路由切换动画结束

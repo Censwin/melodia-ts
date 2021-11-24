@@ -1,0 +1,19 @@
+@mixin button-size($paddingX, $paddingY, $fontSize, $borderRaduis) {
+  padding: $paddingY $paddingX;
+  font-size: $fontSize;
+  border-radius: $borderRaduis;
+}
+
+@mixin alert-style($bgColor) {
+  background-color: lighten($bgColor, 43);
+  border: $btn-border-width solid lighten($bgColor, 20);
+  border-radius: $btn-border-radius;
+}
+// .btn {
+//   @include button-size(
+//     $btn-padding-x,
+//     $btn-padding-y,
+//     $btn-font-size,
+//     $btn-border-radius
+//   );
+// }
