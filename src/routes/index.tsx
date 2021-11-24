@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-28 23:23:22
- * @LastEditTime: 2021-11-22 10:58:36
+ * @LastEditTime: 2021-11-24 15:34:19
  * @Description:
  * @FilePath: \melodia-ts\src\routes\index.tsx
  */
@@ -12,6 +12,7 @@ import Discover from '../application/Discover';
 import Home from '../application/Home';
 import Recommend from '../application/Recommend';
 import Album from '../application/Album';
+import Rank from '../application/Rank';
 
 const routes = [
   {
@@ -32,6 +33,10 @@ const routes = [
             path: '/discover/recommend',
             component: Recommend
             // routes: [{ path: '/discover/recommend/:id', component: Album }]
+          },
+          {
+            path: '/discover/rank',
+            component: Rank
           }
         ]
       },

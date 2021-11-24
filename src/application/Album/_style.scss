@@ -59,6 +59,7 @@
     }
     .info-right {
       padding-left: 20px;
+      overflow: hidden;
       .album-title {
         color: $white;
         margin-bottom: 20px;
@@ -87,7 +88,6 @@
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          max-width: 70%;
         }
       }
     }

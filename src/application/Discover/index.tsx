@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-11-24 14:58:04
+ * @LastEditTime: 2021-11-24 15:35:25
  * @Description:
  * @FilePath: \melodia-ts\src\application\Discover\index.tsx
  */
@@ -30,7 +30,7 @@ const CHANNEL_LIST = [
   {
     icon: 'sort-amount-up',
     name: '排行榜',
-    path: ''
+    path: '/discover/rank'
   },
   {
     icon: 'street-view',
