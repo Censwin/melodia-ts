@@ -4,7 +4,6 @@
   left: 0;
   width: 100%;
   z-index: 1101;
-  padding-bottom: 60px;
   background: lighten($color: $primary, $amount: 9);
   .scroll-window-wrapper {
     height: calc(100vh - 60px);
@@ -59,6 +58,7 @@
     }
     .info-right {
       padding-left: 20px;
+      overflow: hidden;
       .album-title {
         color: $white;
         margin-bottom: 20px;
@@ -87,7 +87,6 @@
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          max-width: 70%;
         }
       }
     }
@@ -125,6 +124,7 @@
 }
 
 .song-list {
+  padding-bottom: 150px;
   background: $white;
   .first-line {
     height: 50px;
