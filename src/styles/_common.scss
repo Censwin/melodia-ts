@@ -1,0 +1,20 @@
+.c-blocka {
+  display: block;
+}
+
+.common-fade-enter,
+.common-fade-appear {
+  transform: translate3d(100%, 0, 0);
+}
+.common-fade-enter-active,
+.common-fade-appear-active {
+  transition: transform 0.3s;
+  transform: translate3d(0, 0, 0);
+}
+.common-fade-exit {
+  transform: translate3d(0, 0, 0);
+}
+.common-fade-exit-active {
+  transition: transform 0.3s;
+  transform: translate3d(100%, 0, 0);
+}

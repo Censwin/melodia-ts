@@ -1,0 +1,132 @@
+.discover-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.scroll-window-wrapper {
+  height: calc(100vh - 110px);
+}
+.Header {
+  position: relative;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 60px;
+  padding: 0 5px;
+  background: $primary;
+  .searchBar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    margin: 0 15px;
+    border-radius: 40px;
+    background: $white-100;
+    color: $gray-700;
+  }
+  .header-more {
+    font-size: 25px;
+    margin-right: 5px;
+    color: $white;
+  }
+}
+
+.channel-list {
+  width: 100%;
+  padding: 15px 0;
+  background: $white;
+  margin-bottom: 5px;
+  .channel-entity {
+    display: inline-block;
+    width: 25%;
+    .channel-icon-wrapper {
+      height: 43px;
+      text-align: center;
+      margin-bottom: 5px;
+      .channel-icon-bg {
+        display: inline-block;
+        height: 43px;
+        width: 43px;
+        background: linear-gradient(to right, #fff, #cfebff);
+        border-radius: 43px;
+        line-height: 40px;
+        font-size: $font-size-lg;
+        color: $primary;
+      }
+    }
+    .channel-name {
+      line-height: 1;
+      text-align: center;
+      font-size: $font-size-least;
+      margin: 0;
+    }
+  }
+}
+.discover-card-header {
+  .card-header-title {
+    font-weight: 300;
+  }
+}
+.more-btn-wrapper {
+  font-size: 12px;
+  border: 0.5px solid $border-color;
+  border-radius: 12px;
+  padding: 2px 4px;
+  span {
+    margin-right: 4px;
+  }
+}
+
+.recommend-wrapper {
+  // 推荐歌单
+  width: 100%;
+  // overflow-x: scroll;
+  display: flex;
+  flex-direction: row;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .recommend-item {
+    margin-right: 5px;
+    position: relative;
+    .recommend-item-pic {
+      border-radius: 12px;
+      width: 100px;
+    }
+    .play-count {
+      font-size: $font-size-least;
+      zoom: 0.8;
+      color: $white;
+      background: linear-gradient(hsla(0, 0%, 43%, 0.4), hsla(0, 0%, 100%, 0));
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      padding: 4px 8px;
+      border-radius: 14px;
+      svg {
+        margin-right: 4px;
+        zoom: 0.8;
+      }
+    }
+    .recommend-item-name {
+      font-size: $font-size-least;
+      width: 100px;
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-line-clamp: 2; // 行数
+      -webkit-box-orient: vertical; // 设置或检索伸缩盒对象的子元素的排列方式
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.video-list-wrapper {
+  width: 100%;
+  padding: 20px 0;
+  > video {
+    width: 100%;
+  }
+}

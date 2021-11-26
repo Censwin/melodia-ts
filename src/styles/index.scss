@@ -1,10 +1,20 @@
 // 全局变量
 @import './variables';
+
 // css样式重置
 @import './reset';
 
+// 导入全局通用类名
+@import './common';
+
+// mixin
+@import './mixin';
+
 // 导入动画
 @import './animation';
+
+// 导入通用UI
+@import './../baseUI/index.scss';
 
 // 导入通用组件样式
 @import './../components/index.scss';

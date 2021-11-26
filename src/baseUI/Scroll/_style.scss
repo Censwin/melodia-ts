@@ -1,0 +1,10 @@
+.myscroll-container {
+  width: 100%;
+  overflow: hidden;
+}
+.myscroll-vertical {
+  height: inherit;
+  > .scroll-content {
+    padding-bottom: 120px;
+  }
+}
