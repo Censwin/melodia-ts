@@ -1,9 +1,9 @@
 /*
  * @Date: 2021-11-24 15:32:17
- * @LastEditors: k200c
- * @LastEditTime: 2021-11-26 18:19:25
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-11-26 23:06:32
  * @Description: 排行榜
- * @FilePath: \melodia-ts\src\application\Rank\index.tsx
+ * @FilePath: /melodia-ts/src/application/Rank/index.tsx
  */
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { CSSTransition } from 'react-transition-group';
@@ -55,6 +55,10 @@ const Rank = () => {
   const RenderOfficial = useCallback(
     () => (
       <ul className="official-wrapper">
+        <h4 className="official-title">
+          <Icon icon="music" />
+          官方榜
+        </h4>
         {officialList.map((item) => {
           return (
             <li key={item.id} className="official-item" onClick={() => enterDetail(item.id)}>
@@ -111,10 +115,6 @@ const Rank = () => {
         <section className="scroll-window-wrapper">
           <Scroll ref={ScrollRef} onScroll={forceCheck}>
             <div>
-              <div className="official-title">
-                <Icon icon="music" />
-                官方榜
-              </div>
               {RenderOfficial()}
               <Card title="精选榜">{RenderRankList(choicenessList)}</Card>
               <Card title="曲风榜">{RenderRankList(musicstyleList)}</Card>

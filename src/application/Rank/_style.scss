@@ -11,7 +11,7 @@
   .official-title {
     text-indent: 1em;
     margin: 0;
-    padding-top: 25px;
+    line-height: 3em;
     svg {
       margin-right: 5px;
       color: lighten($primary, 8);
@@ -21,7 +21,7 @@
     padding: 10px 10px 15px;
     margin-bottom: 10px;
     border-radius: 16px;
-    // background: $white;
+    background: $white;
     @for $i from 1 through 4 {
       .official-item:nth-child(#{$i}) {
         background-color: rgba(random(235), random(235), random(235), 0.1);

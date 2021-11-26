@@ -1,9 +1,9 @@
 /*
  * @Date: 2021-11-19 16:54:40
- * @LastEditors: k200c
- * @LastEditTime: 2021-11-24 14:48:18
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-11-27 00:10:52
  * @Description: 歌单 与 专辑 详情页
- * @FilePath: \melodia-ts\src\application\Album\index.tsx
+ * @FilePath: /melodia-ts/src/application/Album/index.tsx
  */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';

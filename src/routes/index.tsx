@@ -1,9 +1,9 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-28 23:23:22
- * @LastEditTime: 2021-11-24 15:34:19
+ * @LastEditTime: 2021-11-26 23:00:41
  * @Description:
- * @FilePath: \melodia-ts\src\routes\index.tsx
+ * @FilePath: /melodia-ts/src/routes/index.tsx
  */
 import React, { Component, ReactNode } from 'react';
 
@@ -26,19 +26,18 @@ const routes = [
       },
       {
         path: '/discover',
-        // exact: true,
-        component: Discover,
-        routes: [
-          {
-            path: '/discover/recommend',
-            component: Recommend
-            // routes: [{ path: '/discover/recommend/:id', component: Album }]
-          },
-          {
-            path: '/discover/rank',
-            component: Rank
-          }
-        ]
+        exact: true,
+        component: Discover
+      },
+      {
+        path: '/recommend',
+        exact: true,
+        component: Recommend
+      },
+      {
+        path: '/rank',
+        exact: true,
+        component: Rank
       },
       {
         path: '/album/:id',

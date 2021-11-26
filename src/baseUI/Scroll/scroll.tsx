@@ -1,9 +1,9 @@
 /*
  * @Author: Censwin
  * @Date: 2021-09-05 15:23:27
- * @LastEditTime: 2021-11-19 14:15:40
+ * @LastEditTime: 2021-11-27 00:10:25
  * @Description: 通用滚动组件
- * @FilePath: \melodia-ts\src\baseUI\Scroll\scroll.tsx
+ * @FilePath: /melodia-ts/src/baseUI/Scroll/scroll.tsx
  */
 import * as React from 'react';
 import BScroll from 'better-scroll';
@@ -113,7 +113,7 @@ const Scroll = React.forwardRef<ScrollImperativeHandle, Partial<SrcollPropsType>
   });
   return (
     <div className={classes} ref={scrollContaninerRef}>
-      {props.children}
+      <div className="scroll-content">{props.children}</div>
     </div>
   );
 });
