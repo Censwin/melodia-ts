@@ -1,43 +1,54 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-28 23:23:22
- * @LastEditTime: 2021-11-04 15:02:55
+ * @LastEditTime: 2021-11-29 17:44:21
  * @Description:
- * @FilePath: /melodia-ts/src/application/Home/index.tsx
+ * @FilePath: \melodia-ts\src\application\Home\index.tsx
  */
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import { renderRoutes, RouteConfig } from 'react-router-config';
 import { NavLink } from 'react-router-dom';
 import { Icon } from '../../components';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import Player from './../Player';
+import { IApplicationState } from '../../store/reducers';
+import classNames from 'classnames';
 interface IHomeProps extends RouteConfig {
   id?: string;
 }
 const Home: React.FC<IHomeProps> = (props) => {
   const { route } = props;
   const dispatch = useDispatch();
+  const { currentSong } = useSelector((state: IApplicationState) => state.Player);
   const handleClick = () => {
     dispatch({ type: 'TEST' });
   };
+  const CD_PIC_CLASSES = classNames('cd-image', {
+    play: true,
+    pause: false
+  });
+  const handleOpenPlayer = useCallback(() => {
+    dispatch({ type: 'player/SET_ISFULL_SCREEN', payload: true });
+  }, []);
   return (
     <div className="home-container">
       {renderRoutes(route.routes)}
+      <Player />
       <div className="home-footer">
         <NavLink to="/discover" activeClassName="RouterActive">
           <div className="tab-item">
-            <Icon icon="toilet-paper-slash" />
+            <Icon icon="compass" />
             <span>发现</span>
           </div>
         </NavLink>
-        <div className="CD-wrapper play">
-          <div className="CD">
-            <Icon icon="compact-disc" size="4x" />
+        <div className="CD-wrapper" onClick={handleOpenPlayer}>
+          <div className="img-wrapper">
+            <img className={CD_PIC_CLASSES} src={currentSong.al.picUrl + '?param=400x400'} alt="" />
           </div>
         </div>
         <NavLink to="/mine" activeClassName="RouterActive">
           <div className="tab-item">
-            <Icon icon="user-astronaut" />
+            <Icon icon="mitten" />
             <span>我的</span>
           </div>
         </NavLink>
