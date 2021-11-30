@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:47:57
  * @LastEditors: k200c
- * @LastEditTime: 2021-11-26 15:31:56
+ * @LastEditTime: 2021-11-30 14:55:35
  * @Description:
  * @FilePath: \melodia-ts\src\utils\tools.ts
  */
@@ -86,3 +86,39 @@ export const filterRankList = (list: Array<any>) => {
   }
   return [officialList, choicenessList, musicstyleList, globalList, specialList];
 };
+
+let vendor = (() => {
+  // 通过 transition 属性判断浏览器
+  let elementStyle = document.createElement('div').style;
+  interface TransformNamesInterface {
+    webkit: string;
+    Moz: string;
+    O: string;
+    ms: string;
+    standard: string;
+    [key: string]: any;
+  }
+  let transformNames: TransformNamesInterface = {
+    webkit: 'webkitTransform',
+    Moz: 'MozTransform',
+    O: 'OTransfrom',
+    ms: 'msTransform',
+    standard: 'Transform'
+  };
+  for (let key in transformNames) {
+    if (elementStyle[transformNames[key]] !== undefined) {
+      return key;
+    }
+  }
+  return false;
+})();
+
+export function prefixStyle(style: string): string {
+  if (vendor === false) {
+    return '';
+  }
+  if (vendor === 'standard') {
+    return style;
+  }
+  return vendor + style.charAt(0).toUpperCase() + style.substr(1);
+}

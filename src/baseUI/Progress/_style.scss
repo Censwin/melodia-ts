@@ -1,0 +1,28 @@
+.progress-bar {
+  width: 100%;
+  height: 3px;
+  .bar-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: $description;
+    .progress {
+      position: absolute;
+      height: 100%;
+      background: $white-100;
+    }
+    .progress-btn-wrapper {
+      position: absolute;
+      top: -7px;
+      left: -4px;
+      .progress-btn {
+        box-sizing: content-box;
+        width: 8px;
+        height: 8px;
+        background: lighten($primary, 8);
+        border: 5px solid $white-100;
+        border-radius: 50%;
+      }
+    }
+  }
+}

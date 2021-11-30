@@ -6,6 +6,28 @@
   bottom: 0;
   z-index: 2000;
   background: $white;
+  &.page-up-enter,
+  &.page-up-exit-done {
+    .player-header {
+      transform: translate3d(0, -100px, 0);
+    }
+    .player-bottom {
+      transform: translate3d(0, 100px, 0);
+    }
+  }
+  &.page-up-enter-active,
+  &.page-up-exit-active {
+    transition: all linear 0.4s;
+    opacity: 1;
+    .player-header,
+    .player-bottom {
+      transform: translate3d(0, 0, 0);
+      transition: transform linear 0.4s;
+    }
+  }
+  &.page-up-exit-active {
+    opacity: 0;
+  }
   > .player-background {
     opacity: 0.5;
     filter: blur(20px);
@@ -48,7 +70,7 @@
   > .player-middle {
     position: fixed;
     width: 100%;
-    top: 20%;
+    top: 150px;
     .cd-wrapper {
       position: absolute;
       left: 0;
@@ -76,6 +98,25 @@
     position: absolute;
     bottom: 60px;
     width: 100%;
+    .time-line-wrapper {
+      display: flex;
+      align-items: center;
+      height: 30px;
+      width: 80%;
+      margin: 0 auto;
+      margin-bottom: 30px;
+      span:nth-of-type(1) {
+        color: $white-100;
+        padding-right: 10px;
+      }
+      span:nth-of-type(2) {
+        color: $white-100;
+        padding-left: 10px;
+      }
+      .progress-wrapper {
+        width: 100%;
+      }
+    }
     .player-control-bar {
       display: flex;
       justify-content: space-around;
