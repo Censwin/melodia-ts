@@ -70,7 +70,7 @@ const Album: React.FC = () => {
         </div>
       </section>
     ),
-    [currentAlbum]
+    [currentAlbum, descRolling]
   );
   const RenderControlBar = useCallback(
     () => (
