@@ -1,11 +1,11 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-28 23:23:22
- * @LastEditTime: 2021-10-31 14:47:37
+ * @LastEditTime: 2021-12-01 16:47:37
  * @Description:
- * @FilePath: /melodia-ts/src/App.tsx
+ * @FilePath: \melodia-ts\src\App.tsx
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.scss';
 import { HashRouter } from 'react-router-dom';
 import routes from './routes/index';
@@ -14,11 +14,28 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 
 function App() {
-    return (
-        <Provider store={store}>
-            <HashRouter>{renderRoutes(routes)}</HashRouter>
-        </Provider>
-    );
+  useEffect(() => {
+    const target = document.getElementById('root');
+    if (target) {
+      const addAndRemove = function () {
+        const audio: Partial<HTMLAudioElement> =
+          document.getElementById('my_audio') || document.createElement('audio');
+        if (audio.play && audio.pause) {
+          audio.play();
+          audio.pause();
+        }
+        setTimeout(() => {
+          target.removeEventListener('click', addAndRemove);
+        }, 1);
+      };
+      target.addEventListener('click', addAndRemove);
+    }
+  }, []);
+  return (
+    <Provider store={store}>
+      <HashRouter>{renderRoutes(routes)}</HashRouter>
+    </Provider>
+  );
 }
 
 export default App;

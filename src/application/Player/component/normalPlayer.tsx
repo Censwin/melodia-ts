@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 14:29:06
  * @LastEditors: k200c
- * @LastEditTime: 2021-11-30 18:27:59
+ * @LastEditTime: 2021-12-01 17:47:48
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\component\normalPlayer.tsx
  */
@@ -10,25 +10,33 @@ import React, { useRef, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Marquee, Progress } from '../../../baseUI';
 import { Icon } from '../../../components';
-import { getName, prefixStyle } from '../../../utils/tools';
+import { formatPlayTime, getName, prefixStyle } from '../../../utils/tools';
 import animations from 'create-keyframe-animation';
 
 interface INplayerProps {
   song: any;
   isFullScreen: boolean;
   toggleFullScreen: Function;
+  playing: boolean;
+  handleClickPlay: Function;
+  ProgressPercent: number;
+  currentTime: number;
+  durationTime: number;
+  onProgressChange: Function;
+  lastSong: Function;
+  nextSong: Function;
 }
 
 const NormalPlayer: React.FC<INplayerProps> = (props) => {
-  const { song, isFullScreen, toggleFullScreen } = props;
+  const { song, isFullScreen, playing, ProgressPercent, currentTime, durationTime } = props;
+  const { toggleFullScreen, handleClickPlay, onProgressChange, lastSong, nextSong } = props;
   const normalPlayerRef = useRef<HTMLElement>(null);
   const cdWrapperRef = useRef<HTMLElement>(null);
-
   const transform = prefixStyle('transform');
 
   const CD_PIC_CLASSES = classNames('cd-image', {
-    play: true,
-    pause: false
+    play: playing,
+    pause: !playing
   });
   const getMoveDistance = useCallback(() => {
     // 获取小圆到大圆中心到中心点的距离
@@ -99,8 +107,8 @@ const NormalPlayer: React.FC<INplayerProps> = (props) => {
     cdWrapperRef.current.style[transform as any] = '';
     normalPlayerRef.current.style.display = 'none';
   }, []);
-  const changeProgressCallBack = () => {
-    console.log(123123);
+  const changeProgressCallBack = (percent: number) => {
+    onProgressChange(percent);
   };
   return (
     <CSSTransition
@@ -118,7 +126,7 @@ const NormalPlayer: React.FC<INplayerProps> = (props) => {
         <div className="player-background">
           <img src={song.al.picUrl + '?param=300x300'} width="100%" height="100%" />
         </div>
-        <div className="background layer" />
+        <div className="bg-decorate" />
         <article className="player-header">
           <span className="close-btn" onClick={() => toggleFullScreen(false)}>
             <Icon icon="chevron-down" />
@@ -137,24 +145,24 @@ const NormalPlayer: React.FC<INplayerProps> = (props) => {
         </article>
         <article className="player-bottom">
           <div className="time-line-wrapper">
-            <span>0:00</span>
+            <span>{formatPlayTime(currentTime)}</span>
             <div className="progress-wrapper">
-              <Progress percent={50} percentChange={changeProgressCallBack} />
+              <Progress percent={ProgressPercent} percentChange={changeProgressCallBack} />
             </div>
-            <span>4:59</span>
+            <span>{formatPlayTime(durationTime)}</span>
           </div>
           <div className="player-control-bar">
             <span>
               <Icon icon="random" />
             </span>
             <span>
-              <Icon icon="step-backward" />
+              <Icon icon="step-backward" onClick={() => lastSong()} />
+            </span>
+            <span onClick={(e) => handleClickPlay(!playing)}>
+              {playing ? <Icon icon="pause" /> : <Icon icon="play" />}
             </span>
             <span>
-              <Icon icon="play" />
-            </span>
-            <span>
-              <Icon icon="step-forward" />
+              <Icon icon="step-forward" onClick={() => nextSong()} />
             </span>
             <span>
               <Icon icon="stream" />

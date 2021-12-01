@@ -23,7 +23,7 @@
     border-radius: 16px;
     background: $white;
     @for $i from 1 through 4 {
-      .official-item:nth-child(#{$i}) {
+      .official-item:nth-of-type(#{$i}) {
         background-color: rgba(random(235), random(235), random(235), 0.1);
       }
     }
@@ -48,6 +48,8 @@
       }
       .song-list-wrapper {
         padding-left: 30px;
+        overflow: hidden;
+        padding-right: 5px;
         li {
           line-height: 26px;
           font-size: $font-size-least;

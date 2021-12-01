@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:47:57
  * @LastEditors: k200c
- * @LastEditTime: 2021-11-30 14:55:35
+ * @LastEditTime: 2021-12-01 16:52:01
  * @Description:
  * @FilePath: \melodia-ts\src\utils\tools.ts
  */
@@ -122,3 +122,14 @@ export function prefixStyle(style: string): string {
   }
   return vendor + style.charAt(0).toUpperCase() + style.substr(1);
 }
+
+export function createSongUrl(id: string): string {
+  return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
+}
+
+export const formatPlayTime = (interval: any) => {
+  let _interval = interval | 0; // |0表示向下取整
+  const minute = (_interval / 60) | 0;
+  const second = (_interval % 60).toString().padStart(2, '0');
+  return `${minute}:${second}`;
+};

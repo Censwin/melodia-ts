@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 09:58:03
  * @LastEditors: k200c
- * @LastEditTime: 2021-11-29 17:31:30
+ * @LastEditTime: 2021-12-01 17:09:18
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\store\reducer.ts
  */
@@ -30,11 +30,11 @@ const defaultState: IPlayerState = {
   isFullScreen: false,
   playing: false,
   sequencePlayList: [],
-  playList: [],
+  playList: temp,
   mode: 0,
   currentIndex: -1,
   showPlayList: false,
-  currentSong: temp
+  currentSong: {}
 };
 
 const PlayerReducer: Reducer<IPlayerState> = (state = defaultState, action) => {
@@ -43,6 +43,15 @@ const PlayerReducer: Reducer<IPlayerState> = (state = defaultState, action) => {
     switch (type) {
       case ActionType.SET_ISFULL_SCREEN:
         draft.isFullScreen = payload;
+        break;
+      case ActionType.SET_CURRENT_SONG:
+        draft.currentSong = payload;
+        break;
+      case ActionType.SET_CURRENT_INDEX:
+        draft.currentIndex = payload;
+        break;
+      case ActionType.SET_PLAYING_STATE:
+        draft.playing = payload;
         break;
 
       default:

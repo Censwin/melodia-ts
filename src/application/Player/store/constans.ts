@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 10:26:45
  * @LastEditors: k200c
- * @LastEditTime: 2021-11-29 17:30:56
+ * @LastEditTime: 2021-12-01 15:20:00
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\store\constans.ts
  */
