@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 10:26:45
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-01 15:20:00
+ * @LastEditTime: 2021-12-02 15:37:37
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\store\constans.ts
  */
@@ -15,3 +15,6 @@ export const SET_PLAYLIST = 'player/SET_PLAYLIST';
 export const SET_PLAY_MODE = 'player/SET_PLAY_MODE';
 export const SET_CURRENT_INDEX = 'player/SET_CURRENT_INDEX';
 export const SET_SHOW_PLAYLIST = 'player/SET_SHOW_PLAYLIST';
+
+export const CHANGE_PLAYMODE = 'player/CHANGE_PLAYMODE';
+export const SET_PLAYMODE_TEXT = 'player/SET_PLAYMODE_TEXT';

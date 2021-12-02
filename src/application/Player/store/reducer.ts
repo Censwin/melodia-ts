@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 09:58:03
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-01 17:09:18
+ * @LastEditTime: 2021-12-02 15:46:21
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\store\reducer.ts
  */
@@ -9,18 +9,21 @@ import { Reducer } from 'redux';
 import produce, { Draft } from 'immer';
 import * as ActionType from './constans';
 import { temp } from './temp';
-enum PlayMode {
+
+export enum EPlayMode {
   sequence,
   loop,
   random
 }
 
+type TPlayModeTexts = '顺序播放' | '单曲循环' | '随机播放' | '切换失败';
 export interface IPlayerState {
   isFullScreen: boolean;
   playing: boolean;
   sequencePlayList: any[];
   playList: any[];
-  mode: PlayMode;
+  playmode: EPlayMode;
+  playmodeText: TPlayModeTexts;
   currentIndex: number;
   showPlayList: boolean;
   currentSong: any;
@@ -29,12 +32,13 @@ export interface IPlayerState {
 const defaultState: IPlayerState = {
   isFullScreen: false,
   playing: false,
-  sequencePlayList: [],
+  sequencePlayList: temp,
   playList: temp,
-  mode: 0,
+  playmode: 0,
   currentIndex: -1,
   showPlayList: false,
-  currentSong: {}
+  currentSong: {},
+  playmodeText: '顺序播放'
 };
 
 const PlayerReducer: Reducer<IPlayerState> = (state = defaultState, action) => {
@@ -53,7 +57,15 @@ const PlayerReducer: Reducer<IPlayerState> = (state = defaultState, action) => {
       case ActionType.SET_PLAYING_STATE:
         draft.playing = payload;
         break;
-
+      case ActionType.SET_PLAYLIST:
+        draft.playList = payload;
+        break;
+      case ActionType.SET_PLAYMODE_TEXT:
+        draft.playmodeText = payload;
+        break;
+      case ActionType.SET_PLAY_MODE:
+        draft.playmode = payload;
+        break;
       default:
         break;
     }

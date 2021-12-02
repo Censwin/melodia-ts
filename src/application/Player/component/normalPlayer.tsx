@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 14:29:06
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-01 17:47:48
+ * @LastEditTime: 2021-12-02 16:20:12
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\component\normalPlayer.tsx
  */
@@ -12,7 +12,7 @@ import { Marquee, Progress } from '../../../baseUI';
 import { Icon } from '../../../components';
 import { formatPlayTime, getName, prefixStyle } from '../../../utils/tools';
 import animations from 'create-keyframe-animation';
-
+import { EPlayMode } from './../store/reducer';
 interface INplayerProps {
   song: any;
   isFullScreen: boolean;
@@ -25,11 +25,21 @@ interface INplayerProps {
   onProgressChange: Function;
   lastSong: Function;
   nextSong: Function;
+  handleChangeMode: Function;
+  playmode: number;
 }
 
 const NormalPlayer: React.FC<INplayerProps> = (props) => {
-  const { song, isFullScreen, playing, ProgressPercent, currentTime, durationTime } = props;
-  const { toggleFullScreen, handleClickPlay, onProgressChange, lastSong, nextSong } = props;
+  const { song, isFullScreen, playing, ProgressPercent, currentTime, durationTime, playmode } =
+    props;
+  const {
+    toggleFullScreen,
+    handleClickPlay,
+    onProgressChange,
+    lastSong,
+    nextSong,
+    handleChangeMode
+  } = props;
   const normalPlayerRef = useRef<HTMLElement>(null);
   const cdWrapperRef = useRef<HTMLElement>(null);
   const transform = prefixStyle('transform');
@@ -110,6 +120,20 @@ const NormalPlayer: React.FC<INplayerProps> = (props) => {
   const changeProgressCallBack = (percent: number) => {
     onProgressChange(percent);
   };
+
+  const RenderPlaymodeIcon = useCallback(() => {
+    switch (playmode) {
+      case EPlayMode.sequence:
+        return <Icon icon="exchange-alt" />;
+      case EPlayMode.loop:
+        return <Icon icon="redo" />;
+      case EPlayMode.random:
+        return <Icon icon="random" />;
+      default:
+        break;
+    }
+  }, [playmode]);
+
   return (
     <CSSTransition
       in={isFullScreen}
@@ -152,9 +176,7 @@ const NormalPlayer: React.FC<INplayerProps> = (props) => {
             <span>{formatPlayTime(durationTime)}</span>
           </div>
           <div className="player-control-bar">
-            <span>
-              <Icon icon="random" />
-            </span>
+            <span onClick={() => handleChangeMode()}>{RenderPlaymodeIcon()}</span>
             <span>
               <Icon icon="step-backward" onClick={() => lastSong()} />
             </span>

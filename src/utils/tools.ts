@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:47:57
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-01 16:52:01
+ * @LastEditTime: 2021-12-02 15:53:31
  * @Description:
  * @FilePath: \melodia-ts\src\utils\tools.ts
  */
@@ -132,4 +132,22 @@ export const formatPlayTime = (interval: any) => {
   const minute = (_interval / 60) | 0;
   const second = (_interval % 60).toString().padStart(2, '0');
   return `${minute}:${second}`;
+};
+
+export const findCurrentIndex = (current: any, list: Array<any>) => {
+  return list.findIndex((item) => item.id === current.id);
+};
+
+const getRandomInt = (max: number) => {
+  return Math.floor(Math.random() * max);
+};
+export const shuffle = (list: any[]) => {
+  let newList = [];
+  for (let i = 0; i < list.length; i++) {
+    let randomIndex = getRandomInt(list.length);
+    let temp = list[i];
+    newList[i] = list[randomIndex];
+    newList[randomIndex] = temp;
+  }
+  return newList;
 };
