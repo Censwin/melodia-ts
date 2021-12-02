@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 09:58:03
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-02 15:46:21
+ * @LastEditTime: 2021-12-02 17:07:05
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\store\reducer.ts
  */
@@ -65,6 +65,9 @@ const PlayerReducer: Reducer<IPlayerState> = (state = defaultState, action) => {
         break;
       case ActionType.SET_PLAY_MODE:
         draft.playmode = payload;
+        break;
+      case ActionType.SET_SHOW_PLAYLIST:
+        draft.showPlayList = payload;
         break;
       default:
         break;

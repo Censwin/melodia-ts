@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 14:29:06
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-02 16:20:12
+ * @LastEditTime: 2021-12-02 17:58:50
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\component\normalPlayer.tsx
  */
@@ -27,18 +27,29 @@ interface INplayerProps {
   nextSong: Function;
   handleChangeMode: Function;
   playmode: number;
+  showPlayList: boolean;
+  toggleShowPlayList: Function;
 }
 
 const NormalPlayer: React.FC<INplayerProps> = (props) => {
-  const { song, isFullScreen, playing, ProgressPercent, currentTime, durationTime, playmode } =
-    props;
+  const {
+    song,
+    isFullScreen,
+    playing,
+    ProgressPercent,
+    currentTime,
+    durationTime,
+    playmode,
+    showPlayList
+  } = props;
   const {
     toggleFullScreen,
     handleClickPlay,
     onProgressChange,
     lastSong,
     nextSong,
-    handleChangeMode
+    handleChangeMode,
+    toggleShowPlayList
   } = props;
   const normalPlayerRef = useRef<HTMLElement>(null);
   const cdWrapperRef = useRef<HTMLElement>(null);
@@ -186,7 +197,7 @@ const NormalPlayer: React.FC<INplayerProps> = (props) => {
             <span>
               <Icon icon="step-forward" onClick={() => nextSong()} />
             </span>
-            <span>
+            <span onClick={(_) => toggleShowPlayList(true)}>
               <Icon icon="stream" />
             </span>
           </div>

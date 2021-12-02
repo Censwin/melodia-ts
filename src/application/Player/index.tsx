@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-28 11:35:22
- * @LastEditTime: 2021-12-02 16:32:39
+ * @LastEditTime: 2021-12-02 18:15:55
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\index.tsx
  */
@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IApplicationState } from '../../store/reducers';
 import { createSongUrl, isEmptyObject } from '../../utils/tools';
 import NormalPlayer from './component/normalPlayer';
+import PlayList from './component/playList';
 import { EPlayMode } from './store';
 import * as ActionType from './store/constans';
 const Player = () => {
@@ -28,7 +29,8 @@ const Player = () => {
     playmode,
     currentIndex,
     showPlayList,
-    currentSong
+    currentSong,
+    playmodeText
   } = useSelector((state: IApplicationState) => state.Player);
 
   const changePlayingState = (state: boolean) => {
@@ -55,8 +57,7 @@ const Player = () => {
       return;
     }
     const newIndex = currentIndex - 1;
-    dispatch({ type: ActionType.SET_CURRENT_INDEX, payload: newIndex });
-    dispatch({ type: ActionType.SET_CURRENT_SONG, payload: playList[newIndex] });
+    changeCurrentIndex(newIndex);
     if (!playing) changePlayingState(true);
   };
 
@@ -66,32 +67,24 @@ const Player = () => {
       return;
     }
     let newIndex = (currentIndex + 1) % playList.length;
-    // if (newIndex > playList.length - 1) newIndex = currentIndex;
-    dispatch({ type: ActionType.SET_CURRENT_INDEX, payload: newIndex });
-    dispatch({ type: ActionType.SET_CURRENT_SONG, payload: playList[newIndex] });
+    changeCurrentIndex(newIndex);
     if (!playing) changePlayingState(true);
+  };
+
+  const changeCurrentIndex = (index: number) => {
+    dispatch({ type: ActionType.SET_CURRENT_INDEX, payload: index });
+    dispatch({ type: ActionType.SET_CURRENT_SONG, payload: playList[index] });
   };
 
   const handleChangeMode = () => {
     let mode = (playmode + 1) % 3;
     dispatch({ type: ActionType.CHANGE_PLAYMODE, payload: mode });
   };
-
-  const NormalPlayerProps = {
-    song: currentSong,
-    isFullScreen: isFullScreen,
-    toggleFullScreen: (status: boolean) =>
-      dispatch({ type: ActionType.SET_ISFULL_SCREEN, payload: status }),
-    playing,
-    handleClickPlay: changePlayingState,
-    ProgressPercent,
-    currentTime,
-    durationTime,
-    onProgressChange,
-    lastSong,
-    nextSong,
-    handleChangeMode,
-    playmode
+  const toggleFullScreen = (status: boolean) => {
+    dispatch({ type: ActionType.SET_ISFULL_SCREEN, payload: status });
+  };
+  const toggleShowPlayList = (status: boolean) => {
+    dispatch({ type: ActionType.SET_SHOW_PLAYLIST, payload: status });
   };
 
   type audioState = 'play' | 'pause';
@@ -112,8 +105,8 @@ const Player = () => {
 
   useEffect(() => {
     if (!currentSong) return;
-    dispatch({ type: ActionType.SET_CURRENT_INDEX, payload: 0 });
-    dispatch({ type: ActionType.SET_CURRENT_SONG, payload: playList[0] });
+    changeCurrentIndex(0);
+    // dispatch({ type: ActionType.SET_SHOW_PLAYLIST, payload: true });
   }, []);
 
   useEffect(() => {
@@ -139,8 +132,35 @@ const Player = () => {
     setCurrentTime(event.target.currentTime);
   };
 
+  const NormalPlayerProps = {
+    song: currentSong,
+    isFullScreen: isFullScreen,
+    toggleFullScreen,
+    playing,
+    handleClickPlay: changePlayingState,
+    ProgressPercent,
+    currentTime,
+    durationTime,
+    onProgressChange,
+    lastSong,
+    nextSong,
+    handleChangeMode,
+    playmode,
+    showPlayList,
+    toggleShowPlayList
+  };
+
+  const PlayListProps = {
+    showPlayList,
+    toggleShowPlayList,
+    playList,
+    playmodeText,
+    changeCurrentIndex
+  };
+
   return (
     <section className="player-container">
+      <PlayList {...PlayListProps} />
       {!isEmptyObject(currentSong) && <NormalPlayer {...NormalPlayerProps} />}
       <audio
         id="my_audio"
