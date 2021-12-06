@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-19 16:54:40
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-01 10:10:22
+ * @LastEditTime: 2021-12-06 11:26:12
  * @Description: 歌单 与 专辑 详情页
  * @FilePath: \melodia-ts\src\application\Album\index.tsx
  */
@@ -14,6 +14,7 @@ import { getCount, getName, isEmptyObject } from '../../utils/tools';
 import { useDispatch, useSelector } from 'react-redux';
 import { IApplicationState } from '../../store/reducers';
 import * as ActionType from './store/constants';
+import MusicNote from '../../baseUI/musicNote';
 
 const Album: React.FC = () => {
   const history = useHistory();
@@ -26,6 +27,7 @@ const Album: React.FC = () => {
   const [descRolling, setDescRolling] = useState(false);
   const handleExit = () => {};
   const nodeRef = useRef(null);
+  const musicNoteRef = useRef<any>();
   useEffect(() => {
     dispatch({ type: ActionType.GET_ALBUMDETAIL, payload: params });
   }, [params]);
@@ -40,6 +42,12 @@ const Album: React.FC = () => {
     shareCount,
     tracks
   } = currentAlbum;
+
+  const handleSelectSong = () => {
+    if (!musicNoteRef.current) return;
+    musicNoteRef.current.startAnimation();
+  };
+
   const RenderTopInfo = useCallback(
     () => (
       <section className="top-desc-wrapper">
@@ -112,7 +120,7 @@ const Album: React.FC = () => {
         <ul className="songs-wrapper">
           {tracks.map((item: any, index: number) => {
             return (
-              <li key={item.name + index}>
+              <li key={item.name + index} onClick={handleSelectSong}>
                 <span className="index">{index + 1}</span>
                 <div className="song-item">
                   <span className="song-name">{item.name}</span>
@@ -161,6 +169,7 @@ const Album: React.FC = () => {
             </div>
           </>
         )}
+        <MusicNote ref={musicNoteRef} />
       </div>
     </CSSTransition>
   );
