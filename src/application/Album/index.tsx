@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-19 16:54:40
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-06 11:26:12
+ * @LastEditTime: 2021-12-07 14:08:45
  * @Description: 歌单 与 专辑 详情页
  * @FilePath: \melodia-ts\src\application\Album\index.tsx
  */
@@ -43,9 +43,9 @@ const Album: React.FC = () => {
     tracks
   } = currentAlbum;
 
-  const handleSelectSong = () => {
+  const handleSelectSong = (event: React.MouseEvent) => {
     if (!musicNoteRef.current) return;
-    musicNoteRef.current.startAnimation();
+    musicNoteRef.current.startAnimation(event.nativeEvent.clientY);
   };
 
   const RenderTopInfo = useCallback(
@@ -120,7 +120,7 @@ const Album: React.FC = () => {
         <ul className="songs-wrapper">
           {tracks.map((item: any, index: number) => {
             return (
-              <li key={item.name + index} onClick={handleSelectSong}>
+              <li key={item.name + index} onClick={(e) => handleSelectSong(e)}>
                 <span className="index">{index + 1}</span>
                 <div className="song-item">
                   <span className="song-name">{item.name}</span>
