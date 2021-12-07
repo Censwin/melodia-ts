@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-28 11:35:22
- * @LastEditTime: 2021-12-02 18:15:55
+ * @LastEditTime: 2021-12-07 16:38:31
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\index.tsx
  */
@@ -20,7 +20,7 @@ const Player = () => {
   let ProgressPercent = currentTime / durationTime;
   const dispatch = useDispatch();
   const audioRef = useRef<HTMLAudioElement>(document.createElement('audio'));
-  const songReady = useRef(false);
+  const songReady = useRef(true);
   const {
     isFullScreen,
     playing,
@@ -71,6 +71,11 @@ const Player = () => {
     if (!playing) changePlayingState(true);
   };
 
+  const handleError = () => {
+    songReady.current = true;
+    console.log('播放出错');
+  };
+
   const changeCurrentIndex = (index: number) => {
     dispatch({ type: ActionType.SET_CURRENT_INDEX, payload: index });
     dispatch({ type: ActionType.SET_CURRENT_SONG, payload: playList[index] });
@@ -92,7 +97,9 @@ const Player = () => {
     if (state === 'play') {
       audioRef.current
         .play()
-        .then((_) => {
+        .then(() => {
+          songReady.current = true;
+          changePlayingState(true);
           console.log('audio played auto');
         })
         .catch((error) => {
@@ -110,14 +117,14 @@ const Player = () => {
   }, []);
 
   useEffect(() => {
-    if (!playList.length || currentIndex === -1) return;
+    if (!playList.length || currentIndex === -1 || !songReady.current) return;
     const item = playList[currentIndex];
     songReady.current = false;
     const songUrl = createSongUrl(item.id);
     audioRef.current.src = songUrl;
-    // setTimeout(() => {
-    //   audioControler('play');
-    // });
+    setTimeout(() => {
+      audioControler('play');
+    });
     // changePlayingState(true);
     setCurrentTime(0);
     setDurationTime(item.dt / 1000);
@@ -130,6 +137,11 @@ const Player = () => {
 
   const updateTime = (event: any) => {
     setCurrentTime(event.target.currentTime);
+  };
+
+  const handleDeleteSong = (e: React.MouseEvent, song: any) => {
+    e.stopPropagation();
+    dispatch({ type: ActionType.DEL_CURRENT_SONG, payload: { id: song.id } });
   };
 
   const NormalPlayerProps = {
@@ -155,7 +167,9 @@ const Player = () => {
     toggleShowPlayList,
     playList,
     playmodeText,
-    changeCurrentIndex
+    currentIndex,
+    changeCurrentIndex,
+    handleDeleteSong
   };
 
   return (
@@ -166,8 +180,8 @@ const Player = () => {
         id="my_audio"
         ref={audioRef}
         onTimeUpdate={updateTime}
-        muted={true}
         onEnded={nextSong}
+        onError={handleError}
       />
     </section>
   );

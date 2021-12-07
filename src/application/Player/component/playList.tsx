@@ -1,25 +1,29 @@
 /*
  * @Date: 2021-11-29 14:27:08
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-02 18:25:36
+ * @LastEditTime: 2021-12-07 16:17:09
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\component\playList.tsx
  */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Scroll } from '../../../baseUI';
 import animations from 'create-keyframe-animation';
 import { prefixStyle, getName } from '../../../utils/tools';
+import { Icon } from '../../../components';
+import classNames from 'classnames';
 interface IPlayListProps {
   showPlayList: boolean;
   toggleShowPlayList: Function;
   playList: any[];
   playmodeText: string;
+  currentIndex: number;
   changeCurrentIndex: Function;
+  handleDeleteSong: Function;
 }
 const PlayList: React.FC<IPlayListProps> = (props) => {
-  const { showPlayList, playList, playmodeText } = props;
-  const { toggleShowPlayList, changeCurrentIndex } = props;
+  const { showPlayList, playList, playmodeText, currentIndex } = props;
+  const { toggleShowPlayList, changeCurrentIndex, handleDeleteSong } = props;
   const playListWrapperRef = useRef<HTMLElement>(document.createElement('div'));
   const decorateRef = useRef<HTMLDivElement>(null);
   const playListRef = useRef<HTMLUListElement>(document.createElement('ul'));
@@ -62,10 +66,13 @@ const PlayList: React.FC<IPlayListProps> = (props) => {
     playListWrapperRef.current.style.display = 'none';
   };
 
-  const RenderList = () => {
+  const RenderList = useCallback(() => {
     return playList.map((item: any, index: number) => {
+      const liClass = classNames({
+        isSelect: currentIndex === index
+      });
       return (
-        <li key={item.id} data-value={index}>
+        <li key={item.id} data-value={index} className={liClass}>
           <span className="index">{index + 1}</span>
           <div className="song-item">
             <span className="song-name">{item.name}</span>
@@ -73,10 +80,13 @@ const PlayList: React.FC<IPlayListProps> = (props) => {
               {getName(item.ar)} - {item.al.name}
             </span>
           </div>
+          <div className="del-btn" onClick={(e) => handleDeleteSong(e, item)}>
+            <Icon icon="trash-alt" />
+          </div>
         </li>
       );
     });
-  };
+  }, [playList, currentIndex]);
 
   useEffect(() => {
     if (!decorateRef.current) return;
@@ -96,7 +106,7 @@ const PlayList: React.FC<IPlayListProps> = (props) => {
     while (target.nodeType === 1 && target.tagName !== 'LI') {
       target = target.parentNode;
     }
-    changeCurrentIndex(target.getAttribute('data-value'));
+    changeCurrentIndex(Number(target.getAttribute('data-value')));
   };
 
   return (

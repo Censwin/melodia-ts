@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-19 16:54:40
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-07 14:08:45
+ * @LastEditTime: 2021-12-07 17:04:38
  * @Description: 歌单 与 专辑 详情页
  * @FilePath: \melodia-ts\src\application\Album\index.tsx
  */
@@ -14,6 +14,7 @@ import { getCount, getName, isEmptyObject } from '../../utils/tools';
 import { useDispatch, useSelector } from 'react-redux';
 import { IApplicationState } from '../../store/reducers';
 import * as ActionType from './store/constants';
+import * as PlayerType from './../Player/store/constans';
 import MusicNote from '../../baseUI/musicNote';
 
 const Album: React.FC = () => {
@@ -43,9 +44,14 @@ const Album: React.FC = () => {
     tracks
   } = currentAlbum;
 
-  const handleSelectSong = (event: React.MouseEvent) => {
+  const handleSelectSong = (event: React.MouseEvent, item: any) => {
     if (!musicNoteRef.current) return;
     musicNoteRef.current.startAnimation(event.nativeEvent.clientY);
+    dispatch({ type: PlayerType.ADD_CURRENT_SONG, payload: item });
+  };
+
+  const handlePlayAll = () => {
+    dispatch({ type: PlayerType.ADD_CURRENT_SONG, payload: tracks });
   };
 
   const RenderTopInfo = useCallback(
@@ -107,7 +113,7 @@ const Album: React.FC = () => {
     () => (
       <section className="song-list">
         <article className="first-line">
-          <div className="play-all">
+          <div className="play-all" onClick={handlePlayAll}>
             <span className="playicon">
               <Icon icon="play-circle" />
             </span>
@@ -120,7 +126,7 @@ const Album: React.FC = () => {
         <ul className="songs-wrapper">
           {tracks.map((item: any, index: number) => {
             return (
-              <li key={item.name + index} onClick={(e) => handleSelectSong(e)}>
+              <li key={item.name + index} onClick={(e) => handleSelectSong(e, item)}>
                 <span className="index">{index + 1}</span>
                 <div className="song-item">
                   <span className="song-name">{item.name}</span>

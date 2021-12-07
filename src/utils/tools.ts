@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:47:57
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-02 15:53:31
+ * @LastEditTime: 2021-12-07 17:13:54
  * @Description:
  * @FilePath: \melodia-ts\src\utils\tools.ts
  */
@@ -141,13 +141,13 @@ export const findCurrentIndex = (current: any, list: Array<any>) => {
 const getRandomInt = (max: number) => {
   return Math.floor(Math.random() * max);
 };
-export const shuffle = (list: any[]) => {
-  let newList = [];
-  for (let i = 0; i < list.length; i++) {
-    let randomIndex = getRandomInt(list.length);
-    let temp = list[i];
-    newList[i] = list[randomIndex];
-    newList[randomIndex] = temp;
+export type TShuffle = <T>(arr: T[]) => T[];
+export const shuffle: TShuffle = (arr) => {
+  const newArr = [...arr];
+  let [m, i] = [newArr.length, 0];
+  while (m) {
+    i = (Math.random() * m--) >>> 0;
+    [newArr[m], newArr[i]] = [newArr[i], newArr[m]];
   }
-  return newList;
+  return newArr;
 };

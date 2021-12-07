@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 10:25:08
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-02 15:43:06
+ * @LastEditTime: 2021-12-07 17:08:14
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\store\sagas.ts
  */
@@ -52,6 +52,29 @@ function* changePlaymode(action: ICOMMONACTION) {
   }
 }
 
+function* addSongToList(action: ICOMMONACTION) {
+  const { payload } = action;
+  const Player: IPlayerState = yield select((state) => state.Player);
+  const { sequencePlayList, playList } = Player;
+  let newSequenceList;
+  let newPlayList;
+  let currentSong;
+  if (payload instanceof Array) {
+    newSequenceList = [...sequencePlayList, ...payload];
+    newPlayList = [...payload, ...playList];
+    currentSong = payload[0];
+  } else {
+    newSequenceList = [...sequencePlayList, payload];
+    newPlayList = [payload, ...playList];
+    currentSong = payload;
+  }
+  yield put({ type: ActionType.SET_SEQUECE_PLAYLIST, payload: newSequenceList });
+  yield put({ type: ActionType.SET_PLAYLIST, payload: newPlayList });
+  yield put({ type: ActionType.SET_CURRENT_INDEX, payload: 0 });
+  yield put({ type: ActionType.SET_CURRENT_SONG, payload: currentSong });
+}
+
 export default function* () {
   yield takeLatest(ActionType.CHANGE_PLAYMODE, changePlaymode);
+  yield takeLatest(ActionType.ADD_CURRENT_SONG, addSongToList);
 }

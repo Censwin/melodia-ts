@@ -1,14 +1,13 @@
 /*
  * @Date: 2021-11-29 09:58:03
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-02 17:07:05
+ * @LastEditTime: 2021-12-07 17:16:26
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\store\reducer.ts
  */
 import { Reducer } from 'redux';
 import produce, { Draft } from 'immer';
 import * as ActionType from './constans';
-import { temp } from './temp';
 
 export enum EPlayMode {
   sequence,
@@ -32,8 +31,8 @@ export interface IPlayerState {
 const defaultState: IPlayerState = {
   isFullScreen: false,
   playing: false,
-  sequencePlayList: temp,
-  playList: temp,
+  sequencePlayList: [],
+  playList: [],
   playmode: 0,
   currentIndex: -1,
   showPlayList: false,
@@ -60,6 +59,9 @@ const PlayerReducer: Reducer<IPlayerState> = (state = defaultState, action) => {
       case ActionType.SET_PLAYLIST:
         draft.playList = payload;
         break;
+      case ActionType.SET_SEQUECE_PLAYLIST:
+        draft.sequencePlayList = payload;
+        break;
       case ActionType.SET_PLAYMODE_TEXT:
         draft.playmodeText = payload;
         break;
@@ -68,6 +70,10 @@ const PlayerReducer: Reducer<IPlayerState> = (state = defaultState, action) => {
         break;
       case ActionType.SET_SHOW_PLAYLIST:
         draft.showPlayList = payload;
+        break;
+      case ActionType.DEL_CURRENT_SONG:
+        draft.playList = draft.playList.filter((item) => item.id !== payload.id);
+        draft.sequencePlayList = draft.sequencePlayList.filter((item) => item.id !== payload.id);
         break;
       default:
         break;
