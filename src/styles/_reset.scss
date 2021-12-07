@@ -29,6 +29,11 @@ body {
   background-color: $body-bg; // 2
 }
 
+html,
+body {
+  height: 100%;
+}
+
 /**
  * Correct the font size and margin on `h1` elements within `section` and
  * `article` contexts in Chrome, Firefox, and Safari.
@@ -355,4 +360,13 @@ template {
 
 div {
   box-sizing: border-box;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+p {
+  margin: 0;
 }

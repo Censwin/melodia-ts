@@ -1,0 +1,112 @@
+.rank-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
+  background: $white-100;
+  .scroll-window-wrapper {
+    height: calc(100vh - 120px);
+  }
+  .official-title {
+    text-indent: 1em;
+    margin: 0;
+    line-height: 3em;
+    svg {
+      margin-right: 5px;
+      color: lighten($primary, 8);
+    }
+  }
+  .official-wrapper {
+    padding: 10px 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 16px;
+    background: $white;
+    @for $i from 1 through 4 {
+      .official-item:nth-of-type(#{$i}) {
+        background-color: rgba(random(235), random(235), random(235), 0.1);
+      }
+    }
+    .official-item {
+      display: flex;
+      margin-bottom: 8px;
+      border-radius: 16px;
+      overflow: hidden;
+      padding: 15px 5px 12px 20px;
+      position: relative;
+      img {
+        width: 80px;
+        border-radius: 14px;
+      }
+      .update_frequecy {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        color: $description;
+        font-size: $font-size-least;
+        transform: scale(0.8);
+      }
+      .song-list-wrapper {
+        padding-left: 30px;
+        overflow: hidden;
+        padding-right: 5px;
+        li {
+          line-height: 26px;
+          font-size: $font-size-least;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          .singer-name {
+            color: $secondary;
+          }
+        }
+      }
+    }
+  }
+  .rank-list-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    .card-header-title {
+      font-weight: bold;
+    }
+    .rank-item {
+      width: 30%;
+      margin: 5px;
+      position: relative;
+      img {
+        position: relative;
+        width: 100%;
+        border-radius: 12px;
+      }
+      .decorate {
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        width: 100%;
+        height: 30px;
+        border-radius: 12px;
+        background: linear-gradient(hsla(0, 0%, 43%, 0.4), hsla(0, 0%, 100%, 0));
+      }
+      .update_frequecy {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-size: $font-size-least;
+        color: $white;
+        zoom: 0.8;
+      }
+      .playicon {
+        position: absolute;
+        // bottom: 5px;
+        top: 80px;
+        right: 6px;
+        color: $white;
+        opacity: 0.7;
+      }
+      .rank-name {
+        font-size: $font-size-least;
+        color: $subtext;
+      }
+    }
+  }
+}
