@@ -1,9 +1,9 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-11-27 00:13:40
+ * @LastEditTime: 2021-12-07 17:37:33
  * @Description:
- * @FilePath: /melodia-ts/src/application/Discover/index.tsx
+ * @FilePath: \melodia-ts\src\application\Discover\index.tsx
  */
 import React, { useCallback, useEffect, useRef } from 'react';
 import { renderRoutes, RouteConfig } from 'react-router-config';

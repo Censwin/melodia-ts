@@ -1,9 +1,9 @@
 /*
  * @Author: Censwin
  * @Date: 2021-09-05 15:23:27
- * @LastEditTime: 2021-11-27 00:10:25
+ * @LastEditTime: 2021-12-07 17:42:14
  * @Description: 通用滚动组件
- * @FilePath: /melodia-ts/src/baseUI/Scroll/scroll.tsx
+ * @FilePath: \melodia-ts\src\baseUI\Scroll\scroll.tsx
  */
 import * as React from 'react';
 import BScroll from 'better-scroll';
@@ -36,6 +36,7 @@ const Scroll = React.forwardRef<ScrollImperativeHandle, Partial<SrcollPropsType>
     props;
 
   const { pullUp, pullDown, onScroll } = props;
+
   React.useEffect(() => {
     if (bScroll) return;
     const scroll = new BScroll(scrollContaninerRef.current as HTMLDivElement, {
@@ -53,11 +54,13 @@ const Scroll = React.forwardRef<ScrollImperativeHandle, Partial<SrcollPropsType>
       setBScroll(null);
     };
   }, []);
+
   React.useEffect(() => {
     if (refresh && bScroll) {
       bScroll.refresh();
     }
   });
+
   React.useEffect(() => {
     if (!bScroll || !onScroll) return;
     bScroll.on('scroll', onScroll);
@@ -65,6 +68,7 @@ const Scroll = React.forwardRef<ScrollImperativeHandle, Partial<SrcollPropsType>
       bScroll.off('scroll', onScroll);
     };
   }, [onScroll, bScroll]);
+
   React.useEffect(() => {
     if (!bScroll || !pullUp) return;
     bScroll.on('scrollEnd', () => {
@@ -77,6 +81,7 @@ const Scroll = React.forwardRef<ScrollImperativeHandle, Partial<SrcollPropsType>
       bScroll.off('scrollEnd');
     };
   }, [pullUp, bScroll]);
+
   React.useEffect(() => {
     if (!bScroll || !pullDown) return;
     bScroll.on('touchEnd', (pos: { y: number }) => {
@@ -89,6 +94,7 @@ const Scroll = React.forwardRef<ScrollImperativeHandle, Partial<SrcollPropsType>
       bScroll.off('touchEnd');
     };
   }, [pullDown, bScroll]);
+
   React.useImperativeHandle(ref, () => ({
     refresh: () => {
       if (bScroll) {
@@ -108,12 +114,20 @@ const Scroll = React.forwardRef<ScrollImperativeHandle, Partial<SrcollPropsType>
       }
     }
   }));
+
   const classes = classNames('myscroll-container', {
     'myscroll-vertical': direction === 'vertical'
   });
+  const renderChildren = () => {
+    if (direction === 'vertical') {
+      return <div className="scroll-content">{props.children}</div>;
+    } else {
+      return props.children;
+    }
+  };
   return (
     <div className={classes} ref={scrollContaninerRef}>
-      <div className="scroll-content">{props.children}</div>
+      {renderChildren()}
     </div>
   );
 });
