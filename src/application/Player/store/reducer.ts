@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 09:58:03
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-07 17:16:26
+ * @LastEditTime: 2021-12-08 16:56:25
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\store\reducer.ts
  */
@@ -26,6 +26,7 @@ export interface IPlayerState {
   currentIndex: number;
   showPlayList: boolean;
   currentSong: any;
+  lrc: string;
 }
 
 const defaultState: IPlayerState = {
@@ -37,7 +38,8 @@ const defaultState: IPlayerState = {
   currentIndex: -1,
   showPlayList: false,
   currentSong: {},
-  playmodeText: '顺序播放'
+  playmodeText: '顺序播放',
+  lrc: ''
 };
 
 const PlayerReducer: Reducer<IPlayerState> = (state = defaultState, action) => {
@@ -74,6 +76,9 @@ const PlayerReducer: Reducer<IPlayerState> = (state = defaultState, action) => {
       case ActionType.DEL_CURRENT_SONG:
         draft.playList = draft.playList.filter((item) => item.id !== payload.id);
         draft.sequencePlayList = draft.sequencePlayList.filter((item) => item.id !== payload.id);
+        break;
+      case ActionType.SAVE_LYRIC:
+        draft.lrc = payload;
         break;
       default:
         break;

@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:47:57
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-07 17:13:54
+ * @LastEditTime: 2021-12-08 18:07:09
  * @Description:
  * @FilePath: \melodia-ts\src\utils\tools.ts
  */
@@ -151,3 +151,14 @@ export const shuffle: TShuffle = (arr) => {
   }
   return newArr;
 };
+
+// export function aaa<T extends { [X: string]: any }> (data: T[]) {
+//   data.forEach(item => {
+//     // const a= 'a'
+//     item['a' as any]= 10
+//   })
+// }
+// interface Ia {
+//   [key: string]: any
+// }
+// aaa<Ia>([{'a': 1}])

@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-28 11:35:22
- * @LastEditTime: 2021-12-07 16:38:31
+ * @LastEditTime: 2021-12-08 11:14:58
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\index.tsx
  */
@@ -92,6 +92,10 @@ const Player = () => {
     dispatch({ type: ActionType.SET_SHOW_PLAYLIST, payload: status });
   };
 
+  const getSongLyric = (id: number) => {
+    dispatch({ type: ActionType.GET_LYRIC, payload: { id } });
+  };
+
   type audioState = 'play' | 'pause';
   const audioControler = (state: audioState) => {
     if (state === 'play') {
@@ -128,6 +132,7 @@ const Player = () => {
     // changePlayingState(true);
     setCurrentTime(0);
     setDurationTime(item.dt / 1000);
+    getSongLyric(item.id);
   }, [playList, currentIndex]);
 
   useEffect(() => {
