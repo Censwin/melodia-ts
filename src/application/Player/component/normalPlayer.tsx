@@ -1,14 +1,14 @@
 /*
  * @Date: 2021-11-29 14:29:06
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-02 17:58:50
+ * @LastEditTime: 2021-12-08 18:10:09
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\component\normalPlayer.tsx
  */
 import classNames from 'classnames';
 import React, { useRef, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { Marquee, Progress } from '../../../baseUI';
+import { Marquee, Progress, Scroll } from '../../../baseUI';
 import { Icon } from '../../../components';
 import { formatPlayTime, getName, prefixStyle } from '../../../utils/tools';
 import animations from 'create-keyframe-animation';
@@ -29,6 +29,9 @@ interface INplayerProps {
   playmode: number;
   showPlayList: boolean;
   toggleShowPlayList: Function;
+  currentPlayingLyric: string;
+  currentLyric: any;
+  currentLineNum: number;
 }
 
 const NormalPlayer: React.FC<INplayerProps> = (props) => {
@@ -51,9 +54,13 @@ const NormalPlayer: React.FC<INplayerProps> = (props) => {
     handleChangeMode,
     toggleShowPlayList
   } = props;
+  const { currentPlayingLyric, currentLyric, currentLineNum } = props;
   const normalPlayerRef = useRef<HTMLElement>(null);
   const cdWrapperRef = useRef<HTMLElement>(null);
   const transform = prefixStyle('transform');
+  const currentState = useRef<any>('');
+  const lyricScrollRef = useRef<any>();
+  const lyricLineRefs = useRef<any>([]);
 
   const CD_PIC_CLASSES = classNames('cd-image', {
     play: playing,
@@ -145,6 +152,59 @@ const NormalPlayer: React.FC<INplayerProps> = (props) => {
     }
   }, [playmode]);
 
+  const playToggle = () => {
+    handleClickPlay(!playing);
+  };
+
+  const toggleLyricState = () => {};
+  const RenderMiddleCD = useCallback(() => {
+    return (
+      <CSSTransition timeout={400} classNames="fade" in={currentState.current !== 'lyric'}>
+        <div
+          className="cd-wrapper"
+          style={{ visibility: currentState.current !== 'lyric' ? 'visible' : 'hidden' }}
+        >
+          <div className="img-wrapper">
+            <img className={CD_PIC_CLASSES} src={song.al.picUrl + '?param=400x400'} alt="" />
+          </div>
+        </div>
+      </CSSTransition>
+    );
+  }, []);
+
+  const RenderMiddlelyric = useCallback(() => {
+    return (
+      <CSSTransition timeout={400} classNames="fade" in={currentState.current === 'lyric'}>
+        <section className="lyric-container">
+          <Scroll ref={lyricScrollRef}>
+            <div
+              style={{ visibility: currentState.current === 'lyric' ? 'visible' : 'hidden' }}
+              className="lyric_content"
+            >
+              {currentLyric ? (
+                currentLyric.lines.map((item: any, index: number) => {
+                  // 拿到每一行歌词的 DOM 对象，后面滚动歌词需要！
+                  lyricLineRefs.current[index] = React.createRef();
+                  return (
+                    <p
+                      className={`text ${currentLineNum === index ? 'current' : ''}`}
+                      key={item + index}
+                      ref={lyricLineRefs.current[index]}
+                    >
+                      {item.txt}
+                    </p>
+                  );
+                })
+              ) : (
+                <p className="text pure"> 纯音乐，请欣赏。</p>
+              )}
+            </div>
+          </Scroll>
+        </section>
+      </CSSTransition>
+    );
+  }, []);
+
   return (
     <CSSTransition
       in={isFullScreen}
@@ -171,12 +231,8 @@ const NormalPlayer: React.FC<INplayerProps> = (props) => {
             <p className="subtitle">{getName(song.ar)}</p>
           </div>
         </article>
-        <article className="player-middle" ref={cdWrapperRef}>
-          <div className="cd-wrapper">
-            <div className="img-wrapper">
-              <img className={CD_PIC_CLASSES} src={song.al.picUrl + '?param=400x400'} alt="" />
-            </div>
-          </div>
+        <article className="player-middle" ref={cdWrapperRef} onClick={toggleLyricState}>
+          {RenderMiddleCD()}
         </article>
         <article className="player-bottom">
           <div className="time-line-wrapper">
@@ -191,7 +247,7 @@ const NormalPlayer: React.FC<INplayerProps> = (props) => {
             <span>
               <Icon icon="step-backward" onClick={() => lastSong()} />
             </span>
-            <span onClick={(e) => handleClickPlay(!playing)}>
+            <span onClick={(e) => playToggle()}>
               {playing ? <Icon icon="pause" /> : <Icon icon="play" />}
             </span>
             <span>

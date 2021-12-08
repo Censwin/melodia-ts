@@ -9,6 +9,7 @@ import { abort } from 'process';
 import React, { useRef, useState, useEffect, MediaHTMLAttributes } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IApplicationState } from '../../store/reducers';
+import LyricFormater from '../../utils/lyric-creator';
 import { createSongUrl, isEmptyObject } from '../../utils/tools';
 import NormalPlayer from './component/normalPlayer';
 import PlayList from './component/playList';
@@ -17,10 +18,13 @@ import * as ActionType from './store/constans';
 const Player = () => {
   const [currentTime, setCurrentTime] = useState(0); // 当前时间
   const [durationTime, setDurationTime] = useState(0); // 总时长
+  const [currentPlayingLyric, setPlayingLyric] = useState('');
   let ProgressPercent = currentTime / durationTime;
   const dispatch = useDispatch();
   const audioRef = useRef<HTMLAudioElement>(document.createElement('audio'));
   const songReady = useRef(true);
+  const LyricRef = useRef<any>(null);
+  const currentLineRef = useRef(-1);
   const {
     isFullScreen,
     playing,
@@ -30,11 +34,16 @@ const Player = () => {
     currentIndex,
     showPlayList,
     currentSong,
-    playmodeText
+    playmodeText,
+    lrc
   } = useSelector((state: IApplicationState) => state.Player);
 
   const changePlayingState = (state: boolean) => {
     dispatch({ type: ActionType.SET_PLAYING_STATE, payload: state });
+
+    if (LyricRef.current) {
+      LyricRef.current.togglePlay(currentTime * 1000);
+    }
   };
 
   const onProgressChange = (percent: number) => {
@@ -43,6 +52,9 @@ const Player = () => {
     setCurrentTime(newTime);
     if (!playing) {
       changePlayingState(true);
+    }
+    if (LyricRef.current) {
+      LyricRef.current.togglePlay(newTime * 1000);
     }
   };
 
@@ -94,7 +106,23 @@ const Player = () => {
 
   const getSongLyric = (id: number) => {
     dispatch({ type: ActionType.GET_LYRIC, payload: { id } });
+    if (LyricRef.current) {
+      LyricRef.current.stop();
+    }
   };
+
+  const lyricCallBack = () => {};
+
+  useEffect(() => {
+    if (!lrc) {
+      LyricRef.current = null;
+    } else {
+      LyricRef.current = new LyricFormater(lrc, lyricCallBack);
+      LyricRef.current.play();
+      currentLineRef.current = 0;
+      LyricRef.current.seek(0);
+    }
+  }, [lrc]);
 
   type audioState = 'play' | 'pause';
   const audioControler = (state: audioState) => {
@@ -164,7 +192,10 @@ const Player = () => {
     handleChangeMode,
     playmode,
     showPlayList,
-    toggleShowPlayList
+    toggleShowPlayList,
+    currentPlayingLyric: currentPlayingLyric,
+    currentLyric: LyricRef.current,
+    currentLineNum: currentLineRef.current
   };
 
   const PlayListProps = {
