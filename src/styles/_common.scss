@@ -2,19 +2,36 @@
   display: block;
 }
 
-.common-fade-enter,
-.common-fade-appear {
+.common-fadeInUp-enter,
+.common-fadeInUp-appear {
   transform: translate3d(100%, 0, 0);
 }
-.common-fade-enter-active,
-.common-fade-appear-active {
+.common-fadeInUp-enter-active,
+.common-fadeInUp-appear-active {
   transition: transform 0.3s;
   transform: translate3d(0, 0, 0);
 }
-.common-fade-exit {
+.common-fadeInUp-exit {
   transform: translate3d(0, 0, 0);
 }
-.common-fade-exit-active {
+.common-fadeInUp-exit-active {
   transition: transform 0.3s;
   transform: translate3d(100%, 0, 0);
+}
+
+.common-fadeIn-enter,
+.common-fadeIn-appear {
+  opacity: 0;
+}
+.common-fadeIn-enter-active,
+.common-fadeIn-appear-active {
+  transition: all 0.3s;
+  opacity: 1;
+}
+.common-fadeIn-exit {
+  opacity: 1;
+}
+.common-fadeIn-exit-active {
+  transition: all 0.3s;
+  opacity: 0;
 }

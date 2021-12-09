@@ -61,7 +61,7 @@
       width: 50%;
       .title {
         color: $white;
-        font-size: $font-size-lg;
+        font-size: 20px;
       }
       .subtitle {
         text-indent: 1em;
@@ -81,6 +81,7 @@
       right: 0;
       margin: 0 auto;
       text-align: center;
+      visibility: hidden;
       .img-wrapper {
         .cd-image {
           width: 200px;
@@ -94,6 +95,50 @@
           &.pause {
             animation-play-state: paused;
           }
+        }
+      }
+      .playing_lyric {
+        margin-top: 80px;
+        // font-size: 14px;
+        line-height: 20px;
+        white-space: normal;
+        text-align: center;
+        color: $white;
+      }
+      &.cdWrapperShow {
+        visibility: visible;
+      }
+    }
+    .lyric-container {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      height: calc(100vh - 350px);
+      .lyric_content {
+        visibility: hidden;
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        display: contents;
+        p {
+          line-height: 32px;
+          color: rgba(255, 255, 255, 0.5);
+          white-space: normal;
+          &.current {
+            color: $white;
+          }
+          &.pure {
+            position: relative;
+            top: 30vh;
+          }
+        }
+        &.lyricShow {
+          visibility: visible;
         }
       }
     }

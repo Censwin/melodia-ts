@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-28 11:35:22
- * @LastEditTime: 2021-12-07 16:38:31
+ * @LastEditTime: 2021-12-09 16:26:48
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\index.tsx
  */
@@ -9,6 +9,7 @@ import { abort } from 'process';
 import React, { useRef, useState, useEffect, MediaHTMLAttributes } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IApplicationState } from '../../store/reducers';
+import LyricFormater from '../../utils/lyric-creator';
 import { createSongUrl, isEmptyObject } from '../../utils/tools';
 import NormalPlayer from './component/normalPlayer';
 import PlayList from './component/playList';
@@ -17,10 +18,13 @@ import * as ActionType from './store/constans';
 const Player = () => {
   const [currentTime, setCurrentTime] = useState(0); // 当前时间
   const [durationTime, setDurationTime] = useState(0); // 总时长
+  const [currentPlayingLyric, setPlayingLyric] = useState('');
   let ProgressPercent = currentTime / durationTime;
   const dispatch = useDispatch();
   const audioRef = useRef<HTMLAudioElement>(document.createElement('audio'));
   const songReady = useRef(true);
+  const LyricRef = useRef<any>(null); // 歌词类的实例对象
+  const currentLineRef = useRef(-1); // 当前行
   const {
     isFullScreen,
     playing,
@@ -30,11 +34,16 @@ const Player = () => {
     currentIndex,
     showPlayList,
     currentSong,
-    playmodeText
+    playmodeText,
+    lrc
   } = useSelector((state: IApplicationState) => state.Player);
 
   const changePlayingState = (state: boolean) => {
     dispatch({ type: ActionType.SET_PLAYING_STATE, payload: state });
+
+    if (LyricRef.current) {
+      LyricRef.current.togglePlay(currentTime * 1000);
+    }
   };
 
   const onProgressChange = (percent: number) => {
@@ -43,6 +52,9 @@ const Player = () => {
     setCurrentTime(newTime);
     if (!playing) {
       changePlayingState(true);
+    }
+    if (LyricRef.current) {
+      LyricRef.current.ProgressControl(newTime * 1000);
     }
   };
 
@@ -92,6 +104,35 @@ const Player = () => {
     dispatch({ type: ActionType.SET_SHOW_PLAYLIST, payload: status });
   };
 
+  const getSongLyric = (id: number) => {
+    dispatch({ type: ActionType.GET_LYRIC, payload: { id } });
+    if (LyricRef.current) {
+      LyricRef.current.stop();
+    }
+  };
+  // type TlyricCallBack = () => void
+  interface ILParams {
+    lineIndex: number;
+    text: string;
+  }
+  const lyricCallBack = ({ lineIndex, text }: ILParams) => {
+    if (!LyricRef.current) return;
+    // console.log('call', lineIndex);
+    currentLineRef.current = lineIndex;
+    setPlayingLyric(text);
+  };
+
+  useEffect(() => {
+    if (!lrc) {
+      LyricRef.current = null;
+    } else {
+      LyricRef.current = new LyricFormater(lrc, lyricCallBack);
+      LyricRef.current.play();
+      currentLineRef.current = 0;
+      LyricRef.current.ProgressControl(0);
+    }
+  }, [lrc]);
+
   type audioState = 'play' | 'pause';
   const audioControler = (state: audioState) => {
     if (state === 'play') {
@@ -128,6 +169,7 @@ const Player = () => {
     // changePlayingState(true);
     setCurrentTime(0);
     setDurationTime(item.dt / 1000);
+    getSongLyric(item.id);
   }, [playList, currentIndex]);
 
   useEffect(() => {
@@ -159,7 +201,10 @@ const Player = () => {
     handleChangeMode,
     playmode,
     showPlayList,
-    toggleShowPlayList
+    toggleShowPlayList,
+    currentPlayingLyric: currentPlayingLyric,
+    currentLyric: LyricRef.current,
+    currentLineNum: currentLineRef.current
   };
 
   const PlayListProps = {

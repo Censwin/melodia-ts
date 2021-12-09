@@ -100,7 +100,7 @@ const Rank = () => {
     <CSSTransition
       in={showStatus}
       appear={true}
-      classNames="common-fade"
+      classNames="common-fadeInUp"
       timeout={300}
       unmountOnExit
       onExited={history.goBack}
