@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-28 11:35:22
- * @LastEditTime: 2021-12-08 11:14:58
+ * @LastEditTime: 2021-12-09 16:26:48
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\index.tsx
  */
@@ -23,8 +23,8 @@ const Player = () => {
   const dispatch = useDispatch();
   const audioRef = useRef<HTMLAudioElement>(document.createElement('audio'));
   const songReady = useRef(true);
-  const LyricRef = useRef<any>(null);
-  const currentLineRef = useRef(-1);
+  const LyricRef = useRef<any>(null); // 歌词类的实例对象
+  const currentLineRef = useRef(-1); // 当前行
   const {
     isFullScreen,
     playing,
@@ -54,7 +54,7 @@ const Player = () => {
       changePlayingState(true);
     }
     if (LyricRef.current) {
-      LyricRef.current.togglePlay(newTime * 1000);
+      LyricRef.current.ProgressControl(newTime * 1000);
     }
   };
 
@@ -110,8 +110,17 @@ const Player = () => {
       LyricRef.current.stop();
     }
   };
-
-  const lyricCallBack = () => {};
+  // type TlyricCallBack = () => void
+  interface ILParams {
+    lineIndex: number;
+    text: string;
+  }
+  const lyricCallBack = ({ lineIndex, text }: ILParams) => {
+    if (!LyricRef.current) return;
+    // console.log('call', lineIndex);
+    currentLineRef.current = lineIndex;
+    setPlayingLyric(text);
+  };
 
   useEffect(() => {
     if (!lrc) {
@@ -120,7 +129,7 @@ const Player = () => {
       LyricRef.current = new LyricFormater(lrc, lyricCallBack);
       LyricRef.current.play();
       currentLineRef.current = 0;
-      LyricRef.current.seek(0);
+      LyricRef.current.ProgressControl(0);
     }
   }, [lrc]);
 

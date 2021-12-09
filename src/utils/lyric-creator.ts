@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-08 11:42:08
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-08 16:17:50
+ * @LastEditTime: 2021-12-09 16:27:35
  * @Description:
  * @FilePath: \melodia-ts\src\utils\lyric-creator.ts
  */
@@ -115,6 +115,7 @@ class LyricFormater {
   }
 
   private _playRest(controllingProgress = false) {
+    // 通过定时器定时触发回调函数
     let line = this.lines[this.currentIndex];
     let delay;
     if (controllingProgress) {

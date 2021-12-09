@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-19 16:54:40
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-07 17:04:38
+ * @LastEditTime: 2021-12-09 11:06:14
  * @Description: 歌单 与 专辑 详情页
  * @FilePath: \melodia-ts\src\application\Album\index.tsx
  */
@@ -147,7 +147,7 @@ const Album: React.FC = () => {
     <CSSTransition
       in={showStatus}
       appear={true}
-      classNames="common-fade"
+      classNames="common-fadeInUp"
       timeout={300}
       unmountOnExit
       onExited={history.goBack}
