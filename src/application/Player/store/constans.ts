@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 10:26:45
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-07 17:00:40
+ * @LastEditTime: 2021-12-08 16:54:56
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\store\constans.ts
  */
@@ -23,3 +23,6 @@ export const ADD_CURRENT_SONG = 'player/ADD_CURRENT_SONG';
 export const DEL_CURRENT_SONG = 'player/DEL_CURRENT_SONG';
 
 export const PLAY_ALL = 'player/PLAY_ALL';
+
+export const GET_LYRIC = 'player/GET_LYRIC';
+export const SAVE_LYRIC = 'player/SAVE_LYRIC';

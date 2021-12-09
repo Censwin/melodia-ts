@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 10:25:08
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-07 17:08:14
+ * @LastEditTime: 2021-12-08 16:56:28
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\store\sagas.ts
  */
@@ -12,6 +12,8 @@ import { Action } from 'redux';
 import { ICOMMONACTION } from '../../../utils/common_interface';
 import { IPlayerState, EPlayMode } from './reducer';
 import { findCurrentIndex, shuffle } from '../../../utils/tools';
+import { getLyricReq, ILyricRES } from '../../../services/playerApi';
+import LyricFormater from '../../../utils/lyric-creator';
 
 function* changePlaymode(action: ICOMMONACTION) {
   const { type, payload: mode } = action;
@@ -74,7 +76,16 @@ function* addSongToList(action: ICOMMONACTION) {
   yield put({ type: ActionType.SET_CURRENT_SONG, payload: currentSong });
 }
 
+function* getLyric(action: ICOMMONACTION): Generator<any> {
+  const { payload } = action;
+  const { lrc } = (yield call(getLyricReq, payload)) as ILyricRES;
+  const { lyric } = lrc;
+  yield put({ type: ActionType.SAVE_LYRIC, payload: lyric });
+  // const a = new LyricFormater(lyric, () => {});
+}
+
 export default function* () {
   yield takeLatest(ActionType.CHANGE_PLAYMODE, changePlaymode);
   yield takeLatest(ActionType.ADD_CURRENT_SONG, addSongToList);
+  yield takeLatest(ActionType.GET_LYRIC, getLyric);
 }

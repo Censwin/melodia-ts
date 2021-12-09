@@ -102,7 +102,7 @@ const Recommend: React.FC<IRecommendProps> = (props) => {
       nodeRef={containerRef} // TRG issue 668
       in={show}
       timeout={300}
-      classNames="common-fade"
+      classNames="common-fadeInUp"
       unmountOnExit
       appear={true}
       onExited={history.goBack}
