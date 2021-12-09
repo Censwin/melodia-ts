@@ -1,9 +1,9 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-28 23:23:22
- * @LastEditTime: 2021-11-26 23:00:41
+ * @LastEditTime: 2021-12-09 17:20:07
  * @Description:
- * @FilePath: /melodia-ts/src/routes/index.tsx
+ * @FilePath: \melodia-ts\src\routes\index.tsx
  */
 import React, { Component, ReactNode } from 'react';
 
@@ -13,7 +13,7 @@ import Home from '../application/Home';
 import Recommend from '../application/Recommend';
 import Album from '../application/Album';
 import Rank from '../application/Rank';
-
+import Search from '../application/Search';
 const routes = [
   {
     path: '/',
@@ -44,6 +44,12 @@ const routes = [
         exact: true,
         key: 'album',
         component: Album
+      },
+      {
+        path: '/search',
+        exact: true,
+        key: 'search',
+        component: Search
       }
     ]
   }

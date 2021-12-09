@@ -26,6 +26,9 @@
     border-radius: 40px;
     background: $white-100;
     color: $gray-700;
+    svg {
+      margin-right: 5px;
+    }
   }
   .header-more {
     font-size: 25px;

@@ -1,9 +1,9 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 17:37:30
- * @LastEditTime: 2021-11-16 16:41:01
+ * @LastEditTime: 2021-12-09 16:51:00
  * @Description:
- * @FilePath: /melodia-ts/src/application/Discover/store/reducer.ts
+ * @FilePath: \melodia-ts\src\application\Discover\store\reducer.ts
  */
 import { Reducer } from 'redux';
 import produce, { Draft } from 'immer';
@@ -15,11 +15,13 @@ interface bannerItem {
 export interface IDiscoverState {
   bannerList: bannerItem[];
   recommendList: any[];
+  videoUrl: string;
 }
 
 const defaultState: IDiscoverState = {
   bannerList: [],
-  recommendList: []
+  recommendList: [],
+  videoUrl: ''
 };
 
 const DiscoverReducer: Reducer<IDiscoverState> = (state = defaultState, action) => {
@@ -31,6 +33,9 @@ const DiscoverReducer: Reducer<IDiscoverState> = (state = defaultState, action) 
         break;
       case ActionTypes.SAVE_RECOMMEND:
         draft.recommendList = payload;
+        break;
+      case ActionTypes.SAVE_VIDEO_URL:
+        draft.videoUrl = payload;
         break;
       default:
         break;
