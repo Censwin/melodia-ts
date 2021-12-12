@@ -107,11 +107,13 @@
       position: absolute;
       top: 6px;
       right: 8px;
-      padding: 4px 8px;
+      padding: 1px 8px;
       border-radius: 14px;
       svg {
         margin-right: 4px;
         zoom: 0.8;
+        transform: scale(0.6);
+        vertical-align: top;
       }
     }
     .recommend-item-name {
