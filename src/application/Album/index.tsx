@@ -8,7 +8,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { useHistory, useParams } from 'react-router';
-import { Header, Marquee, Scroll } from '../../baseUI';
+import { CommonSongList, Header, Marquee, Scroll } from '../../baseUI';
 import { Icon } from '../../components';
 import { getCount, getName, isEmptyObject } from '../../utils/tools';
 import { useDispatch, useSelector } from 'react-redux';
@@ -123,22 +123,7 @@ const Album: React.FC = () => {
             </span>
           </div>
         </article>
-        <ul className="songs-wrapper">
-          {tracks.map((item: any, index: number) => {
-            return (
-              <li key={item.name + index} onClick={(e) => handleSelectSong(e, item)}>
-                <span className="index">{index + 1}</span>
-                <div className="song-item">
-                  <span className="song-name">{item.name}</span>
-                  <span className="singer-name">
-                    <Icon icon="h-square" />
-                    {getName(item.ar)} - {item.al.name}
-                  </span>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <CommonSongList songs={tracks} onClickCallback={handleSelectSong} />
       </section>
     ),
     [currentAlbum]

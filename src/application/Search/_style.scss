@@ -6,12 +6,12 @@
   height: 100%;
   background: $white;
   .search-header {
+    padding: 0 10px;
     height: 60px;
-
     form {
       position: absolute;
       top: 10px;
-      width: 100%;
+      width: 94%;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -40,6 +40,28 @@
         border: none;
         outline: none;
         color: $primary;
+      }
+    }
+  }
+  .hotkey-wrapper {
+    width: 80%;
+    margin: 0 auto;
+    li {
+      line-height: 45px;
+      float: left;
+      width: 50%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      &:nth-of-type(-n + 3) {
+        i {
+          color: $danger;
+        }
+      }
+      i {
+        margin-right: 10px;
+        color: $subtext;
+        font-weight: bold;
       }
     }
   }

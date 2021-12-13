@@ -10,34 +10,6 @@
   .scroll-window-wrapper {
     height: calc(100vh - 132px);
   }
-  .r-cate-wrapper {
-    padding: 5px 10px;
-    margin-bottom: 10px;
-    > .r-cate-item {
-      font-size: $font-size-least;
-      padding: 5px 8px;
-      position: relative;
-      &::after {
-        content: '';
-        position: absolute;
-        z-index: -1;
-        bottom: 0;
-        left: 10%;
-        transform: translateY(-70%);
-        width: 80%;
-        height: 6px;
-        border-radius: 6px;
-        background-color: transparent;
-      }
-      &.selected {
-        font-weight: bold;
-        &::after {
-          transition: background-color 0.5s;
-          background-color: lighten($primary, 8);
-        }
-      }
-    }
-  }
   .playlist-wrapper {
     // 歌单列表
     width: 95%;

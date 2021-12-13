@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:47:57
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-08 18:07:09
+ * @LastEditTime: 2021-12-13 17:03:39
  * @Description:
  * @FilePath: \melodia-ts\src\utils\tools.ts
  */
@@ -152,13 +152,20 @@ export const shuffle: TShuffle = (arr) => {
   return newArr;
 };
 
-// export function aaa<T extends { [X: string]: any }> (data: T[]) {
-//   data.forEach(item => {
-//     // const a= 'a'
-//     item['a' as any]= 10
-//   })
-// }
-// interface Ia {
-//   [key: string]: any
-// }
-// aaa<Ia>([{'a': 1}])
+export const getResOrderLable = (arr: string[]) => {
+  const newArr = arr.map((item) => {
+    switch (item) {
+      case 'songs':
+        return '歌曲';
+      case 'artists':
+        return '歌手';
+      case 'albums':
+        return '专辑';
+      case 'playlists':
+        return '歌单';
+      default:
+        return '';
+    }
+  });
+  return newArr;
+};
