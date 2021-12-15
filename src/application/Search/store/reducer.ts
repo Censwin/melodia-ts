@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-13 11:09:43
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-13 18:23:13
+ * @LastEditTime: 2021-12-14 10:29:52
  * @Description:
  * @FilePath: \melodia-ts\src\application\Search\store\reducer.ts
  */
@@ -9,7 +9,7 @@ import produce, { Draft } from 'immer';
 import { Reducer } from 'redux';
 import { getResOrderLable } from '../../../utils/tools';
 import * as ActionType from './constants';
-import { temp1 } from './temp';
+import { temp1, temp2 } from './temp';
 interface ISuggest {
   albums?: { id: number; name: string }[];
   artists?: { id: number; name: string; picUrl: string }[];
@@ -27,7 +27,7 @@ export interface ISearchState {
 const defaultState = {
   hotKeyList: [],
   suggestObject: temp1, // 列表歌单和歌手
-  songsList: [], // 歌曲列表
+  songsList: temp2, // 歌曲列表
   enterLoading: false
 };
 

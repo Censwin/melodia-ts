@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-09 17:18:49
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-13 18:22:01
+ * @LastEditTime: 2021-12-15 10:09:12
  * @Description:
  * @FilePath: \melodia-ts\src\application\Search\index.tsx
  */
@@ -116,19 +116,19 @@ const Search = () => {
     });
   };
 
-  // const RenderSongs = useCallback(() => {
-  //   return (
-  //     <CSSTransition
-  //       in={selectedOption === 'songs'}
-  //       mountOnEnter
-  //       unmountOnExit
-  //       classNames="common-fadeInUp"
-  //       timeout={300}
-  //     >
-  //       <CommonSongList songs={songsList} onClickCallback={() => {}} />
-  //     </CSSTransition>
-  //   );
-  // }, [songsList]);
+  const RenderSongs = useCallback(() => {
+    return (
+      <CSSTransition
+        in={selectedOption === 'songs'}
+        mountOnEnter
+        unmountOnExit
+        classNames="common-fadeInUp"
+        timeout={300}
+      >
+        <CommonSongList songs={songsList} onClickCallback={() => {}} showNum={false} />
+      </CSSTransition>
+    );
+  }, [songsList, selectedOption]);
 
   return (
     <CSSTransition
