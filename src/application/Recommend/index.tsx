@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:57:53
  * @LastEditors: k200c
- * @LastEditTime: 2021-11-24 14:49:19
+ * @LastEditTime: 2021-12-16 17:09:15
  * @Description:
  * @FilePath: \melodia-ts\src\application\Recommend\index.tsx
  */
@@ -18,6 +18,7 @@ import { Icon } from '../../components';
 import { getCount } from '../../utils/tools';
 import LazyLoad, { forceCheck } from 'react-lazyload';
 import defaultImg from './../../assets/img/defaultmusic.png';
+import Tabs from '../../components/Tabs';
 
 interface IRecommendProps extends RouteConfig {
   a?: string;
@@ -33,9 +34,7 @@ const Recommend: React.FC<IRecommendProps> = (props) => {
   const containerRef = useRef(null);
   type ScrollComponentType = React.ElementRef<typeof Scroll>;
   const ScrollRef = useRef<ScrollComponentType>(null);
-  // useEffect(() => {
-  //   setshow(true);
-  // }, []);
+
   useEffect(() => {
     if (!cateList.length) {
       dispatch({ type: ActionTypes.GET_CATELIST });
@@ -58,25 +57,12 @@ const Recommend: React.FC<IRecommendProps> = (props) => {
 
   const handleChangeSelectedId = (id: string) => {
     setSelectedId(id);
-    const index = cateList.findIndex((item) => item.id === id);
+    const index = cateList.findIndex((item) => String(item.id) === id);
     dispatch({
       type: ActionTypes.GET_PLAYLISTS,
       payload: { cat: cateList[index].name, limit: 50 }
     });
   };
-
-  const RenderCateOptions = useCallback(() => {
-    return cateList.map((item) => {
-      const classes = classNames('r-cate-item horizen-item', {
-        selected: selectedId === item.id
-      });
-      return (
-        <span key={item.id} className={classes} onClick={() => handleChangeSelectedId(item.id)}>
-          {item.name}
-        </span>
-      );
-    });
-  }, [selectedId]);
 
   const RenderPlayList = () => {
     return playLists.map((item) => {
@@ -109,14 +95,19 @@ const Recommend: React.FC<IRecommendProps> = (props) => {
     >
       <div className="recommend-container" ref={containerRef}>
         <Header title="歌单广场" handleClick={handleBack} />
-        <HorizenScroll>
-          <div className="r-cate-wrapper">{RenderCateOptions()}</div>
-        </HorizenScroll>
-        <div className="scroll-window-wrapper">
-          <Scroll ref={ScrollRef} onScroll={forceCheck}>
-            <div className="playlist-wrapper">{RenderPlayList()}</div>
-          </Scroll>
-        </div>
+        <Tabs onTabClick={handleChangeSelectedId}>
+          {cateList.map((item) => {
+            return (
+              <Tabs.Item label={item.name} key={item.id}>
+                <div className="scroll-window-wrapper">
+                  <Scroll ref={ScrollRef} onScroll={forceCheck}>
+                    <div className="playlist-wrapper">{RenderPlayList()}</div>
+                  </Scroll>
+                </div>
+              </Tabs.Item>
+            );
+          })}
+        </Tabs>
       </div>
     </CSSTransition>
   );

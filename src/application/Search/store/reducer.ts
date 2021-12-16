@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-13 11:09:43
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-14 10:29:52
+ * @LastEditTime: 2021-12-16 17:31:45
  * @Description:
  * @FilePath: \melodia-ts\src\application\Search\store\reducer.ts
  */
@@ -14,7 +14,7 @@ interface ISuggest {
   albums?: { id: number; name: string }[];
   artists?: { id: number; name: string; picUrl: string }[];
   order: string[]; // 该返回结果所显示的标签 如：  ["songs", "artists", "albums", "playlists"]
-  playlists?: { id: number; name: string; playCount: number }[];
+  playlists?: { id: number; name: string; playCount: number; coverImgUrl: string }[];
 }
 
 export interface ISearchState {

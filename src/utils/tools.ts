@@ -1,10 +1,12 @@
 /*
  * @Date: 2021-11-17 14:47:57
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-13 17:03:39
+ * @LastEditTime: 2021-12-16 16:51:02
  * @Description:
  * @FilePath: \melodia-ts\src\utils\tools.ts
  */
+import React from 'react';
+import * as ReactIs from 'react-is';
 
 export const debounce = () => {};
 
@@ -169,3 +171,30 @@ export const getResOrderLable = (arr: string[]) => {
   });
   return newArr;
 };
+
+export interface Option {
+  keepEmpty?: boolean;
+}
+
+export default function ChildrenToArray(
+  children: React.ReactNode,
+  option: Option = {}
+): React.ReactElement[] {
+  let ret: React.ReactElement[] = [];
+
+  React.Children.forEach(children, (child: any) => {
+    if ((child === undefined || child === null) && !option.keepEmpty) {
+      return;
+    }
+
+    if (Array.isArray(child)) {
+      ret = ret.concat(ChildrenToArray(child));
+    } else if (ReactIs.isFragment(child) && child.props) {
+      ret = ret.concat(ChildrenToArray(child.props.children, option));
+    } else {
+      ret.push(child);
+    }
+  });
+
+  return ret;
+}

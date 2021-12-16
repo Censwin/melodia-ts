@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-16 14:15:24
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-16 16:16:42
+ * @LastEditTime: 2021-12-16 16:30:22
  * @Description:
  * @FilePath: \melodia-ts\src\components\Tabs\TabPane.tsx
  */
@@ -13,12 +13,11 @@ export interface ITabPaneProps {
   activeKey?: string;
   children?: React.ReactNode;
   active?: boolean;
-  forceRender?: boolean;
 }
 
 function TabPanne(props: ITabPaneProps) {
-  const { activeKey, children, active, forceRender } = props;
-  const [visited, setVisited] = React.useState(forceRender);
+  const { activeKey, children, active } = props;
+  const [visited, setVisited] = React.useState(false);
 
   React.useEffect(() => {
     if (active) {

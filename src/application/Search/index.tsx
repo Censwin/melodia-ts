@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-09 17:18:49
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-16 14:38:23
+ * @LastEditTime: 2021-12-16 17:32:06
  * @Description:
  * @FilePath: \melodia-ts\src\application\Search\index.tsx
  */
@@ -13,11 +13,13 @@ import { CommonSongList, HorizenScroll } from '../../baseUI';
 import { Icon } from '../../components';
 import useDebounce from '../../hooks/useDebounce';
 import { IApplicationState } from '../../store/reducers';
-import { getResOrderLable } from '../../utils/tools';
+import { getResOrderLable, getCount } from '../../utils/tools';
 import Filter from './component/filter';
 import * as ActionType from './store/constants';
 import classNames from 'classnames';
 import Tabs from '../../components/Tabs';
+import LazyLoad, { forceCheck } from 'react-lazyload';
+import defaultImg from './../../assets/img/defaultmusic.png';
 
 const Search = () => {
   const [showState, setShowState] = useState(true);
@@ -81,55 +83,49 @@ const Search = () => {
     }
   }, [hotKeyList, showHotkey]);
 
-  const RenderResOptions = useCallback(() => {
-    const { order } = suggestObject;
-    return order.map((item) => {
-      const classes = classNames('r-cate-item horizen-item', {
-        selected: selectedOption === item
-      });
-      return (
-        <span key={item} className={classes} onClick={() => setSelectedOption(item)}>
-          {item}
-        </span>
-      );
-    });
-  }, [suggestObject.order, selectedOption]);
+  const handleChangePannel = (key: string) => {
+    setSelectedOption(key);
+  };
 
-  const RenderSuggest = () => {
-    const { order } = suggestObject;
-    return order.map((item: string) => {
-      const show = item === selectedOption;
-      console.log(show);
+  const RenderPlayList = () => {
+    if (!suggestObject.playlists) return;
+    return suggestObject.playlists.map((item) => {
       return (
-        <CSSTransition
-          key={item}
-          in={show}
-          mountOnEnter
-          unmountOnExit
-          classNames="common-fadeInUp"
-          timeout={300}
+        <div
+          key={item.id}
+          className="playlist-item"
+          onClick={(_) => history.push(`/album/${item.id}`)}
         >
-          <div>
-            <h1>{item}</h1>
+          <div className="item-pic-wrapper">
+            <LazyLoad placeholder={<img width="100%" height="100%" src={defaultImg} />}>
+              <img className="playlist-item-pic" src={item.coverImgUrl + '?param=300x300'} />
+            </LazyLoad>
           </div>
-        </CSSTransition>
+          <div className="play-count">
+            <Icon icon="play" />
+            {getCount(item.playCount)}
+          </div>
+          <span className="recommend-item-name">{item.name}</span>
+        </div>
       );
     });
   };
 
-  const RenderSongs = useCallback(() => {
-    return (
-      <CSSTransition
-        in={selectedOption === 'songs'}
-        mountOnEnter
-        unmountOnExit
-        classNames="common-fadeInUp"
-        timeout={300}
-      >
-        <CommonSongList songs={songsList} onClickCallback={() => {}} showNum={false} />
-      </CSSTransition>
-    );
-  }, [songsList, selectedOption]);
+  const RenderContent = useCallback(
+    (option: string) => {
+      switch (option) {
+        case 'songs':
+          return <CommonSongList songs={songsList} onClickCallback={() => {}} showNum={false} />;
+        case 'albums':
+          return <h1>123</h1>;
+        case 'playlists':
+          return RenderPlayList();
+        default:
+          return <h1>123</h1>;
+      }
+    },
+    [selectedOption]
+  );
 
   return (
     <CSSTransition
@@ -145,18 +141,14 @@ const Search = () => {
         <Filter {...FilterProps} />
         {RenderHotKeys()}
         <article className="result-wrapper">
-          {/* <HorizenScroll>
-            <div className="r-cate-wrapper">{RenderResOptions()}</div>
-          </HorizenScroll> */}
-          {/* {RenderSuggest()} */}
-          {/* {RenderSongs()} */}
-          <Tabs>
-            <Tabs.Item key="1" label="面板1">
-              <h1>1234</h1>
-            </Tabs.Item>
-            <Tabs.Item key="2" label="面板2">
-              <h1>431</h1>
-            </Tabs.Item>
+          <Tabs onTabClick={handleChangePannel}>
+            {suggestObject.order.map((item) => {
+              return (
+                <Tabs.Item label={item} key={item}>
+                  {RenderContent(item)}
+                </Tabs.Item>
+              );
+            })}
           </Tabs>
         </article>
       </section>
