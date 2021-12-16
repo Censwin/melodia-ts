@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-09 17:18:49
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-15 10:09:12
+ * @LastEditTime: 2021-12-16 14:38:23
  * @Description:
  * @FilePath: \melodia-ts\src\application\Search\index.tsx
  */
@@ -17,6 +17,7 @@ import { getResOrderLable } from '../../utils/tools';
 import Filter from './component/filter';
 import * as ActionType from './store/constants';
 import classNames from 'classnames';
+import Tabs from '../../components/Tabs';
 
 const Search = () => {
   const [showState, setShowState] = useState(true);
@@ -144,11 +145,19 @@ const Search = () => {
         <Filter {...FilterProps} />
         {RenderHotKeys()}
         <article className="result-wrapper">
-          <HorizenScroll>
+          {/* <HorizenScroll>
             <div className="r-cate-wrapper">{RenderResOptions()}</div>
-          </HorizenScroll>
+          </HorizenScroll> */}
           {/* {RenderSuggest()} */}
           {/* {RenderSongs()} */}
+          <Tabs>
+            <Tabs.Item key="1" label="面板1">
+              <h1>1234</h1>
+            </Tabs.Item>
+            <Tabs.Item key="2" label="面板2">
+              <h1>431</h1>
+            </Tabs.Item>
+          </Tabs>
         </article>
       </section>
     </CSSTransition>

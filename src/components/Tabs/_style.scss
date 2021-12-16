@@ -1,0 +1,15 @@
+.tab-content-wrapper {
+  .tab-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    transition: margin-left 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    will-change: margin-left;
+  }
+  .tab-tabpane {
+    width: 100%;
+    flex-shrink: 0;
+    opacity: 1;
+    transition: opacity 0.45s;
+  }
+}

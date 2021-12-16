@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import TabNavList from './TabNavList';
-import TabPannelList, { ITabPaneProps } from './TabPannelList';
+import TabPannelList from './TabPanelList';
 import type { ITab } from './interface';
 import TabContext from './TabContext';
 
@@ -11,6 +11,7 @@ export interface ITabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, '
   style?: React.CSSProperties;
   className?: string;
   children?: React.ReactNode;
+  onTabClick?: (activeKey: string, e: React.MouseEvent) => void;
 }
 
 function parseTabList(children: React.ReactNode): ITab[] {
@@ -19,6 +20,7 @@ function parseTabList(children: React.ReactNode): ITab[] {
       const key = node.key !== undefined ? String(node.key) : undefined;
       return {
         key,
+        ...node.props,
         node
       };
     }
@@ -33,17 +35,42 @@ function Tabs({
   style,
   onChange,
   children,
+  onTabClick,
   ...otherprops
 }: ITabsProps) {
   const tabs = parseTabList(children);
 
-  const TabNavListProps = {};
+  const memoContext = useMemo(() => ({ tabs }), [children]);
+  const [ActiveKey, setActiveKey] = useState(tabs[0]?.key);
+
+  const shareProps = {
+    ActiveKey
+  };
+
+  const onInternalTabClick = (key: string, e: React.MouseEvent) => {
+    if (onTabClick) {
+      onTabClick(key, e);
+    }
+    if (key !== ActiveKey) {
+      setActiveKey(key);
+    }
+  };
+  const TabNavProps = {
+    ...shareProps,
+    onTabClick: onInternalTabClick
+  };
+
+  const TabPaneListProps = {
+    ...shareProps
+  };
   return (
-    <TabContext.Provider value={{ tabs }}>
+    <TabContext.Provider value={memoContext}>
       <div className={classNames('beetle-tabs', className)} {...otherprops}>
-        <TabNavList />
-        <TabPannelList />
+        <TabNavList {...TabNavProps} />
+        <TabPannelList {...TabPaneListProps} />
       </div>
     </TabContext.Provider>
   );
 }
+
+export default Tabs;
