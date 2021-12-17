@@ -1,9 +1,9 @@
 /*
  * @Date: 2021-12-08 11:42:08
- * @LastEditors: k200c
- * @LastEditTime: 2021-12-09 16:27:35
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-12-17 23:01:26
  * @Description:
- * @FilePath: \melodia-ts\src\utils\lyric-creator.ts
+ * @FilePath: /melodia-ts/src/utils/lyric-creator.ts
  */
 
 const timeExp = /\[(\d{2,}):(\d{2})(?:\.(\d{2,3}))?]/g;

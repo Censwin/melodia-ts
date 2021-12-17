@@ -74,7 +74,7 @@
   > .player-middle {
     position: fixed;
     width: 100%;
-    top: 150px;
+    top: 100px;
     .cd-wrapper {
       position: absolute;
       left: 0;
@@ -84,7 +84,7 @@
       visibility: hidden;
       .img-wrapper {
         .cd-image {
-          width: 200px;
+          width: 160px;
           border-radius: 50%;
           border: 50px black solid;
           box-shadow: 0 0 1px 10px rgba(255, 255, 255, 0.3);
@@ -98,7 +98,7 @@
         }
       }
       .playing_lyric {
-        margin-top: 80px;
+        margin-top: 50px;
         // font-size: 14px;
         line-height: 20px;
         white-space: normal;
