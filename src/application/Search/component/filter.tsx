@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-13 10:47:47
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-12-17 23:37:25
+ * @LastEditTime: 2021-12-17 23:50:23
  * @Description:
  * @FilePath: /melodia-ts/src/application/Search/component/filter.tsx
  */
@@ -26,7 +26,9 @@ const Filter: React.FC<IFilterProps> = (props) => {
     setInputVal(e.target.value);
   };
   const handleSubmit = (e: React.FormEvent) => {
+    handleSearch(inputVal);
     e.stopPropagation();
+    e.preventDefault();
   };
   useEffect(() => {
     inputRef.current.focus();
@@ -54,9 +56,15 @@ const Filter: React.FC<IFilterProps> = (props) => {
             onChange={handleInput}
           />
         </div>
-        <button className="search-button" onClick={() => handleSearch(inputVal)}>
-          搜索
-        </button>
+        <input
+          type="button"
+          value="搜索"
+          className="search-button"
+          onClick={(e) => {
+            handleSearch(inputVal);
+            return false;
+          }}
+        />
       </form>
     </article>
   );
