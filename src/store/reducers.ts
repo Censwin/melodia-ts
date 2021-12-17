@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-30 17:12:13
- * @LastEditTime: 2021-11-29 14:09:12
+ * @LastEditTime: 2021-12-13 11:19:16
  * @Description:
  * @FilePath: \melodia-ts\src\store\reducers.ts
  */
@@ -13,6 +13,7 @@ import { reducer as RecommendReducer, IRcomendState } from './../application/Rec
 import { reducer as AlbumReducer, IAlbumState } from './../application/Album/store';
 import { reducer as RankReducer, IRankState } from './../application/Rank/store';
 import { reducer as PlayerReducer, IPlayerState } from './../application/Player/store';
+import { reducer as SearchReducer, ISearchState } from './../application/Search/store';
 
 export const RootReducers = combineReducers({
   Home: HomeReducer,
@@ -20,7 +21,8 @@ export const RootReducers = combineReducers({
   Recommend: RecommendReducer,
   Album: AlbumReducer,
   Rank: RankReducer,
-  Player: PlayerReducer
+  Player: PlayerReducer,
+  Search: SearchReducer
 });
 
 export interface IApplicationState {
@@ -30,4 +32,5 @@ export interface IApplicationState {
   Album: IAlbumState;
   Rank: IRankState;
   Player: IPlayerState;
+  Search: ISearchState;
 }
