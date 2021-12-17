@@ -1,9 +1,9 @@
 /*
  * @Date: 2021-12-13 10:47:47
- * @LastEditors: k200c
- * @LastEditTime: 2021-12-17 17:21:10
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-12-17 23:37:25
  * @Description:
- * @FilePath: \melodia-ts\src\application\Search\component\filter.tsx
+ * @FilePath: /melodia-ts/src/application/Search/component/filter.tsx
  */
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router';
@@ -25,6 +25,9 @@ const Filter: React.FC<IFilterProps> = (props) => {
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputVal(e.target.value);
   };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.stopPropagation();
+  };
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -40,7 +43,7 @@ const Filter: React.FC<IFilterProps> = (props) => {
 
   return (
     <article className="search-header">
-      <div className="filter">
+      <form className="filter" onSubmit={handleSubmit}>
         <Icon className="header-back" icon="chevron-left" onClick={handleCancel} />
         <div className="input-wrapper">
           <Icon icon="search" />
@@ -54,7 +57,7 @@ const Filter: React.FC<IFilterProps> = (props) => {
         <button className="search-button" onClick={() => handleSearch(inputVal)}>
           搜索
         </button>
-      </div>
+      </form>
     </article>
   );
 };

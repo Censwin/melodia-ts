@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-28 23:23:22
- * @LastEditTime: 2021-12-17 23:06:49
+ * @LastEditTime: 2021-12-17 23:25:00
  * @Description:
  * @FilePath: /melodia-ts/src/App.tsx
  */
@@ -20,8 +20,13 @@ function App() {
       const addAndRemove = function () {
         const audio: HTMLAudioElement = document.getElementById('my_audio') as HTMLAudioElement;
         if (audio) {
-          audio.play();
-          audio.pause();
+          audio
+            .play()
+            .then(() => {})
+            .catch((error) => {});
+          setTimeout(() => {
+            audio.pause();
+          }, 1);
         }
         setTimeout(() => {
           target.removeEventListener('click', addAndRemove);
