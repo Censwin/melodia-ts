@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-28 11:35:22
- * @LastEditTime: 2021-12-09 16:26:48
+ * @LastEditTime: 2021-12-17 15:54:28
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\index.tsx
  */
@@ -76,6 +76,10 @@ const Player = () => {
   const nextSong = () => {
     if (playmode === EPlayMode.loop) {
       resetAudioTime();
+      return;
+    }
+    if (playList.length === 1) {
+      changePlayingState(false);
       return;
     }
     let newIndex = (currentIndex + 1) % playList.length;

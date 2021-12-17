@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-16 14:15:24
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-16 16:30:22
+ * @LastEditTime: 2021-12-17 16:35:43
  * @Description:
  * @FilePath: \melodia-ts\src\components\Tabs\TabPane.tsx
  */
@@ -18,7 +18,6 @@ export interface ITabPaneProps {
 function TabPanne(props: ITabPaneProps) {
   const { activeKey, children, active } = props;
   const [visited, setVisited] = React.useState(false);
-
   React.useEffect(() => {
     if (active) {
       setVisited(true);

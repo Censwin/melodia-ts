@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:57:53
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-16 17:09:15
+ * @LastEditTime: 2021-12-17 17:29:17
  * @Description:
  * @FilePath: \melodia-ts\src\application\Recommend\index.tsx
  */
@@ -19,6 +19,7 @@ import { getCount } from '../../utils/tools';
 import LazyLoad, { forceCheck } from 'react-lazyload';
 import defaultImg from './../../assets/img/defaultmusic.png';
 import Tabs from '../../components/Tabs';
+import { CommonPlaylist } from './../../baseUI';
 
 interface IRecommendProps extends RouteConfig {
   a?: string;
@@ -64,25 +65,6 @@ const Recommend: React.FC<IRecommendProps> = (props) => {
     });
   };
 
-  const RenderPlayList = () => {
-    return playLists.map((item) => {
-      return (
-        <div key={item.id} className="playlist-item" onClick={(_) => enterDetail(item.id)}>
-          <div className="item-pic-wrapper">
-            <LazyLoad placeholder={<img width="100%" height="100%" src={defaultImg} />}>
-              <img className="playlist-item-pic" src={item.coverImgUrl + '?param=300x300'} />
-            </LazyLoad>
-          </div>
-          <div className="play-count">
-            <Icon icon="play" />
-            {getCount(item.playCount)}
-          </div>
-          <span className="recommend-item-name">{item.name}</span>
-        </div>
-      );
-    });
-  };
-
   return (
     <CSSTransition
       nodeRef={containerRef} // TRG issue 668
@@ -101,7 +83,9 @@ const Recommend: React.FC<IRecommendProps> = (props) => {
               <Tabs.Item label={item.name} key={item.id}>
                 <div className="scroll-window-wrapper">
                   <Scroll ref={ScrollRef} onScroll={forceCheck}>
-                    <div className="playlist-wrapper">{RenderPlayList()}</div>
+                    <div className="playlist-wrapper">
+                      <CommonPlaylist data={playLists} onClickCallback={enterDetail} />
+                    </div>
                   </Scroll>
                 </div>
               </Tabs.Item>

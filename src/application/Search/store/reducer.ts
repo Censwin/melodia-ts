@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-13 11:09:43
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-16 17:31:45
+ * @LastEditTime: 2021-12-17 17:03:31
  * @Description:
  * @FilePath: \melodia-ts\src\application\Search\store\reducer.ts
  */
@@ -9,11 +9,11 @@ import produce, { Draft } from 'immer';
 import { Reducer } from 'redux';
 import { getResOrderLable } from '../../../utils/tools';
 import * as ActionType from './constants';
-import { temp1, temp2 } from './temp';
+// import { temp1, temp2 } from './temp';
 interface ISuggest {
   albums?: { id: number; name: string }[];
   artists?: { id: number; name: string; picUrl: string }[];
-  order: string[]; // 该返回结果所显示的标签 如：  ["songs", "artists", "albums", "playlists"]
+  order?: string[]; // 该返回结果所显示的标签 如：  ["songs", "artists", "albums", "playlists"]
   playlists?: { id: number; name: string; playCount: number; coverImgUrl: string }[];
 }
 
@@ -26,8 +26,8 @@ export interface ISearchState {
 
 const defaultState = {
   hotKeyList: [],
-  suggestObject: temp1, // 列表歌单和歌手
-  songsList: temp2, // 歌曲列表
+  suggestObject: {}, // 列表歌单和歌手
+  songsList: [], // 歌曲列表
   enterLoading: false
 };
 
@@ -46,7 +46,11 @@ const SearchReducer: Reducer<ISearchState> = (state = defaultState, action) => {
         break;
       case ActionType.SET_SUGGEST_LIST:
         draft.suggestObject = payload;
-        draft.suggestObject.order = getResOrderLable(draft.suggestObject.order);
+        draft.suggestObject.order = getResOrderLable(draft.suggestObject.order as string[]);
+        break;
+      case ActionType.CLEAR_DATA:
+        draft.suggestObject = {};
+        draft.songsList = [];
         break;
       default:
         break;

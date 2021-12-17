@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import TabNavList from './TabNavList';
 import TabPannelList from './TabPanelList';
 import type { ITab } from './interface';
@@ -40,12 +40,14 @@ function Tabs({
   ...otherprops
 }: ITabsProps) {
   const tabs = parseTabList(children);
-  // console.dir(tabs)
-  const memoContext = useMemo(() => ({ tabs }), [tabs]);
-  // console.log()
-
-  const [ActiveKey, setActiveKey] = useState(tabs[0]?.key);
-
+  const memoContext = useMemo(() => ({ tabs }), [tabs, tabs.length]);
+  const [ActiveKey, setActiveKey] = useState('');
+  useEffect(() => {
+    if (!ActiveKey && tabs[0]) {
+      setActiveKey(tabs[0].key);
+    }
+  }, [tabs]);
+  console.log(ActiveKey);
   const shareProps = {
     ActiveKey
   };

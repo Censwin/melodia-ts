@@ -1,13 +1,14 @@
 /*
  * @Date: 2021-11-29 09:58:03
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-08 16:56:25
+ * @LastEditTime: 2021-12-17 15:58:02
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\store\reducer.ts
  */
 import { Reducer } from 'redux';
 import produce, { Draft } from 'immer';
 import * as ActionType from './constans';
+import { findCurrentIndex } from '../../../utils/tools';
 
 export enum EPlayMode {
   sequence,
@@ -28,6 +29,36 @@ export interface IPlayerState {
   currentSong: any;
   lrc: string;
 }
+
+const handleInsertSong = (draft: IPlayerState, song: any) => {
+  let currentIndex = draft.currentIndex;
+  let nextIndex = findCurrentIndex(song, draft.playList);
+  if (currentIndex === nextIndex && currentIndex !== -1) return;
+  currentIndex++;
+  draft.playList.splice(currentIndex, 0, song);
+  if (nextIndex > -1) {
+    if (currentIndex > nextIndex) {
+      draft.playList.splice(nextIndex, 1);
+      currentIndex--;
+    } else {
+      draft.playList.splice(nextIndex + 1, 1);
+    }
+  }
+
+  let sequenceIndex = findCurrentIndex(draft.currentSong, draft.sequencePlayList) + 1;
+  let fsIndex = findCurrentIndex(song, draft.sequencePlayList);
+  draft.sequencePlayList.splice(sequenceIndex, 0, song);
+  if (fsIndex > -1) {
+    if (sequenceIndex > fsIndex) {
+      draft.sequencePlayList.splice(fsIndex, 1);
+      sequenceIndex--;
+    } else {
+      draft.sequencePlayList.splice(fsIndex + 1, 1);
+    }
+  }
+  draft.currentIndex = currentIndex;
+  draft.currentSong = song;
+};
 
 const defaultState: IPlayerState = {
   isFullScreen: false,
@@ -79,6 +110,9 @@ const PlayerReducer: Reducer<IPlayerState> = (state = defaultState, action) => {
         break;
       case ActionType.SAVE_LYRIC:
         draft.lrc = payload;
+        break;
+      case ActionType.INSERT_SONG:
+        handleInsertSong(draft, payload);
         break;
       default:
         break;

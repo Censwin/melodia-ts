@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:47:57
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-16 16:51:02
+ * @LastEditTime: 2021-12-17 16:07:21
  * @Description:
  * @FilePath: \melodia-ts\src\utils\tools.ts
  */
@@ -166,7 +166,7 @@ export const getResOrderLable = (arr: string[]) => {
       case 'playlists':
         return '歌单';
       default:
-        return '';
+        return '--';
     }
   });
   return newArr;

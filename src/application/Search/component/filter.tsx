@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-13 10:47:47
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-13 17:05:40
+ * @LastEditTime: 2021-12-17 17:21:10
  * @Description:
  * @FilePath: \melodia-ts\src\application\Search\component\filter.tsx
  */
@@ -28,32 +28,20 @@ const Filter: React.FC<IFilterProps> = (props) => {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
-  // useEffect(() => {
-  //   setShowHotkey(inputVal.length === 0);
-  // }, [inputVal]);
+  useEffect(() => {
+    setShowHotkey(inputVal.length === 0);
+  }, [inputVal]);
   useEffect(() => {
     if (inputVal !== HotKey) {
       setInputVal(HotKey);
       inputRef.current.value = HotKey;
     }
   }, [HotKey]);
-  const RenderButton = useCallback(() => {
-    if (inputVal) {
-      return (
-        <button type="submit" className="search-button" onClick={() => handleSearch(inputVal)}>
-          搜索
-        </button>
-      );
-    }
-    return (
-      <button className="search-button" onClick={handleCancel}>
-        取消
-      </button>
-    );
-  }, [inputVal]);
+
   return (
     <article className="search-header">
-      <form>
+      <div className="filter">
+        <Icon className="header-back" icon="chevron-left" onClick={handleCancel} />
         <div className="input-wrapper">
           <Icon icon="search" />
           <input
@@ -63,8 +51,10 @@ const Filter: React.FC<IFilterProps> = (props) => {
             onChange={handleInput}
           />
         </div>
-        {RenderButton()}
-      </form>
+        <button className="search-button" onClick={() => handleSearch(inputVal)}>
+          搜索
+        </button>
+      </div>
     </article>
   );
 };

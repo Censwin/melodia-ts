@@ -5,16 +5,22 @@
   width: 100%;
   height: 100%;
   background: $white;
+  .scroll-w-wrapper {
+    height: calc(100vh - 110px);
+  }
   .search-header {
     padding: 0 10px;
     height: 60px;
-    form {
+    .filter {
       position: absolute;
       top: 10px;
       width: 94%;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      .header-back {
+        margin-right: 10px;
+      }
       .input-wrapper {
         border-radius: 40px;
         background: $white-100;
@@ -62,6 +68,39 @@
         margin-right: 10px;
         color: $subtext;
         font-weight: bold;
+      }
+    }
+  }
+  .singer-wrapper {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    overflow: hidden;
+    .title {
+      margin: 10px 0 10px 10px;
+      color: $description;
+      // font-size: 14px;
+    }
+    .singer-item {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      margin: 0 5px;
+      padding: 5px 0;
+      align-items: center;
+      border-bottom: 1px solid $border-color;
+      .img_wrapper {
+        margin-right: 20px;
+        img {
+          border-radius: 3px;
+          width: 50px;
+          height: 50px;
+        }
+      }
+      .name {
+        // font-size: 14px;
+        color: $description;
+        font-weight: 500;
       }
     }
   }
