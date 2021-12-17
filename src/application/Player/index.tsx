@@ -1,9 +1,9 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-28 11:35:22
- * @LastEditTime: 2021-12-17 15:54:28
+ * @LastEditTime: 2021-12-17 23:15:54
  * @Description:
- * @FilePath: \melodia-ts\src\application\Player\index.tsx
+ * @FilePath: /melodia-ts/src/application/Player/index.tsx
  */
 import { abort } from 'process';
 import React, { useRef, useState, useEffect, MediaHTMLAttributes } from 'react';
@@ -121,7 +121,6 @@ const Player = () => {
   }
   const lyricCallBack = ({ lineIndex, text }: ILParams) => {
     if (!LyricRef.current) return;
-    // console.log('call', lineIndex);
     currentLineRef.current = lineIndex;
     setPlayingLyric(text);
   };
@@ -131,9 +130,12 @@ const Player = () => {
       LyricRef.current = null;
     } else {
       LyricRef.current = new LyricFormater(lrc, lyricCallBack);
-      LyricRef.current.play();
+      // LyricRef.current.play();
       currentLineRef.current = 0;
       LyricRef.current.ProgressControl(0);
+      if (!playing) {
+        LyricRef.current.stop();
+      }
     }
   }, [lrc]);
 
@@ -149,6 +151,7 @@ const Player = () => {
         })
         .catch((error) => {
           console.log('audio error:', error);
+          changePlayingState(false);
         });
     } else {
       audioRef.current.pause();
@@ -157,7 +160,9 @@ const Player = () => {
 
   useEffect(() => {
     if (!currentSong) return;
-    changeCurrentIndex(0);
+    if (playList.length !== 0) {
+      changeCurrentIndex(0);
+    }
     // dispatch({ type: ActionType.SET_SHOW_PLAYLIST, payload: true });
   }, []);
 
@@ -170,7 +175,7 @@ const Player = () => {
     setTimeout(() => {
       audioControler('play');
     });
-    // changePlayingState(true);
+    changePlayingState(true);
     setCurrentTime(0);
     setDurationTime(item.dt / 1000);
     getSongLyric(item.id);

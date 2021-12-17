@@ -1,14 +1,14 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-12-14 15:34:13
+ * @LastEditTime: 2021-12-17 22:12:28
  * @Description:
- * @FilePath: \melodia-ts\src\utils\request.ts
+ * @FilePath: /melodia-ts/src/utils/request.ts
  */
 import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-let apiBaseUrl = 'http://localhost:3000';
-// let apiBaseUrl = 'http://192.168.43.239:3000';
+// let apiBaseUrl = 'http://localhost:3000';
+let apiBaseUrl = 'http://192.168.43.239:3000';
 if (process.env.NODE_ENV === 'development') {
   // apiBaseUrl = 'http://localhost:3000';
 } else if (process.env.NODE_ENV === 'production') {

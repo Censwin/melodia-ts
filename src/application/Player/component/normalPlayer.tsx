@@ -1,9 +1,9 @@
 /*
  * @Date: 2021-11-29 14:29:06
- * @LastEditors: k200c
- * @LastEditTime: 2021-12-09 15:34:21
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-12-17 23:00:37
  * @Description:
- * @FilePath: \melodia-ts\src\application\Player\component\normalPlayer.tsx
+ * @FilePath: /melodia-ts/src/application/Player/component/normalPlayer.tsx
  */
 import classNames from 'classnames';
 import React, { useRef, useCallback, useEffect, useState } from 'react';
@@ -224,10 +224,11 @@ const NormalPlayer: React.FC<INplayerProps> = (props) => {
   useEffect(() => {
     if (!lyricScrollRef.current) return;
     let bScroll = lyricScrollRef.current.getBScroll();
+    if (!bScroll) return;
     if (currentLineNum > 5) {
       let lineElement = lyricLineRefs.current[currentLineNum - 5].current;
       bScroll.scrollToElement(lineElement, 1000);
-    } else {
+    } else if (currentLineNum > 0 && currentLineNum <= 5) {
       // 当前歌词行数 <=5, 直接滚动到最顶端
       bScroll.scrollTo(0, 0, 1000);
     }
