@@ -1,9 +1,9 @@
 /*
  * @Date: 2021-11-29 09:58:03
- * @LastEditors: k200c
- * @LastEditTime: 2021-12-17 15:58:02
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-12-17 22:24:05
  * @Description:
- * @FilePath: \melodia-ts\src\application\Player\store\reducer.ts
+ * @FilePath: /melodia-ts/src/application/Player/store/reducer.ts
  */
 import { Reducer } from 'redux';
 import produce, { Draft } from 'immer';
@@ -44,7 +44,6 @@ const handleInsertSong = (draft: IPlayerState, song: any) => {
       draft.playList.splice(nextIndex + 1, 1);
     }
   }
-
   let sequenceIndex = findCurrentIndex(draft.currentSong, draft.sequencePlayList) + 1;
   let fsIndex = findCurrentIndex(song, draft.sequencePlayList);
   draft.sequencePlayList.splice(sequenceIndex, 0, song);
