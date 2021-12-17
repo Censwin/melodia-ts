@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-12-07 17:37:33
+ * @LastEditTime: 2021-12-09 17:21:35
  * @Description:
  * @FilePath: \melodia-ts\src\application\Discover\index.tsx
  */
@@ -41,9 +41,10 @@ const CHANNEL_LIST = [
 type TDiscoverProps = IDiscoverState & RouteConfig;
 
 const Discover: React.FC<TDiscoverProps> = (props) => {
-  const { bannerList, recommendList, route } = props;
+  const { bannerList, recommendList, videoUrl, route } = props;
   const dispatch = useDispatch();
   const history = useHistory();
+
   useEffect(() => {
     if (!bannerList.length) {
       dispatch({ type: ActionTypes.GET_BANNER });
@@ -51,7 +52,9 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
     if (!recommendList.length) {
       dispatch({ type: ActionTypes.GET_RECOMMEND });
     }
+    dispatch({ type: ActionTypes.GET_VIDEO_URL });
   }, []);
+
   type ScrollComponentType = React.ElementRef<typeof Scroll>;
   const VerticalScrollRef = useRef<ScrollComponentType>(null);
   useEffect(() => {
@@ -111,7 +114,12 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
     <div className="discover-content">
       {/* {renderRoutes(route.routes)} */}
       <div className="Header">
-        <div className="searchBar">
+        <div
+          className="searchBar"
+          onClick={() => {
+            history.push('/search');
+          }}
+        >
           <span>
             <Icon icon="search" />
             <span>周杰伦</span>
@@ -139,10 +147,7 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
               extra={<MoreBtn path="/recommend" />}
             >
               <div className="video-list-wrapper">
-                <video
-                  autoPlay
-                  src="http://vodkgeyttp9c.vod.126.net/vodkgeyttp8/68sKFbGS_1328070069_hd.mp4?ts=1637943811&rid=47115DC667964F5C42BDE925D7219E80&rl=3&rs=jISItkhGgVtTDFoDoLOBCXwuMDHNbdTU&sign=a63fc25e905ad4a8e25838e4739e5e27&ext=NnR5gMvHcZNcbCz592mDGUGuDOFN18isir07K1EOfL2908SObHgXJWayIT%2BlhpNOfLlN8OYjzxY36kf2bOfgX%2By91jJuCGaJhK5XVNGDXrOPOUvTYe6JYihFnBWKrepu17TfZvWjnFBVnVs1JvHpgDZKNNCkWzg3aNGm0B0Hn0OFmRwLOJXUL0HZVar2rwdK0lJIzOSpWItt5cWlYgagSdl2axlHqsFinunKJTaFqmphyr1OcCvnVYzK1%2FD4Ceo6"
-                >
+                <video autoPlay src={videoUrl} muted={true}>
                   您的浏览器不支持 video 标签。
                 </video>
               </div>
@@ -156,7 +161,8 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
 
 const mapStateToProps = ({ Discover }: IApplicationState) => ({
   bannerList: Discover.bannerList,
-  recommendList: Discover.recommendList
+  recommendList: Discover.recommendList,
+  videoUrl: Discover.videoUrl
 });
 
 export default connect(mapStateToProps)(React.memo(Discover));

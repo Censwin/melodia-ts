@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 10:26:45
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-08 16:54:56
+ * @LastEditTime: 2021-12-17 15:19:41
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\store\constans.ts
  */
@@ -26,3 +26,6 @@ export const PLAY_ALL = 'player/PLAY_ALL';
 
 export const GET_LYRIC = 'player/GET_LYRIC';
 export const SAVE_LYRIC = 'player/SAVE_LYRIC';
+
+export const GET_SONG_DETAIL = 'player/GET_SONG_DETAIL';
+export const INSERT_SONG = 'player/INSERT_SONG';

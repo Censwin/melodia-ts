@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-29 14:27:08
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-07 16:17:09
+ * @LastEditTime: 2021-12-13 14:21:01
  * @Description:
  * @FilePath: \melodia-ts\src\application\Player\component\playList.tsx
  */
@@ -101,10 +101,10 @@ const PlayList: React.FC<IPlayListProps> = (props) => {
     };
   });
 
-  const handleClickSong = (e: any) => {
-    let target = e.target;
+  const handleClickSong = (e: React.MouseEvent) => {
+    let target = e.target as HTMLElement;
     while (target.nodeType === 1 && target.tagName !== 'LI') {
-      target = target.parentNode;
+      target = target.parentNode as HTMLElement;
     }
     changeCurrentIndex(Number(target.getAttribute('data-value')));
   };

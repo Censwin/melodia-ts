@@ -2080,6 +2080,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-is@^17.0.3":
+  "integrity" "sha1-LYVbpXXy/I0X75hh8ISsxLkKE3o="
+  "resolved" "https://registry.npmmirror.com/@types/react-is/download/@types/react-is-17.0.3.tgz"
+  "version" "17.0.3"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-lazyload@^3.1.1":
   "integrity" "sha1-mLBWUDHQWMhIAufJZfSVxfuJ2GQ="
   "resolved" "https://registry.npmmirror.com/@types/react-lazyload/download/@types/react-lazyload-3.1.1.tgz"

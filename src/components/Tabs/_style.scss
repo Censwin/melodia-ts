@@ -1,0 +1,48 @@
+.beetle-tabs {
+  .tabs-nav {
+    // 横向目录样式
+    .r-cate-wrapper {
+      padding: 5px 10px;
+      margin-bottom: 10px;
+      > .r-cate-item {
+        font-size: $font-size-least;
+        padding: 5px 18px;
+        position: relative;
+        &::after {
+          content: '';
+          position: absolute;
+          z-index: -1;
+          bottom: 0;
+          left: 10%;
+          transform: translateY(-70%);
+          width: 80%;
+          height: 6px;
+          border-radius: 6px;
+          background-color: transparent;
+        }
+        &.selected {
+          font-weight: bold;
+          &::after {
+            transition: background-color 0.5s;
+            background-color: lighten($primary, 8);
+          }
+        }
+      }
+    }
+  }
+  .tab-content-wrapper {
+    .tab-content {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      transition: margin-left 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      will-change: margin-left;
+    }
+    .tab-tabpane {
+      width: 100%;
+      flex-shrink: 0;
+      opacity: 1;
+      transition: opacity 0.45s;
+    }
+  }
+}

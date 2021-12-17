@@ -1,12 +1,12 @@
 /*
  * @Date: 2021-12-08 10:43:32
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-08 11:27:13
+ * @LastEditTime: 2021-12-17 15:16:18
  * @Description:
  * @FilePath: \melodia-ts\src\services\playerApi.ts
  */
 import { AxiosPromise } from 'axios';
-import Requset from '.';
+import Request from '.';
 
 interface ILyricReqParams {
   id: number;
@@ -19,8 +19,20 @@ export interface ILyricRES {
 }
 
 export const getLyricReq = (params: ILyricReqParams): AxiosPromise<ILyricRES> => {
-  return Requset.request({
+  return Request.request({
     url: `/lyric`,
     params: params
+  });
+};
+
+export interface ISongDetailRes {
+  songs: any[];
+}
+export const getSongDetailRequest = (id: string): AxiosPromise<ISongDetailRes> => {
+  return Request.request({
+    url: '/song/detail',
+    params: {
+      ids: id
+    }
   });
 };

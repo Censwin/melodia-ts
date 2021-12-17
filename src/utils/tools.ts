@@ -1,10 +1,12 @@
 /*
  * @Date: 2021-11-17 14:47:57
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-08 18:07:09
+ * @LastEditTime: 2021-12-17 16:07:21
  * @Description:
  * @FilePath: \melodia-ts\src\utils\tools.ts
  */
+import React from 'react';
+import * as ReactIs from 'react-is';
 
 export const debounce = () => {};
 
@@ -152,13 +154,47 @@ export const shuffle: TShuffle = (arr) => {
   return newArr;
 };
 
-// export function aaa<T extends { [X: string]: any }> (data: T[]) {
-//   data.forEach(item => {
-//     // const a= 'a'
-//     item['a' as any]= 10
-//   })
-// }
-// interface Ia {
-//   [key: string]: any
-// }
-// aaa<Ia>([{'a': 1}])
+export const getResOrderLable = (arr: string[]) => {
+  const newArr = arr.map((item) => {
+    switch (item) {
+      case 'songs':
+        return '歌曲';
+      case 'artists':
+        return '歌手';
+      case 'albums':
+        return '专辑';
+      case 'playlists':
+        return '歌单';
+      default:
+        return '--';
+    }
+  });
+  return newArr;
+};
+
+export interface Option {
+  keepEmpty?: boolean;
+}
+
+export default function ChildrenToArray(
+  children: React.ReactNode,
+  option: Option = {}
+): React.ReactElement[] {
+  let ret: React.ReactElement[] = [];
+
+  React.Children.forEach(children, (child: any) => {
+    if ((child === undefined || child === null) && !option.keepEmpty) {
+      return;
+    }
+
+    if (Array.isArray(child)) {
+      ret = ret.concat(ChildrenToArray(child));
+    } else if (ReactIs.isFragment(child) && child.props) {
+      ret = ret.concat(ChildrenToArray(child.props.children, option));
+    } else {
+      ret.push(child);
+    }
+  });
+
+  return ret;
+}
