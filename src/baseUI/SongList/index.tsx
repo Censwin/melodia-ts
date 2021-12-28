@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-13 17:39:31
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-17 16:46:46
+ * @LastEditTime: 2021-12-28 11:25:23
  * @Description:
  * @FilePath: \melodia-ts\src\baseUI\SongList\index.tsx
  */
@@ -14,15 +14,17 @@ interface ISongListProps {
   songs: any[];
   onClickCallback: Function;
   showNum?: boolean;
+  className?: string;
 }
 const SongList: React.FC<ISongListProps> = (props) => {
-  const { songs, showNum } = props;
+  const { songs, showNum, className } = props;
   const { onClickCallback } = props;
+  const wrapperClasses = classNames('songs-wrapper', className);
   const itemClasses = classNames('song-item', {
     isIndent: !showNum
   });
   return (
-    <ul className="songs-wrapper">
+    <ul className={wrapperClasses}>
       {songs.map((item: any, index: number) => {
         const artist = item.ar || item.artists;
         const albumName = item.al ? item.al.name : item.album.name;

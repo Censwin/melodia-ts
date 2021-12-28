@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-09 17:18:49
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-17 17:05:14
+ * @LastEditTime: 2021-12-27 10:28:22
  * @Description:
  * @FilePath: \melodia-ts\src\application\Search\index.tsx
  */
@@ -130,7 +130,12 @@ const Search = () => {
                 <LazyLoad
                   placeholder={<img width="100%" height="100%" src={defaultImg} alt="singer" />}
                 >
-                  <img src={item.picUrl} width="100%" height="100%" alt="music" />
+                  <img
+                    src={item.picUrl + '?param=300x300'}
+                    width="100%"
+                    height="100%"
+                    alt="music"
+                  />
                 </LazyLoad>
               </div>
               <span className="name"> 歌手: {item.name}</span>

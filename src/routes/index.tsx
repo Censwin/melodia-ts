@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-28 23:23:22
- * @LastEditTime: 2021-12-09 17:20:07
+ * @LastEditTime: 2021-12-27 10:52:59
  * @Description:
  * @FilePath: \melodia-ts\src\routes\index.tsx
  */
@@ -14,6 +14,8 @@ import Recommend from '../application/Recommend';
 import Album from '../application/Album';
 import Rank from '../application/Rank';
 import Search from '../application/Search';
+import Singer from '../application/Singer';
+
 const routes = [
   {
     path: '/',
@@ -50,6 +52,11 @@ const routes = [
         exact: true,
         key: 'search',
         component: Search
+      },
+      {
+        path: '/singers/:id',
+        exact: true,
+        component: Singer
       }
     ]
   }

@@ -1,10 +1,11 @@
 /*
  * @Date: 2021-11-17 16:22:13
  * @LastEditors: k200c
- * @LastEditTime: 2021-11-23 17:13:08
+ * @LastEditTime: 2021-12-28 11:03:18
  * @Description:
  * @FilePath: \melodia-ts\src\baseUI\Header\header.tsx
  */
+import classNames from 'classnames';
 import React from 'react';
 import { Marquee } from '..';
 import { Icon } from './../../components';
@@ -13,12 +14,14 @@ interface IHeaderProps {
   title: string;
   rolling?: boolean;
   style?: React.CSSProperties;
+  className?: string;
 }
 
 const Header: React.FC<IHeaderProps> = (props) => {
-  const { title, handleClick, rolling, style } = props;
+  const { title, handleClick, rolling, style, className } = props;
+  const classes = classNames('header-container', className);
   return (
-    <div className="header-container" onClick={() => handleClick()} style={style}>
+    <div className={classes} onClick={() => handleClick()} style={style}>
       <Icon className="header-back" icon="chevron-left" />
       <div className="title-wrapper">
         {rolling ? <Marquee text={title} /> : <span>{title}</span>}
