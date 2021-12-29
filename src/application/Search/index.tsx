@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-09 17:18:49
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-17 17:05:14
+ * @LastEditTime: 2021-12-29 16:56:07
  * @Description:
  * @FilePath: \melodia-ts\src\application\Search\index.tsx
  */
@@ -9,18 +9,15 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { CSSTransition } from 'react-transition-group';
-import { CommonPlaylist, CommonSongList, HorizenScroll, Scroll } from '../../baseUI';
+import { CommonPlaylist, CommonSongList, Scroll } from '../../baseUI';
 import { Icon } from '../../components';
-import useDebounce from '../../hooks/useDebounce';
 import { IApplicationState } from '../../store/reducers';
-import { getResOrderLable, getCount, isEmptyObject } from '../../utils/tools';
+import { isEmptyObject } from '../../utils/tools';
 import Filter from './component/filter';
 import * as ActionType from './store/constants';
-import classNames from 'classnames';
 import Tabs from '../../components/Tabs';
-import LazyLoad, { forceCheck } from 'react-lazyload';
+import LazyLoad from 'react-lazyload';
 import defaultImg from './../../assets/img/defaultmusic.png';
-import MusicNote from '../../baseUI/musicNote';
 
 const Search = () => {
   const [showState, setShowState] = useState(true);
@@ -33,7 +30,6 @@ const Search = () => {
   const { hotKeyList, suggestObject, songsList, enterLoading } = useSelector(
     (state: IApplicationState) => state.Search
   );
-  const musicNoteRef = useRef<any>();
   type ScrollComponentType = React.ElementRef<typeof Scroll>;
   const ScrollRef = useRef<ScrollComponentType>(null);
 
@@ -84,8 +80,6 @@ const Search = () => {
   }, []);
 
   const handleSelectSong = (event: React.MouseEvent, item: any) => {
-    if (!musicNoteRef.current) return;
-    musicNoteRef.current.startAnimation(event.nativeEvent.clientY);
     dispatch({ type: 'player/GET_SONG_DETAIL', payload: item.id });
   };
 
@@ -112,7 +106,26 @@ const Search = () => {
     }
   }, [hotKeyList, showHotkey]);
 
-  const renderSingers = () => {
+  const RenderSongs = useCallback(() => {
+    return (
+      <div className="scroll-w-wrapper">
+        <Scroll ref={ScrollRef}>
+          <CommonSongList songs={songsList} onClickCallback={handleSelectSong} showNum={false} />
+        </Scroll>
+      </div>
+    );
+  }, [songsList]);
+
+  const RenderPlayList = useCallback(() => {
+    return (
+      <CommonPlaylist
+        data={suggestObject.playlists ? suggestObject.playlists : []}
+        onClickCallback={enterDetail}
+      />
+    );
+  }, [suggestObject.playlists]);
+
+  const RenderSingers = useCallback(() => {
     let singers = suggestObject.artists;
     if (!singers || !singers.length) {
       return <h1>暂无数据</h1>;
@@ -126,45 +139,59 @@ const Search = () => {
               key={index}
               onClick={() => history.push(`/singers/${item.id}`)}
             >
-              <div className="img_wrapper">
-                <LazyLoad
-                  placeholder={<img width="100%" height="100%" src={defaultImg} alt="singer" />}
-                >
-                  <img src={item.picUrl} width="100%" height="100%" alt="music" />
-                </LazyLoad>
+              <div className="singer-left">
+                <div className="img_wrapper">
+                  <LazyLoad
+                    placeholder={<img width="100%" height="100%" src={defaultImg} alt="singer" />}
+                  >
+                    <img
+                      src={item.picUrl + '?param=300x300'}
+                      width="100%"
+                      height="100%"
+                      alt="music"
+                    />
+                  </LazyLoad>
+                </div>
+                <span className="name"> 歌手: {item.name}</span>
               </div>
-              <span className="name"> 歌手: {item.name}</span>
+              <div className="singer-right">
+                <Icon icon="chevron-right" />
+              </div>
             </div>
           );
         })}
       </div>
     );
-  };
+  }, [suggestObject.artists]);
+
+  const RenderAlbums = useCallback(() => {
+    if (suggestObject.albums) {
+      return (
+        <div style={{ padding: '0 15%' }}>
+          {suggestObject.albums.map((item: any, index: number) => {
+            const direction = index % 2 ? 'right' : 'left';
+            return (
+              <h2 key={item.id} style={{ textAlign: direction }}>
+                {item.name}
+              </h2>
+            );
+          })}
+        </div>
+      );
+    }
+  }, [suggestObject.albums]);
 
   const renderContent = useCallback(
     (option: string) => {
       switch (option) {
         case '歌曲':
-          return (
-            <div className="scroll-w-wrapper">
-              <Scroll ref={ScrollRef}>
-                <CommonSongList
-                  songs={songsList}
-                  onClickCallback={handleSelectSong}
-                  showNum={false}
-                />
-              </Scroll>
-            </div>
-          );
+          return RenderSongs();
         case '歌手':
-          return renderSingers();
+          return RenderSingers();
         case '歌单':
-          return (
-            <CommonPlaylist
-              data={suggestObject.playlists ? suggestObject.playlists : []}
-              onClickCallback={enterDetail}
-            />
-          );
+          return RenderPlayList();
+        case '专辑':
+          return RenderAlbums();
         default:
           return <h1 style={{ textAlign: 'center' }}>功能开发中</h1>;
       }
@@ -205,7 +232,6 @@ const Search = () => {
         <Filter {...FilterProps} />
         {renderHotKeys()}
         {renderResult()}
-        <MusicNote ref={musicNoteRef} />
       </section>
     </CSSTransition>
   );

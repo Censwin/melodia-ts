@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-13 11:09:43
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-17 17:03:31
+ * @LastEditTime: 2021-12-29 16:38:03
  * @Description:
  * @FilePath: \melodia-ts\src\application\Search\store\reducer.ts
  */
@@ -10,13 +10,7 @@ import { Reducer } from 'redux';
 import { getResOrderLable } from '../../../utils/tools';
 import * as ActionType from './constants';
 // import { temp1, temp2 } from './temp';
-interface ISuggest {
-  albums?: { id: number; name: string }[];
-  artists?: { id: number; name: string; picUrl: string }[];
-  order?: string[]; // 该返回结果所显示的标签 如：  ["songs", "artists", "albums", "playlists"]
-  playlists?: { id: number; name: string; playCount: number; coverImgUrl: string }[];
-}
-
+import type { ISuggest } from '../../../services/searchApi';
 export interface ISearchState {
   hotKeyList: any[];
   suggestObject: ISuggest;

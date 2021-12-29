@@ -1,4 +1,32 @@
 .songs-wrapper {
+  background: $white;
+  .first-line {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    .play-all {
+      .playicon {
+        display: inline-block;
+        width: 58px;
+        text-align: center;
+        > svg {
+          color: $primary;
+          font-size: $font-size-lg;
+          vertical-align: sub;
+        }
+      }
+      > span {
+        font-weight: bold;
+        font-size: 17px;
+        .sum {
+          color: $description;
+          font-size: $font-size-least;
+        }
+      }
+    }
+  }
+}
+.songs-ul {
   margin: 0;
   padding: 0;
   list-style: none;

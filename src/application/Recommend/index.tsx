@@ -6,18 +6,14 @@
  * @FilePath: \melodia-ts\src\application\Recommend\index.tsx
  */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { renderRoutes, RouteConfig } from 'react-router-config';
+import { RouteConfig } from 'react-router-config';
 import { CSSTransition } from 'react-transition-group';
 import { useHistory } from 'react-router';
-import { Header, HorizenScroll, Scroll } from '../../baseUI';
-import classNames from 'classnames';
+import { Header, Scroll } from '../../baseUI';
 import { useDispatch, useSelector } from 'react-redux';
 import { ActionTypes } from './store';
 import { IApplicationState } from '../../store/reducers';
-import { Icon } from '../../components';
-import { getCount } from '../../utils/tools';
-import LazyLoad, { forceCheck } from 'react-lazyload';
-import defaultImg from './../../assets/img/defaultmusic.png';
+import { forceCheck } from 'react-lazyload';
 import Tabs from '../../components/Tabs';
 import { CommonPlaylist } from './../../baseUI';
 

@@ -14,6 +14,7 @@ import { reducer as AlbumReducer, IAlbumState } from './../application/Album/sto
 import { reducer as RankReducer, IRankState } from './../application/Rank/store';
 import { reducer as PlayerReducer, IPlayerState } from './../application/Player/store';
 import { reducer as SearchReducer, ISearchState } from './../application/Search/store';
+import { reducer as SingerReducer, ISingerState } from './../application/Singer/store';
 
 export const RootReducers = combineReducers({
   Home: HomeReducer,
@@ -22,7 +23,8 @@ export const RootReducers = combineReducers({
   Album: AlbumReducer,
   Rank: RankReducer,
   Player: PlayerReducer,
-  Search: SearchReducer
+  Search: SearchReducer,
+  Singer: SingerReducer
 });
 
 export interface IApplicationState {
@@ -33,4 +35,5 @@ export interface IApplicationState {
   Rank: IRankState;
   Player: IPlayerState;
   Search: ISearchState;
+  Singer: ISingerState;
 }

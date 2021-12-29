@@ -36,6 +36,13 @@
         transform-origin: center;
       }
     }
+    // 最后一行左对齐
+    &:last-child:nth-child(3n - 1) {
+      margin-right: 33%;
+    }
+    &:last-child:nth-child(3n - 2) {
+      margin-right: 66%;
+    }
   }
   .recommend-item-name {
     font-size: $font-size-least;
