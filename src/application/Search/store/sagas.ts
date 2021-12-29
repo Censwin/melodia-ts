@@ -15,6 +15,7 @@ import {
   ISuggestRes
 } from '../../../services/searchApi';
 import { ICOMMONACTION } from '../../../utils/common_interface';
+import { isEmptyObject } from '../../../utils/tools';
 import * as ActionType from './constants';
 
 function* getHotKeys() {
@@ -32,7 +33,14 @@ function* search(action: ICOMMONACTION) {
       call(getSuggestListRequest, payload),
       call(getSearchResultRequest, payload)
     ]);
-    yield put({ type: ActionType.SET_SUGGEST_LIST, payload: suggests.result });
+    // 有些歌手suggests会返回空对象导致没有标签，原因不明,写死一个以免一片空白
+    let suggestsObj = suggests.result;
+    if (isEmptyObject(suggests.result)) {
+      suggestsObj = {
+        order: ['songs']
+      };
+    }
+    yield put({ type: ActionType.SET_SUGGEST_LIST, payload: suggestsObj });
     yield put({ type: ActionType.SET_RESULT_SONGS_LIST, payload: songs.result.songs });
   } catch (error) {}
 }

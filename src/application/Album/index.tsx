@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-19 16:54:40
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-09 11:06:14
+ * @LastEditTime: 2021-12-29 15:31:31
  * @Description: 歌单 与 专辑 详情页
  * @FilePath: \melodia-ts\src\application\Album\index.tsx
  */
@@ -28,7 +28,6 @@ const Album: React.FC = () => {
   const [descRolling, setDescRolling] = useState(false);
   const handleExit = () => {};
   const nodeRef = useRef(null);
-  const musicNoteRef = useRef<any>();
   useEffect(() => {
     dispatch({ type: ActionType.GET_ALBUMDETAIL, payload: params });
   }, [params]);
@@ -45,8 +44,6 @@ const Album: React.FC = () => {
   } = currentAlbum;
 
   const handleSelectSong = (event: React.MouseEvent, item: any) => {
-    if (!musicNoteRef.current) return;
-    musicNoteRef.current.startAnimation(event.nativeEvent.clientY);
     dispatch({ type: PlayerType.ADD_CURRENT_SONG, payload: item });
   };
 
@@ -111,20 +108,12 @@ const Album: React.FC = () => {
   );
   const RenderSongList = useCallback(
     () => (
-      <section className="song-list">
-        <article className="first-line">
-          <div className="play-all" onClick={handlePlayAll}>
-            <span className="playicon">
-              <Icon icon="play-circle" />
-            </span>
-            <span>
-              {' '}
-              播放全部 <span className="sum">({tracks.length})</span>
-            </span>
-          </div>
-        </article>
-        <CommonSongList songs={tracks} onClickCallback={handleSelectSong} />
-      </section>
+      <CommonSongList
+        songs={tracks}
+        onClickCallback={handleSelectSong}
+        showPlayAll={true}
+        onClickPlayAll={handlePlayAll}
+      />
     ),
     [currentAlbum]
   );
@@ -160,7 +149,6 @@ const Album: React.FC = () => {
             </div>
           </>
         )}
-        <MusicNote ref={musicNoteRef} />
       </div>
     </CSSTransition>
   );
