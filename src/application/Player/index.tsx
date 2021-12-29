@@ -6,7 +6,7 @@
  * @FilePath: /melodia-ts/src/application/Player/index.tsx
  */
 import { abort } from 'process';
-import React, { useRef, useState, useEffect, MediaHTMLAttributes } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IApplicationState } from '../../store/reducers';
 import LyricFormater from '../../utils/lyric-creator';

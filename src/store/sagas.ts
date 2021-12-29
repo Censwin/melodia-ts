@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-30 17:32:01
- * @LastEditTime: 2021-12-13 11:22:58
+ * @LastEditTime: 2021-12-29 14:59:54
  * @Description:
  * @FilePath: \melodia-ts\src\store\sagas.ts
  */
@@ -13,6 +13,7 @@ import { sagas as AlbumSagas } from '../application/Album/store';
 import { sagas as RankSagas } from '../application/Rank/store';
 import { sagas as PlayerSagas } from '../application/Player/store';
 import { sagas as SearchSagas } from '../application/Search/store';
+import { sagas as SingerSagas } from '../application/Singer/store';
 
 export default function* rootSagas() {
   yield all([
@@ -22,6 +23,7 @@ export default function* rootSagas() {
     AlbumSagas(),
     RankSagas(),
     PlayerSagas(),
-    SearchSagas()
+    SearchSagas(),
+    SingerSagas()
   ]);
 }
