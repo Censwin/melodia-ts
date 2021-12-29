@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-19 16:54:40
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-29 15:31:31
+ * @LastEditTime: 2021-12-29 17:22:57
  * @Description: 歌单 与 专辑 详情页
  * @FilePath: \melodia-ts\src\application\Album\index.tsx
  */
@@ -56,7 +56,7 @@ const Album: React.FC = () => {
       <section className="top-desc-wrapper">
         <div className="info-wrapper">
           <article className="info-left">
-            <img className="cover-pic" src={coverImgUrl} />
+            <img className="cover-pic" src={coverImgUrl + '?param=300x300'} />
             <div className="play-count">
               <Icon icon="play" />
               {getCount(subscribedCount)}
@@ -66,7 +66,7 @@ const Album: React.FC = () => {
             <p className="album-title">{name}</p>
             <article className="creator">
               <div className="avatar">
-                <img src={creator.avatarUrl} />
+                <img src={creator.avatarUrl + '?param=100x100'} />
               </div>
               <div className="creator-name">{creator.nickname}</div>
               <div className="description">

@@ -1,12 +1,12 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-12-09 17:21:35
+ * @LastEditTime: 2021-12-29 17:24:43
  * @Description:
  * @FilePath: \melodia-ts\src\application\Discover\index.tsx
  */
 import React, { useCallback, useEffect, useRef } from 'react';
-import { renderRoutes, RouteConfig } from 'react-router-config';
+import { RouteConfig } from 'react-router-config';
 import { useDispatch, connect } from 'react-redux';
 import { Icon, Slider, Card } from '../../components';
 import { IApplicationState } from '../../store/reducers';
