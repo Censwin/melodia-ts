@@ -1,9 +1,9 @@
 /*
  * @Date: 2021-11-24 15:32:17
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-11-26 23:06:32
+ * @LastEditors: k200c
+ * @LastEditTime: 2021-12-29 17:21:25
  * @Description: 排行榜
- * @FilePath: /melodia-ts/src/application/Rank/index.tsx
+ * @FilePath: \melodia-ts\src\application\Rank\index.tsx
  */
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { CSSTransition } from 'react-transition-group';
@@ -64,7 +64,7 @@ const Rank = () => {
             <li key={item.id} className="official-item" onClick={() => enterDetail(item.id)}>
               <div className="img_wrapper">
                 <LazyLoad placeholder={<img width="100%" height="100%" src={defaultImg} />}>
-                  <img src={item.coverImgUrl} alt="" />
+                  <img src={item.coverImgUrl + '?param=300x300'} alt="" />
                 </LazyLoad>
               </div>
               <span className="update_frequecy">{item.updateFrequency}</span>
@@ -83,7 +83,7 @@ const Rank = () => {
           return (
             <li key={item.id} className="rank-item" onClick={() => enterDetail(item.id)}>
               <LazyLoad placeholder={<img width="100%" height="100%" src={defaultImg} />}>
-                <img src={item.coverImgUrl} alt="" />
+                <img src={item.coverImgUrl + '?param=300x300'} alt="" />
               </LazyLoad>
               <div className="decorate" />
               <span className="update_frequecy">{item.updateFrequency}</span>
