@@ -1,14 +1,14 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-12-29 17:24:43
+ * @LastEditTime: 2022-01-06 16:44:57
  * @Description:
  * @FilePath: \melodia-ts\src\application\Discover\index.tsx
  */
 import React, { useCallback, useEffect, useRef } from 'react';
 import { RouteConfig } from 'react-router-config';
 import { useDispatch, connect } from 'react-redux';
-import { Icon, Slider, Card } from '../../components';
+import { Icon, Slider, Card, Message } from '../../components';
 import { IApplicationState } from '../../store/reducers';
 import { IDiscoverState, ActionTypes } from './store';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
@@ -117,7 +117,8 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
         <div
           className="searchBar"
           onClick={() => {
-            history.push('/search');
+            // history.push('/search');
+            Message.success('successssssss');
           }}
         >
           <span>
