@@ -1,7 +1,7 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2022-01-06 16:44:57
+ * @LastEditTime: 2022-01-06 17:27:24
  * @Description:
  * @FilePath: \melodia-ts\src\application\Discover\index.tsx
  */
@@ -113,6 +113,7 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
   return (
     <div className="discover-content">
       {/* {renderRoutes(route.routes)} */}
+
       <div className="Header">
         <div
           className="searchBar"

@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:57:53
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-17 17:29:17
+ * @LastEditTime: 2022-01-06 17:32:20
  * @Description:
  * @FilePath: \melodia-ts\src\application\Recommend\index.tsx
  */
@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ActionTypes } from './store';
 import { IApplicationState } from '../../store/reducers';
 import { forceCheck } from 'react-lazyload';
-import Tabs from '../../components/Tabs';
+import { Tabs } from '../../components';
 import { CommonPlaylist } from './../../baseUI';
 
 interface IRecommendProps extends RouteConfig {

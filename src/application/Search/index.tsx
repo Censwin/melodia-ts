@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-09 17:18:49
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-29 16:56:07
+ * @LastEditTime: 2022-01-06 17:32:22
  * @Description:
  * @FilePath: \melodia-ts\src\application\Search\index.tsx
  */
@@ -10,12 +10,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { CSSTransition } from 'react-transition-group';
 import { CommonPlaylist, CommonSongList, Scroll } from '../../baseUI';
-import { Icon } from '../../components';
+import { Icon, Tabs } from '../../components';
 import { IApplicationState } from '../../store/reducers';
 import { isEmptyObject } from '../../utils/tools';
 import Filter from './component/filter';
 import * as ActionType from './store/constants';
-import Tabs from '../../components/Tabs';
 import LazyLoad from 'react-lazyload';
 import defaultImg from './../../assets/img/defaultmusic.png';
 

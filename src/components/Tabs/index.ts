@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-16 14:02:13
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-16 14:20:00
+ * @LastEditTime: 2022-01-06 17:33:51
  * @Description:
  * @FilePath: \melodia-ts\src\components\Tabs\index.ts
  */
@@ -15,7 +15,7 @@ type ITabsComponent = FC<ITabsProps> & {
   Item: FC<ITabPaneProps>;
 };
 
-const Tabs = _Tabs as ITabsComponent;
-Tabs.Item = TabPane;
+const TransTabs = _Tabs as ITabsComponent;
+TransTabs.Item = TabPane;
 
-export default Tabs;
+export default TransTabs;
