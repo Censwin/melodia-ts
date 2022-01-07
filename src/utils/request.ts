@@ -1,19 +1,19 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2021-12-27 10:27:40
+ * @LastEditTime: 2022-01-07 15:57:18
  * @Description:
  * @FilePath: \melodia-ts\src\utils\request.ts
  */
 import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-let apiBaseUrl = 'http://localhost:3000';
-// let apiBaseUrl = 'http://192.168.43.239:3000';
-if (process.env.NODE_ENV === 'development') {
-  // apiBaseUrl = 'http://localhost:3000';
-} else if (process.env.NODE_ENV === 'production') {
-  // apiBaseUrl = 'http://localhost:3000';
-}
+let apiBaseUrl = 'https://music-api-five.vercel.app/';
+
+// if (process.env.NODE_ENV === 'development') {
+//   // apiBaseUrl = 'http://localhost:3000';
+// } else if (process.env.NODE_ENV === 'production') {
+//   // apiBaseUrl = 'http://localhost:3000';
+// }
 axios.defaults.timeout = 5000;
 class HttpRequest {
   public baseUrl: string;
