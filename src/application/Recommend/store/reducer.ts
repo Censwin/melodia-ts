@@ -13,10 +13,12 @@ import { DRAFTABLE } from 'immer/dist/internal';
 export interface IRcomendState {
   cateList: any[];
   playLists: any[]; // 歌单列表
+  loading: Boolean;
 }
 const defaultState: IRcomendState = {
   cateList: [],
-  playLists: []
+  playLists: [],
+  loading: false
 };
 
 const RecommendReducer: Reducer<IRcomendState> = (state = defaultState, action) => {
@@ -28,6 +30,9 @@ const RecommendReducer: Reducer<IRcomendState> = (state = defaultState, action) 
         break;
       case ActionTypes.SAVE_PLAYLISTS:
         draft.playLists = payload;
+        break;
+      case ActionTypes.CHANGE_LOADING:
+        draft.loading = payload;
         break;
       default:
         break;

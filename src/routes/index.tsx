@@ -15,7 +15,7 @@ import Home from '../application/Home';
 // import Rank from '../application/Rank';
 // import Search from '../application/Search';
 // import Singer from '../application/Singer';
-
+// const Home = lazy(() => import('../application/Home'));
 const Discover = lazy(() => import('../application/Discover'));
 const Recommend = lazy(() => import('../application/Recommend'));
 const Album = lazy(() => import('../application/Album'));
@@ -25,7 +25,7 @@ const Singer = lazy(() => import('../application/Singer'));
 
 const SuspenseComponent = (Component: any) => (props: any) =>
   (
-    <Suspense fallback="加载中">
+    <Suspense fallback="">
       <Component {...props} />
     </Suspense>
   );

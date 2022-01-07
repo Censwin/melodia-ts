@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-27 10:00:34
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-29 15:33:32
+ * @LastEditTime: 2022-01-07 14:27:05
  * @Description:
  * @FilePath: \melodia-ts\src\application\Singer\index.tsx
  */
@@ -18,10 +18,9 @@ import * as PlayerType from './../Player/store/constans';
 const Singer: React.FC = () => {
   const [showStatus, setShowStatus] = useState(true);
   const history = useHistory();
-  interface Iparams {
-    id: string;
-  }
-  const params = useParams<Iparams>();
+
+  const params = useParams<{ id?: string }>();
+
   const dispatch = useDispatch();
   const { artist, songsOfArtist } = useSelector((state: IApplicationState) => state.Singer);
   const containerRef = useRef(null);
@@ -38,7 +37,7 @@ const Singer: React.FC = () => {
   const transform = prefixStyle('transform');
   useEffect(() => {
     dispatch({ type: ActionType.GET_SINGER, payload: { id: params.id } });
-  }, []);
+  }, [params.id]);
   useEffect(() => {
     if (imgWrapperRef.current && songsWrapperRef.current && layerRef.current && scrollRef.current) {
       let h = imgWrapperRef.current.offsetHeight;

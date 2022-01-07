@@ -1,14 +1,15 @@
 /*
  * @Date: 2021-11-29 09:58:03
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-12-17 22:24:05
+ * @LastEditors: k200c
+ * @LastEditTime: 2022-01-07 10:53:57
  * @Description:
- * @FilePath: /melodia-ts/src/application/Player/store/reducer.ts
+ * @FilePath: \melodia-ts\src\application\Player\store\reducer.ts
  */
 import { Reducer } from 'redux';
 import produce, { Draft } from 'immer';
 import * as ActionType from './constans';
 import { findCurrentIndex } from '../../../utils/tools';
+import { Message } from '../../../components';
 
 export enum EPlayMode {
   sequence,
@@ -96,6 +97,7 @@ const PlayerReducer: Reducer<IPlayerState> = (state = defaultState, action) => {
         break;
       case ActionType.SET_PLAYMODE_TEXT:
         draft.playmodeText = payload;
+        Message.info(payload);
         break;
       case ActionType.SET_PLAY_MODE:
         draft.playmode = payload;

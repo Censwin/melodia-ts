@@ -1,0 +1,25 @@
+.spin-wrapper {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2000;
+  width: 100px;
+  height: 100px;
+  background-color: #2c32376e;
+  // border: 1px solid #91d5ffd9;
+  border-radius: 10px;
+  display: table;
+  .spin-dot {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    color: $white;
+    svg {
+      font-size: $font-size-lg;
+    }
+    p {
+      margin-top: 10px;
+    }
+  }
+}

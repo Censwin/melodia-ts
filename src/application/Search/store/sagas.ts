@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-13 11:08:33
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-17 15:17:37
+ * @LastEditTime: 2022-01-07 14:32:18
  * @Description:
  * @FilePath: \melodia-ts\src\application\Search\store\sagas.ts
  */
@@ -19,14 +19,19 @@ import { isEmptyObject } from '../../../utils/tools';
 import * as ActionType from './constants';
 
 function* getHotKeys() {
+  yield put({ type: 'global/CHANGE_GLOBAL_LOADING', payload: true });
   try {
     const { result } = (yield call(getHotKeysRequest)) as IHotkeysRes;
     const { hots } = result;
     yield put({ type: ActionType.SET_HOT_KEYWRODS, payload: hots });
-  } catch (error) {}
+    yield put({ type: 'global/CHANGE_GLOBAL_LOADING', payload: false });
+  } catch (error) {
+    yield put({ type: 'global/CHANGE_GLOBAL_LOADING', payload: false });
+  }
 }
 
 function* search(action: ICOMMONACTION) {
+  yield put({ type: 'global/CHANGE_GLOBAL_LOADING', payload: true });
   try {
     const { payload } = action;
     const [suggests, songs]: [ISuggestRes, ISearchRes] = yield all([
@@ -42,7 +47,10 @@ function* search(action: ICOMMONACTION) {
     }
     yield put({ type: ActionType.SET_SUGGEST_LIST, payload: suggestsObj });
     yield put({ type: ActionType.SET_RESULT_SONGS_LIST, payload: songs.result.songs });
-  } catch (error) {}
+    yield put({ type: 'global/CHANGE_GLOBAL_LOADING', payload: false });
+  } catch (error) {
+    yield put({ type: 'global/CHANGE_GLOBAL_LOADING', payload: false });
+  }
 }
 
 export default function* () {
