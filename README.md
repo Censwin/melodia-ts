@@ -1,12 +1,11 @@
 # Melodia
 
 <!-- Badge -->
-![Stars badge](https://img.shields.io/badge/stars-11.2-green)
-![Forks badge](https://img.shields.io/badge/forks-2.5k-brightgreen)
+![Stars badge](https://img.shields.io/badge/stars-3-green)
+![Forks badge](https://img.shields.io/badge/forks-0-brightgreen)
 ![cypress badge](https://img.shields.io/badge/E2E-Cypress-brightgreen)
 ![jest badge](https://img.shields.io/badge/unit%20test-jest-yellowgreen)
 ![build badge](https://github.com/wangeditor-team/wangEditor/workflows/build/badge.svg)
-![MIT License](https://img.shields.io/badge/License-MIT-blue)
 
 <!-- PROJECT LOGO -->
 <br />
