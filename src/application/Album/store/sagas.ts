@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-19 17:36:37
  * @LastEditors: k200c
- * @LastEditTime: 2021-11-24 11:44:04
+ * @LastEditTime: 2022-01-07 14:25:11
  * @Description:
  * @FilePath: \melodia-ts\src\application\Album\store\sagas.ts
  */
@@ -15,11 +15,16 @@ interface AlbumDetailAction extends Action {
 }
 function* fetchAlbumDetail(action: AlbumDetailAction) {
   const { payload } = action;
+
+  yield put({ type: 'global/CHANGE_GLOBAL_LOADING', payload: true });
   try {
     const { playlist } = (yield call(getAlbumDetail, payload)) as IAlbumDetailRes;
     yield put({ type: ActionTypes.SAVE_ALBUMDETAIL, payload: playlist });
+    yield put({ type: 'global/CHANGE_GLOBAL_LOADING', payload: false });
   } catch (error) {
     console.error(error);
+
+    yield put({ type: 'global/CHANGE_GLOBAL_LOADING', payload: false });
   }
 }
 

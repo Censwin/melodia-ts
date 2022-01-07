@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-17 14:57:53
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-17 17:29:17
+ * @LastEditTime: 2022-01-07 14:03:14
  * @Description:
  * @FilePath: \melodia-ts\src\application\Recommend\index.tsx
  */
@@ -14,20 +14,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ActionTypes } from './store';
 import { IApplicationState } from '../../store/reducers';
 import { forceCheck } from 'react-lazyload';
-import Tabs from '../../components/Tabs';
+import { Spin, Tabs } from '../../components';
 import { CommonPlaylist } from './../../baseUI';
 
-interface IRecommendProps extends RouteConfig {
-  a?: string;
-}
-
-const Recommend: React.FC<IRecommendProps> = (props) => {
-  const { route } = props;
+const Recommend: React.FC = (props) => {
   const [show, setshow] = useState(true);
   const [selectedId, setSelectedId] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
   const { cateList, playLists } = useSelector((state: IApplicationState) => state.Recommend);
+  const { Global_Loading } = useSelector((state: IApplicationState) => state.Home);
   const containerRef = useRef(null);
   type ScrollComponentType = React.ElementRef<typeof Scroll>;
   const ScrollRef = useRef<ScrollComponentType>(null);
@@ -72,6 +68,7 @@ const Recommend: React.FC<IRecommendProps> = (props) => {
       onExited={history.goBack}
     >
       <div className="recommend-container" ref={containerRef}>
+        {Global_Loading && <Spin />}
         <Header title="歌单广场" handleClick={handleBack} />
         <Tabs onTabClick={handleChangeSelectedId}>
           {cateList.map((item) => {
@@ -92,9 +89,5 @@ const Recommend: React.FC<IRecommendProps> = (props) => {
     </CSSTransition>
   );
 };
-
-const mapStateToProps = ({ Recommend }: IApplicationState) => ({
-  cateList: Recommend.cateList
-});
 
 export default React.memo(Recommend);
