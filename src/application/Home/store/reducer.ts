@@ -1,26 +1,31 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-30 17:51:21
- * @LastEditTime: 2021-11-16 15:10:23
+ * @LastEditTime: 2022-01-07 14:00:52
  * @Description:
- * @FilePath: /melodia-ts/src/application/Home/store/reducer.ts
+ * @FilePath: \melodia-ts\src\application\Home\store\reducer.ts
  */
+import { Reducer } from 'redux';
 import produce, { Draft } from 'immer';
+import * as ActionType from './constans';
 export interface IHomeState {
-  text: string;
+  Global_Loading: Boolean;
 }
 const defaultState: IHomeState = {
-  text: ''
+  Global_Loading: false
 };
 
-export default (state = defaultState, action: { type: string }) => {
+const HomeReducer: Reducer = (state = defaultState, action) => {
   return produce(state, (draft: Draft<IHomeState>) => {
-    switch (action.type) {
-      case 'TEST':
-        draft.text = '8888888';
+    const { type, payload } = action;
+    switch (type) {
+      case ActionType.CHANGE_GLOBAL_LOADING:
+        draft.Global_Loading = payload;
         break;
       default:
         break;
     }
   });
 };
+
+export default HomeReducer;

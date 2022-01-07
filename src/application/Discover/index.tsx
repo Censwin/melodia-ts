@@ -1,14 +1,14 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-14 12:09:49
- * @LastEditTime: 2022-01-06 17:27:24
+ * @LastEditTime: 2022-01-07 14:40:53
  * @Description:
  * @FilePath: \melodia-ts\src\application\Discover\index.tsx
  */
 import React, { useCallback, useEffect, useRef } from 'react';
 import { RouteConfig } from 'react-router-config';
 import { useDispatch, connect } from 'react-redux';
-import { Icon, Slider, Card, Message } from '../../components';
+import { Icon, Slider, Card, Spin, Message } from '../../components';
 import { IApplicationState } from '../../store/reducers';
 import { IDiscoverState, ActionTypes } from './store';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
@@ -20,7 +20,7 @@ const CHANNEL_LIST = [
   {
     icon: 'calendar-week',
     name: '每日推荐',
-    path: ''
+    path: '/recommend'
   },
   {
     icon: 'stream',
@@ -35,7 +35,7 @@ const CHANNEL_LIST = [
   {
     icon: 'street-view',
     name: '歌手',
-    path: ''
+    path: '/search'
   }
 ];
 type TDiscoverProps = IDiscoverState & RouteConfig;
@@ -112,14 +112,11 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
 
   return (
     <div className="discover-content">
-      {/* {renderRoutes(route.routes)} */}
-
       <div className="Header">
         <div
           className="searchBar"
           onClick={() => {
-            // history.push('/search');
-            Message.success('successssssss');
+            history.push('/search');
           }}
         >
           <span>
@@ -127,7 +124,9 @@ const Discover: React.FC<TDiscoverProps> = (props) => {
             <span>周杰伦</span>
           </span>
         </div>
-        <Icon icon="bars" className="header-more" />
+        <span onClick={() => Message.info('这里啥也没有')}>
+          <Icon icon="bars" className="header-more" />
+        </span>
       </div>
       <div className="scroll-window-wrapper">
         <Scroll ref={VerticalScrollRef}>

@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-12-13 17:39:31
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-17 14:24:41
+ * @LastEditTime: 2022-01-07 13:35:03
  * @Description:
  * @FilePath: \melodia-ts\src\baseUI\PlayList\index.tsx
  */
@@ -21,9 +21,13 @@ const CommonPlaylist: React.FC<IPlaylistProps> = (props) => {
   const { onClickCallback } = props;
   return (
     <div className="playlist-wrapper">
-      {data.map((item) => {
+      {data.map((item, index) => {
         return (
-          <div key={item.id} className="playlist-item" onClick={(_) => onClickCallback(item.id)}>
+          <div
+            key={item.id + index}
+            className="playlist-item"
+            onClick={(_) => onClickCallback(item.id)}
+          >
             <div className="item-pic-wrapper">
               <LazyLoad placeholder={<img width="100%" height="100%" src={defaultImg} />}>
                 <img className="playlist-item-pic" src={item.coverImgUrl + '?param=300x300'} />

@@ -1,12 +1,12 @@
 .musicnote-wrapper {
   .icon-wrapper {
     position: fixed;
-    z-index: 1140;
+    z-index: 2000;
     margin-left: -20px;
     margin-top: -20px;
     color: $primary;
-    display: none;
-    // display: inline-block;
+    // display: none;
+    display: inline-block;
     transition: transform 1s cubic-bezier(0.86, 0.1, 0.37, 0.6);
     transform: translate3d(0, 0, 0);
     > span {

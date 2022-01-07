@@ -1,7 +1,14 @@
 .m-message {
+  position: absolute;
+  z-index: 2000;
+  left: 50%;
+  transform: translateX(-50%);
   .m-message-notice-content {
-    width: 100px;
-    height: 50px;
-    background: red;
+    box-sizing: border-box;
+    padding: 8px 15px;
+    background: #f5f5f5;
+    border-radius: 20px;
+    color: $gray-700;
+    // box-shadow: 0 2px 12px $primary;
   }
 }

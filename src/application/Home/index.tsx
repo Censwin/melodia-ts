@@ -1,14 +1,14 @@
 /*
  * @Author: Censwin
  * @Date: 2021-10-28 23:23:22
- * @LastEditTime: 2021-12-01 16:36:47
+ * @LastEditTime: 2022-01-07 14:09:27
  * @Description:
  * @FilePath: \melodia-ts\src\application\Home\index.tsx
  */
 import React, { ReactNode, useCallback } from 'react';
 import { renderRoutes, RouteConfig } from 'react-router-config';
 import { NavLink } from 'react-router-dom';
-import { Icon } from '../../components';
+import { Icon, Spin } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import Player from './../Player';
 import { IApplicationState } from '../../store/reducers';
@@ -21,6 +21,7 @@ const Home: React.FC<IHomeProps> = (props) => {
   const { route } = props;
   const dispatch = useDispatch();
   const { currentSong, playing } = useSelector((state: IApplicationState) => state.Player);
+  const { Global_Loading } = useSelector((state: IApplicationState) => state.Home);
   const handleClick = () => {
     dispatch({ type: 'TEST' });
   };
@@ -33,6 +34,7 @@ const Home: React.FC<IHomeProps> = (props) => {
   }, []);
   return (
     <div className="home-container">
+      {Global_Loading && <Spin />}
       {renderRoutes(route.routes)}
       <Player />
       <div className="home-footer">

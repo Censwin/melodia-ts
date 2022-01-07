@@ -1,9 +1,9 @@
 /*
  * @Author: Censwin
  * @Date: 2021-11-28 11:35:22
- * @LastEditTime: 2021-12-17 23:15:54
+ * @LastEditTime: 2022-01-07 10:54:03
  * @Description:
- * @FilePath: /melodia-ts/src/application/Player/index.tsx
+ * @FilePath: \melodia-ts\src\application\Player\index.tsx
  */
 import { abort } from 'process';
 import React, { useRef, useState, useEffect } from 'react';

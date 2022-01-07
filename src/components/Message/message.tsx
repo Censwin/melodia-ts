@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-01-06 14:47:49
  * @LastEditors: k200c
- * @LastEditTime: 2022-01-06 18:22:42
+ * @LastEditTime: 2022-01-07 14:50:40
  * @Description:
  * @FilePath: \melodia-ts\src\components\Message\message.tsx
  */
@@ -12,7 +12,7 @@ import animations from 'create-keyframe-animation';
 interface IParams {
   name: string;
   animation: any[];
-  presets: { duration: number; easing: string };
+  presets: { duration: number; easing: string; delay?: number };
 }
 // ==================== Content Layout =======================
 
@@ -27,7 +27,10 @@ const Layout: React.FC<ILayout> = (props) => {
 // ==================== Content Layout =======================
 
 const nodePosition = (num: number) => {
-  return [0, (num - 1) * 60 + 10];
+  const marginTop = 45;
+  const msgHeight = 40;
+  const gap = 10;
+  return [0, marginTop + (num - 1) * msgHeight + gap];
 };
 
 const unmountMsgWrapper = () => {
@@ -44,12 +47,13 @@ const getMsgWrapper = () => {
   document.body.appendChild(wrapper);
   return wrapper;
 };
-
+let nums = 0;
 const alert = (type: string, content: React.ReactNode) => {
+  // TODO: 使用传入type设计不同样式；拓展 显示时间
   let msgWrapper = getMsgWrapper();
   let timer = 0;
-  let duration = 5000;
-  let nums = 0;
+  let duration = 500;
+
   ReactDOM.render(<Layout content={content} />, msgWrapper as HTMLElement, () => {
     nums++;
     let params: IParams = {
@@ -57,11 +61,11 @@ const alert = (type: string, content: React.ReactNode) => {
       animation: [
         {
           opacity: 0,
-          y: 0
+          top: 0
         },
         {
           opacity: 1,
-          y: nodePosition(nums)[1]
+          top: `${nodePosition(nums)[1]}px`
         }
       ],
       presets: {
@@ -75,6 +79,7 @@ const alert = (type: string, content: React.ReactNode) => {
       let _params: IParams = JSON.parse(JSON.stringify(params));
       _params.animation = _params.animation.reverse();
       _params.name = `${_params.name}H`;
+      _params.presets.delay = 800; // 停留一下
       animations.registerAnimation(_params);
       animations.runAnimation(msgWrapper, _params.name, () => {
         nums--;
@@ -86,10 +91,12 @@ const alert = (type: string, content: React.ReactNode) => {
   });
 };
 
-// https://www.jianshu.com/p/c796ee179392
-
-const success = alert.bind(this, 'success');
-const Message = () => {};
-Message.success = success;
+interface IMessage {
+  info: (content: React.ReactNode) => void;
+}
+const info = alert.bind(this, 'info');
+const Message: IMessage = {
+  info
+};
 
 export default Message;

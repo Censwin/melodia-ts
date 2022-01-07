@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-11-19 16:54:40
  * @LastEditors: k200c
- * @LastEditTime: 2021-12-29 17:22:57
+ * @LastEditTime: 2022-01-07 14:25:13
  * @Description: 歌单 与 专辑 详情页
  * @FilePath: \melodia-ts\src\application\Album\index.tsx
  */
@@ -19,7 +19,7 @@ import MusicNote from '../../baseUI/musicNote';
 
 const Album: React.FC = () => {
   const history = useHistory();
-  const params = useParams();
+  const { id: detailId } = useParams<{ id?: string }>();
   const dispatch = useDispatch();
   const { currentAlbum } = useSelector((state: IApplicationState) => state.Album);
   const [showStatus, setShowStatus] = useState(true);
@@ -29,9 +29,8 @@ const Album: React.FC = () => {
   const handleExit = () => {};
   const nodeRef = useRef(null);
   useEffect(() => {
-    dispatch({ type: ActionType.GET_ALBUMDETAIL, payload: params });
-  }, [params]);
-  // if (!currentAlbum.tracks) return <i>{}</i>;
+    dispatch({ type: ActionType.GET_ALBUMDETAIL, payload: { id: detailId } });
+  }, [detailId]);
   const {
     coverImgUrl,
     name,
